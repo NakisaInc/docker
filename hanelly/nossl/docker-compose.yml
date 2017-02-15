@@ -16,6 +16,7 @@ services:
   hanelly1:
     image: nakisa/hanelly:2.2
     hostname: hanelly1
+      - "80:8080"
     volumes:
         - /usr/local/tomcat/webapps/hr-enterprise-web
     depends_on:
@@ -40,20 +41,6 @@ services:
       nakisa:
         aliases:
           - hanelly-db
-  ngnix:  
-    image: nginx
-    depends_on:
-      - hanelly1
-    volumes:
-      - ./ngnix/:/etc/nginx/conf.d/external/
-    ports:
-      - "80:80"
-      - "443:443"
-    command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"
-    networks:
-      nakisa:
-        aliases:
-          - nginx
 
 networks:
   nakisa:
