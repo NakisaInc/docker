@@ -16,6 +16,7 @@ services:
   hanelly1:
     image: nakisa/hanelly:2.2
     hostname: hanelly1
+    ports:
       - "80:8080"
     volumes:
         - /usr/local/tomcat/webapps/hr-enterprise-web
