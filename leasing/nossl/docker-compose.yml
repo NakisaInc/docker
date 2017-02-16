@@ -14,19 +14,35 @@ services:
           - es1
 
   slan:
-    image: nakisa/leasing:3.2
+    image: nakisa/leaseadministration:3.2-mysql-standalone-es
     ports:
       - "80:8080" 
     environment:
       CATALINA_OPTS: "-Xms1g -Xmx4g"    
     depends_on:
       - elasticsearch1
+      - slandb
     volumes:
       - ./data:/data
     networks:
       nakisa:
         aliases:
           - slan
+
+  slandb:
+    image: mysql:5.7
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: Nakisa_1
+        MYSQL_DATABASE: slan
+        #MYSQL_USER: root
+        MYSQL_PASSWORD: Nakisa_1
+    networks:
+      nakisa:
+        aliases:
+          - slandb
+# mysql --host=slandb --user=root --password=Nakisa_1 slan
 
 networks:
   nakisa:
