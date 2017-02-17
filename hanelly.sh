@@ -33,7 +33,7 @@ echo '
 |/     \||/     \||/    )_)(_______/(_______/(_______/\_/   
                                                             
 Switch to application by running:
-cd ~/nakisa/leasing/nossl/
+cd ~/nakisa/hanelly/nossl/
 
 Please get credentials from Nakisa support. 
 Then login to docker hub using:
