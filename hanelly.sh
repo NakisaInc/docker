@@ -28,8 +28,8 @@ echo '
 
 Please get credentials from Nakisa support. 
 Then login to docker hub using:
-sudo docker login
+\e[32sudo docker login\e[25
 
 Then run Hanelly using using:
-sudo docker-compose up -d'
+\e[32sudo docker-compose up -d\e[25'
 
