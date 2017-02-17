@@ -10,7 +10,7 @@ git clone https://github.com/NakisaInc/docker.git .
  
 sudo bash ./installdocker.sh
  
-cd hanelly/nossl/
+cd hanelly/ssl/
 
 clear
 
