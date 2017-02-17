@@ -31,13 +31,13 @@ echo '
       /\____) || (____/\| )   ( || )  \  |            
       \_______)(_______/|/     \||/    )_)            
                                                                                                                   
-Switch to application bu running:
+Switch to application by running:
 cd ~/nakisa/leasing/nossl/
 																												  
 Please get credentials from Nakisa support. 
 Then login to docker hub using:
 sudo docker login
 
-Then run SLAN using using:
+Then run SLAN using:
 sudo docker-compose up -d'
 
