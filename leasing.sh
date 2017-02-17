@@ -9,8 +9,6 @@ cd nakisa
 git clone https://github.com/NakisaInc/docker.git .
  
 sudo bash ./installdocker.sh
- 
-cd leasing/nossl/
 
 clear
 
@@ -33,7 +31,9 @@ echo '
       /\____) || (____/\| )   ( || )  \  |            
       \_______)(_______/|/     \||/    )_)            
                                                                                                                   
-
+Switch to application bu running:
+cd ~/nakisa/leasing/nossl/
+																												  
 Please get credentials from Nakisa support. 
 Then login to docker hub using:
 sudo docker login
