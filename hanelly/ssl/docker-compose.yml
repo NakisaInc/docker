@@ -17,7 +17,7 @@ services:
     image: nakisa/hanelly:2.2
     hostname: hanelly1
     volumes:
-        - /usr/local/tomcat/webapps/hr-enterprise-web
+        - /usr/local/tomcat/webapps/hanelly
     depends_on:
       - elasticsearch1
       - hanelly-db
