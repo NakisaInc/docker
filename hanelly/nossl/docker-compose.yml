@@ -19,7 +19,7 @@ services:
     ports:
       - "80:8080"
     volumes:
-        - /usr/local/tomcat/webapps/hr-enterprise-web
+        - /usr/local/tomcat/webapps/hanelly
     depends_on:
       - elasticsearch1
       - hanelly-db
