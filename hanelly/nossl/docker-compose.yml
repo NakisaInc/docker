@@ -28,7 +28,7 @@ services:
         aliases:
           - hanelly1
     environment:
-        CATALINA_OPTS: "-Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly1 -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
+        CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly1 -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
   hanelly-db:
     image: mysql:5.7
     volumes:
