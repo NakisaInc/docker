@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: elasticsearch:2.4.1
+    environment:
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+    command: elasticsearch --discovery.zen.ping.unicast.hosts=elasticsearch
+    volumes:
+        - ./es:/usr/share/elasticsearch/data
+  hanelly:
+    image: nakisa/hanelly:2.2
+    ports:
+      - "80:8080"
+    volumes:
+        - hanelly-data:/usr/local/tomcat/webapps/hanelly
+    depends_on:
+      - elasticsearch
+      - hanelly-db
+    environment:
+        CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+
+volumes:
+  hanelly-data:
