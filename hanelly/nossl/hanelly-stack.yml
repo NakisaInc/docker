@@ -10,12 +10,13 @@ services:
         - ./es:/usr/share/elasticsearch/data
   hanelly:
     image: nakisa/hanelly:2.2
+    replicas: 2
     ports:
       - "80:8080"
       - "7000:4000"
     volumes:
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
-        - ./app:/usr/local/tomcat/agent/
+        - ./agent:/usr/local/tomcat/agent/
     depends_on:
       - elasticsearch
       - hanelly-db
