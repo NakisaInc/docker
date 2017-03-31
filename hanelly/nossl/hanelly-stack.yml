@@ -10,7 +10,6 @@ services:
         - ./es:/usr/share/elasticsearch/data
   hanelly:
     image: nakisa/hanelly:2.2
-    replicas: 2
     ports:
       - "80:8080"
       - "7000:4000"
