@@ -1,7 +1,7 @@
 {
-  "name":"PrometheusTest",
+  "name":"Prometheus",
   "type":"prometheus",
-  "url":"http://localhost:9090",
-  "access":"direct",
+  "url":"http://prometheus:9090",
+  "access":"proxy",
   "basicAuth":false
 }

@@ -19,10 +19,10 @@ apt-get -y --no-install-recommends install curl
 curl -vX POST http://admin:admin@localhost:3000/api/datasources -d @/var/lib/nakisa/prometheus.json --header "Content-Type: application/json"
 
 # Adding dashboards
-curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @/var/lib/nakisa/testdashboard.json --header "Content-Type: application/json"
-#curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @testdashboard.json --header "Content-Type: application/json"
-#curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @testdashboard.json --header "Content-Type: application/json"
-#curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @testdashboard.json --header "Content-Type: application/json"
+curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @/var/lib/nakisa/sqldashboard.json --header "Content-Type: application/json"
+curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @/var/lib/nakisa/cadvisor.json --header "Content-Type: application/json"
+curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @/var/lib/nakisa/tomcat.json --header "Content-Type: application/json"
+curl -vX POST http://admin:admin@localhost:3000/api/dashboards/db -d @/var/lib/nakisa/elasticsearch.json --header "Content-Type: application/json"
 
 # do not exit or the container will exit :)
 sleep infinity
