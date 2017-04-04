@@ -14,19 +14,19 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['ec2-52-60-163-165.ca-central-1.compute.amazonaws.com:9104']
+      - targets: ['hanelly-db:9104']
   - job_name: 'cAdvisor'
 
     # Override the global default and scrape targets from this job every 5 seconds.
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['ec2-52-60-163-165.ca-central-1.compute.amazonaws.com:8080']
+      - targets: ['cadvisor:8080']
   - job_name: 'tomcat'
 
     # Override the global default and scrape targets from this job every 5 seconds.
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['ec2-52-60-163-165.ca-central-1.compute.amazonaws.com:4000']
+      - targets: ['hanelly:4000']
       
