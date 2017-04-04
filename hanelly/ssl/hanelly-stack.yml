@@ -47,11 +47,13 @@ services:
     volumes:
       - ./ngnix/:/etc/nginx/conf.d/external/
     ports:
-      - "3080:80"
-      - "3443:443"
+      - "80:80"
+      - "443:443"
     command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"
   prometheus:  
     image: prom/prometheus
+    ports:
+      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
   grafana:
@@ -64,7 +66,7 @@ services:
     environment:
       GF_SERVER_ROOT_URL: "http://grafana"
       GF_SERVER_DOMAIN: "grafana"
-    entrypoint: /var/lib/nakisa/setup.sh
+    entrypoint: bash /var/lib/nakisa/setup.sh
 
 
 volumes:
