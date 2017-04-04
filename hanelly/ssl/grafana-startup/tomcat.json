@@ -1,8 +1,8 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Production Overview",
-    "tags": [ "templated" ],
+    "title": "Hanelly Tomcat",
+    "tags": [ "hanelly" ],
     "timezone": "browser",
     "rows": [
       {

@@ -1,32 +1,7 @@
 {
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "3.1.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    }
-  ],
+  "dashboard": {
   "id": null,
-  "title": "Docker Dashboard",
+  "title": "Docker",
   "description": "Docker Monitoring Template",
   "tags": [
     "docker"
@@ -677,4 +652,5 @@
   "version": 3,
   "links": [],
   "gnetId": 179
+}
 }
