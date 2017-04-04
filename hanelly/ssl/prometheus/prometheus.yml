@@ -14,7 +14,7 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['hanelly-db:9104']
+      - targets: ['db-monitor:9104']
   - job_name: 'cAdvisor'
 
     # Override the global default and scrape targets from this job every 5 seconds.
