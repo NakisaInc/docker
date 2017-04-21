@@ -16,8 +16,6 @@ services:
   hanelly1:
     image: nakisa/hanelly:3.0.0-SNAPSHOT
     hostname: hanelly1
-    ports:
-      - "80:8080"
     volumes:
         - /usr/local/tomcat/webapps/hanelly
     depends_on:
@@ -51,7 +49,7 @@ services:
       nakisa:
         aliases:
           - redis1
-  ngnix:  
+  nginx:  
     image: nginx
     depends_on:
       - hanelly1
