@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: elasticsearch:2.4.1
+    environment:
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+    command: elasticsearch --discovery.zen.ping.unicast.hosts=elasticsearch
+    volumes:
+        - ./es:/usr/share/elasticsearch/data
+  hanelly:
+    image: nakisa/hanelly:${DOCKER_TAG}
+    ports:
+      - "80:8080"
+      - "7000:4000"
+    volumes:
+        - hanelly-data:/usr/local/tomcat/webapps/hanelly
+        - ./agent:/usr/local/tomcat/agent/
+    depends_on:
+      - elasticsearch
+      - hanelly-db
+    environment:
+        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+  db-monitor:
+  #https://github.com/percona/grafana-dashboards/tree/master/dashboards
+    image: prom/mysqld-exporter
+    ports: 
+      - "7001:9104"
+    environment:
+      DATA_SOURCE_NAME: "hanelly:hanelly@(hanelly-db:3306)/hanelly"
+    depends_on:
+      - hanelly-db
+  cadvisor:
+    image: google/cadvisor
+    ports:
+      - "7002:8080"
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+  
+volumes:
+  hanelly-data:
