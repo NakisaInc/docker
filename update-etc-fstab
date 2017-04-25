@@ -1,0 +1,4 @@
+/swapfile   none    swap    sw  0   0
+/dev/xvdb1  /tmp    ext4    defaults    0   0
+/dev/xvdb2  /swap   ext4    defaults    0   0
+/dev/xvdb3  /nakisa ext4    defaults    0   0
