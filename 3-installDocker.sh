@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# symlink docker to /nakisa/docker-data so that all docker volumes are on /nakisa
+sudo mkdir /nakisa/docker-data
+sudo ln -s /nakisa/docker-data /var/lib/docker
 
 sudo apt-get update
  
