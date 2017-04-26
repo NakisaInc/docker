@@ -88,10 +88,7 @@ echo "vm.max_map_count = 262144" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
 
 # install docker service
-sudo bash /nakisaInstaller/installdocker.sh
-
-# make nakisa app/data/everything directory
-sudo mkdir /nakisa
+sudo bash /nakisa/installdocker.sh
 
 # reboot system
 sudo reboot
