@@ -14,7 +14,7 @@ services:
         aliases:
           - es1
   hanelly1:
-    image: nakisa/hanelly:3.0.0-SNAPSHOT
+    image: nakisa/hanelly:3.0.0-snapshot
     hostname: hanelly1
     volumes:
         - /usr/local/tomcat/webapps/hanelly
