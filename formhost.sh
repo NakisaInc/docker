@@ -87,6 +87,10 @@ echo "# Set Elastic Search virtual memory and preserve setting over reboot" >> ~
 echo "vm.max_map_count = 262144" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
 
+# symlink docker to /nakisa/docker-data so that all docker volumes are on /nakisa
+sudo mkdir /nakisa/docker-data
+sudo ln -s /nakisa/docker-data /var/lib/docker
+
 # install docker service
 sudo apt-get update
  
@@ -120,8 +124,6 @@ chmod +x /usr/local/bin/docker-compose
  
 sudo docker-compose --version
 
-# reboot system
-sudo reboot
 
 
 
