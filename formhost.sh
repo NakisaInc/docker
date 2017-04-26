@@ -87,10 +87,13 @@ echo "# Set Elastic Search virtual memory and preserve setting over reboot" >> ~
 echo "vm.max_map_count = 262144" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
 
+# install docker service
+sudo bash /nakisaInstaller/installdocker.sh
+
 # make nakisa app/data/everything directory
 sudo mkdir /nakisa
 
-# Reboot system
+# reboot system
 sudo reboot
 
 
