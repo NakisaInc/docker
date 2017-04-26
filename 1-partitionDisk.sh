@@ -16,8 +16,9 @@ sudo mkfs.ext4 /dev/xvdb1
 sudo mkfs.ext4 /dev/xvdb2
 sudo mkfs.ext4 /dev/xvdb3
  
-# make swap directory
+# make /swap and /nakisa directories
 sudo mkdir /swap
+sudo mkdir /nakisa
 
 # ensure the following lines is present in etc/fstab file and append next four
 #LABEL=cloudimg-rootfs   /   ext4    defaults,discard    0   0
