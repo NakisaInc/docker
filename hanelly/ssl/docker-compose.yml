@@ -50,7 +50,7 @@ services:
         aliases:
           - redis1
   nginx:  
-    image: nginx
+    image: nginx:1.11.5
     depends_on:
       - hanelly1
     volumes:
