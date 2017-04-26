@@ -22,14 +22,16 @@ sudo mkdir /nakisa
 # make swap directory
 sudo mkdir /swap
 
-# ensure the following 5 lines are present in etc/fstab file by appending update-etc-fstab file
+# ensure the following lines is present in etc/fstab file and append next four
 #LABEL=cloudimg-rootfs   /   ext4    defaults,discard    0   0
-#/swapfile   none    swap    sw  0   0
-#/dev/xvdb1  /tmp    ext4    defaults    0   0
-#/dev/xvdb2  /swap   ext4    defaults    0   0
-#/dev/xvdb3  /nakisa ext4    defaults    0   0
-cat /etc/fstab /nakisaInstaller/update-etc-fstab > ~/fstab_updated
-sudo mv ~/fstab_updated /etc/fstab
+cat /etc/fstab > ~/appendedFile
+echo "" >> ~/appendedFile
+echo "# Set ceiling for maximum nunmber of open files for root and all other users" >> /appendedFile
+echo "/swapfile   none    swap    sw  0   0" >> /appendedFile
+echo "/dev/xvdb1  /tmp    ext4    defaults    0   0" >> /appendedFile
+echo "/dev/xvdb2  /swap   ext4    defaults    0   0" >> /appendedFile
+echo "/dev/xvdb3  /nakisa ext4    defaults    0   0" >> /appendedFile
+sudo mv ~/appendedFile /etc/fstab
 
 # mount all volumes and swap
 sudo mount -a
@@ -51,6 +53,7 @@ sudo swapon /swap/swapfile
 sudo chmod 777 /tmp
  
 # Set ceiling for number of open files to maximum allowed by system
+# https://underyx.me/2015/05/18/raising-the-maximum-number-of-file-descriptors
 cat /etc/security/limits.conf > ~/appendedFile
 echo "" >> ~/appendedFile
 echo "# Set ceiling for maximum nunmber of open files for root and all other users" >> /appendedFile
@@ -79,18 +82,16 @@ echo "# Set ceiling for number of open files to maximum allowed by system" >> /a
 echo "fs.file-max = $(cat /proc/sys/fs/file-max)" >> /appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
 
-
-# Setting up Virtual Memory for Elastic Search
+# Increase Elastic Search virtual memory
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
-# update /etc/sysctl.conf file
-cat /etc/sysctl.conf /nakisaInstaller/update-etc-sysctl.conf > ~/sysctl.conf_updated
-sudo mv ~/sysctl.conf_updated /etc/sysctl.conf
-
 cat /etc/sysctl.conf > ~/appendedFile
 echo "" >> ~/appendedFile
-echo "# Set Elastic Search virtual memory to preserve setting over reboot" >> /appendedFile
-echo "fvm.max_map_count = 262144" >> /appendedFile
+echo "# Set Elastic Search virtual memory and preserve setting over reboot" >> /appendedFile
+echo "vm.max_map_count = 262144" >> /appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
+
+# Reboot system
+sudo reboot
 
 
 
