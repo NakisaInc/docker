@@ -20,12 +20,11 @@ sudo mkfs.ext4 /dev/xvdb3
 sudo mkdir /swap
 sudo mkdir /nakisa
 
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/3/html/System_Administration_Guide/s1-swap-adding.html
 # ensure the following lines is present in etc/fstab file and append next four
 #LABEL=cloudimg-rootfs   /   ext4    defaults,discard    0   0
 cat /etc/fstab > ~/appendedFile
-echo "" >> ~/appendedFile
-echo "# Set ceiling for maximum nunmber of open files for root and all other users" >> /appendedFile
-echo "/swapfile   none    swap    sw  0   0" >> ~/appendedFile
+echo "/swap/swapfile   swap    swap    sw  0   0" >> ~/appendedFile
 echo "/dev/xvdb1  /tmp    ext4    defaults    0   0" >> ~/appendedFile
 echo "/dev/xvdb2  /swap   ext4    defaults    0   0" >> ~/appendedFile
 echo "/dev/xvdb3  /nakisa ext4    defaults    0   0" >> ~/appendedFile
