@@ -16,9 +16,6 @@ sudo mkfs.ext4 /dev/xvdb1
 sudo mkfs.ext4 /dev/xvdb2
 sudo mkfs.ext4 /dev/xvdb3
  
-# make nakisa app/data/everything directory
-sudo mkdir /nakisa
- 
 # make swap directory
 sudo mkdir /swap
 
@@ -27,10 +24,10 @@ sudo mkdir /swap
 cat /etc/fstab > ~/appendedFile
 echo "" >> ~/appendedFile
 echo "# Set ceiling for maximum nunmber of open files for root and all other users" >> /appendedFile
-echo "/swapfile   none    swap    sw  0   0" >> /appendedFile
-echo "/dev/xvdb1  /tmp    ext4    defaults    0   0" >> /appendedFile
-echo "/dev/xvdb2  /swap   ext4    defaults    0   0" >> /appendedFile
-echo "/dev/xvdb3  /nakisa ext4    defaults    0   0" >> /appendedFile
+echo "/swapfile   none    swap    sw  0   0" >> ~/appendedFile
+echo "/dev/xvdb1  /tmp    ext4    defaults    0   0" >> ~/appendedFile
+echo "/dev/xvdb2  /swap   ext4    defaults    0   0" >> ~/appendedFile
+echo "/dev/xvdb3  /nakisa ext4    defaults    0   0" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/fstab
 
 # mount all volumes and swap
@@ -56,39 +53,42 @@ sudo chmod 777 /tmp
 # https://underyx.me/2015/05/18/raising-the-maximum-number-of-file-descriptors
 cat /etc/security/limits.conf > ~/appendedFile
 echo "" >> ~/appendedFile
-echo "# Set ceiling for maximum nunmber of open files for root and all other users" >> /appendedFile
-echo "# cat /proc/sys/fs/file-max returns the max possible ceiling for the system" >> /appendedFile
-echo "*    soft nofile $(cat /proc/sys/fs/file-max)" >> /appendedFile
-echo "*    hard nofile $(cat /proc/sys/fs/file-max)" >> /appendedFile
-echo "root soft nofile $(cat /proc/sys/fs/file-max)" >> /appendedFile
-echo "root hard nofile $(cat /proc/sys/fs/file-max)" >> /appendedFile
+echo "# Set ceiling for maximum nunmber of open files for root and all other users" >> ~/appendedFile
+echo "# cat /proc/sys/fs/file-max returns the max possible ceiling for the system" >> ~/appendedFile
+echo "*    soft nofile $(cat /proc/sys/fs/file-max)" >> ~/appendedFile
+echo "*    hard nofile $(cat /proc/sys/fs/file-max)" >> ~/appendedFile
+echo "root soft nofile $(cat /proc/sys/fs/file-max)" >> ~/appendedFile
+echo "root hard nofile $(cat /proc/sys/fs/file-max)" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/security/limits.conf
 
 cat /etc/pam.d/common-session  > ~/appendedFile
 echo "" >> ~/appendedFile
-echo "# Ensure OS ceiling for number of open files is set for each session" >> /appendedFile
-echo "session required pam_limits.so" >> /appendedFile
+echo "# Ensure OS ceiling for number of open files is set for each session" >> ~/appendedFile
+echo "session required pam_limits.so" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/pam.d/common-session
 
 cat /etc/pam.d/common-session-noninteractive > ~/appendedFile
 echo "" >> ~/appendedFile
-echo "# Ensure OS ceiling for number of open files is set for each session" >> /appendedFile
-echo "session required pam_limits.so" >> /appendedFile
+echo "# Ensure OS ceiling for number of open files is set for each session" >> ~/appendedFile
+echo "session required pam_limits.so" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/pam.d/common-session-noninteractive
 
 cat /etc/sysctl.conf > ~/appendedFile
 echo "" >> ~/appendedFile
-echo "# Set ceiling for number of open files to maximum allowed by system" >> /appendedFile
-echo "fs.file-max = $(cat /proc/sys/fs/file-max)" >> /appendedFile
+echo "# Set ceiling for number of open files to maximum allowed by system" >> ~/appendedFile
+echo "fs.file-max = $(cat /proc/sys/fs/file-max)" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
 
 # Increase Elastic Search virtual memory
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
 cat /etc/sysctl.conf > ~/appendedFile
 echo "" >> ~/appendedFile
-echo "# Set Elastic Search virtual memory and preserve setting over reboot" >> /appendedFile
-echo "vm.max_map_count = 262144" >> /appendedFile
+echo "# Set Elastic Search virtual memory and preserve setting over reboot" >> ~/appendedFile
+echo "vm.max_map_count = 262144" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
+
+# make nakisa app/data/everything directory
+sudo mkdir /nakisa
 
 # Reboot system
 sudo reboot
