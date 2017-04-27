@@ -48,9 +48,3 @@ sudo swapon /swap/swapfile
  
 # set permissions for /tmp access
 sudo chmod 777 /tmp
-
-
-
-
-
-

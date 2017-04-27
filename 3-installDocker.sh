@@ -37,4 +37,7 @@ chmod +x /usr/local/bin/docker-compose
  
 sudo docker-compose --version
 
+# install Nakisa application docker structure
+cd /nakisa/app
+sudo git clone -b 2DiskFormation https://github.com/NakisaInc/docker.git .
 

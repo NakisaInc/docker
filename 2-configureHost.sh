@@ -38,9 +38,3 @@ echo "" >> ~/appendedFile
 echo "# Set Elastic Search virtual memory and preserve setting over reboot" >> ~/appendedFile
 echo "vm.max_map_count = 262144" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
-
-
-
-
-
-
