@@ -52,7 +52,7 @@ services:
   redis:
     image: redis:VAR_RDS_TAG
     volumes:
-      - ./redis: /data
+      - ./redis:/data
 
 volumes:
   hanelly-data:
