@@ -2,14 +2,14 @@ version: '3'
 
 services:
   elasticsearch:
-    image: elasticsearch:2.4.1
+    image: elasticsearch:VAR_ES_TAG
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
     command: elasticsearch --discovery.zen.ping.unicast.hosts=elasticsearch
     volumes:
         - ./es:/usr/share/elasticsearch/data
   hanelly:
-    image: nakisa/hanelly:${DOCKER_TAG}
+    image: nakisa/hanelly:VAR_HAN_TAG
     ports:
       - "80:8080"
       - "7000:4000"
@@ -19,10 +19,11 @@ services:
     depends_on:
       - elasticsearch
       - hanelly-db
+      - redis
     environment:
         CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
   hanelly-db:
-    image: mysql:5.7
+    image: mysql:VAR_MYSQL_TAG
     volumes:
         - ./mysql:/var/lib/mysql
     environment:
@@ -45,9 +46,13 @@ services:
       - "7002:8080"
     volumes:
       - "/:/rootfs:ro"
-      - "/var/run:/var/run:rw"
+      - "/var/run:/var/run"
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
-  
+  redis:
+    image: redis:VAR_RDS_TAG
+    volumes:
+      - ./redis: /data
+
 volumes:
   hanelly-data:
