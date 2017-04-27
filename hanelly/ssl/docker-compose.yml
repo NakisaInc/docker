@@ -3,6 +3,7 @@ version: '2'
 services:
   elasticsearch1:
     image: elasticsearch:2.4.1
+    restart: always
     hostname: es1
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
@@ -16,6 +17,7 @@ services:
   hanelly1:
     image: nakisa/hanelly:2.2
     hostname: hanelly1
+    restart: always
     volumes:
         - /usr/local/tomcat/webapps/hanelly
     depends_on:
@@ -29,6 +31,7 @@ services:
         CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly1 -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
   hanelly-db:
     image: mysql:5.7
+    restart: always
     volumes:
         - ./mysql:/var/lib/mysql
     environment:
@@ -41,7 +44,8 @@ services:
         aliases:
           - hanelly-db
   ngnix:  
-    image: nginx
+    image: nginx:1.5.11
+    restart: always
     depends_on:
       - hanelly1
     volumes:
