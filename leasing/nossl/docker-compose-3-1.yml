@@ -2,6 +2,7 @@ version: '2'
 services:
   elasticsearch1:
     image: elasticsearch:2.4.1
+    restart: always
     hostname: es1
     volumes:
       - ./es:/usr/share/elasticsearch/data 
@@ -15,6 +16,7 @@ services:
 
   slan:
     image: nakisa/leaseadministration:slan3.1
+    restart: always
     ports:
       - "80:8080" 
     environment:
@@ -31,7 +33,8 @@ services:
 
   slandb:
     image: mysql:5.7
-    volumes:
+     restart: always
+   volumes:
         - ./mysql:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: Nakisa_1

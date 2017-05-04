@@ -2,6 +2,7 @@ version: '2'
 services:
   elasticsearch1:
     image: elasticsearch:2.4.1
+    restart: always
     hostname: es1
     volumes:
       - ./es:/usr/share/elasticsearch/data 
@@ -15,6 +16,7 @@ services:
 
   slan:
     image: nakisa/leaseadministration:3.2-mysql-standalone-es
+    restart: always
     environment:
       CATALINA_OPTS: "-Xms1g -Xmx4g"    
     depends_on:
@@ -29,6 +31,7 @@ services:
 
   slandb:
     image: mysql:5.7
+    restart: always
     volumes:
         - ./mysql:/var/lib/mysql
     environment:
@@ -43,7 +46,8 @@ services:
 # mysql --host=slandb --user=root --password=Nakisa_1 slan
 
   ngnix:  
-    image: nginx
+    image: nginx:1.5.11
+    restart: always
     depends_on:
       - slan
     volumes:
