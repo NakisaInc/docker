@@ -35,7 +35,7 @@ services:
     image: prom/mysqld-exporter:v0.10.0
     ports: 
       - "7001:9104"
-   environment:
+    environment:
       DATA_SOURCE_NAME: "hanelly:hanelly@(hanelly-db:3306)/hanelly"
     depends_on:
       - hanelly-db
