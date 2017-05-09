@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# to get this installation script:
+# wget -O - https://raw.githubusercontent.com/NakisaInc/docker/app3_2/formHost.sh | sudo bash
+
+# install git
+sudo apt-get install -y --no-install-recommends git
+ 
+# create /nakisaInstaller application directory and download the installer
+sudo mkdir /nakisaInstaller; cd /nakisaInstaller
+sudo git clone -b app3_2 https://github.com/NakisaInc/docker.git .
+
 # partition disk
 sudo bash ./1-partitionDisk.sh
  
