@@ -11,13 +11,13 @@ sudo mkdir /nakisaInstaller; cd /nakisaInstaller
 sudo git clone -b Hanelly_3.0 https://github.com/NakisaInc/docker.git .
 
 # partition disk
-sudo bash ./1-partitionDisk.sh
+#sudo bash ./1-partitionDisk.sh
  
 # configure host
 sudo bash ./2-configureHost.sh
 
 # install docker service
-sudo bash ./3-installDocker.sh
+#sudo bash ./3-installDocker.sh
 
 # reboot system
-sudo reboot
+#sudo reboot
