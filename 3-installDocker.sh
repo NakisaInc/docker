@@ -39,5 +39,5 @@ sudo docker-compose --version
 
 # install Nakisa application docker structure
 cd /nakisa/app
-sudo git clone -b 2DiskFormation https://github.com/NakisaInc/docker.git .
+sudo git clone -b Hanelly_3.0 https://github.com/NakisaInc/docker.git .
 
