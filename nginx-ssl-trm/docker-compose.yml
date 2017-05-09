@@ -1,10 +1,10 @@
 version: '2'
 
 services:
-  ngnix:  
+  nginx:  
     image: nginx
     volumes:
-      - ./ngnix/:/etc/nginx/conf.d/external/
+      - ./nginx/:/etc/nginx/conf.d/external/
     ports:
       - "80:80"
       - "443:443"

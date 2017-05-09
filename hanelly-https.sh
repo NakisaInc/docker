@@ -6,7 +6,7 @@ mkdir nakisa
  
 cd nakisa
  
-git clone https://github.com/NakisaInc/docker.git .
+git clone -b app3_2 https://github.com/NakisaInc/docker.git .
  
 sudo bash ./installdocker.sh
  

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# symlink docker to /nakisa/docker-data so that all docker volumes are on /nakisa
+sudo mkdir /nakisa/app
+sudo mkdir /nakisa/docker-data
+sudo ln -s /nakisa/docker-data /var/lib/docker
 
 sudo apt-get update
  
@@ -32,3 +36,8 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
  
 sudo docker-compose --version
+
+# install Nakisa application docker structure
+cd /nakisa/app
+sudo git clone -b app3_2 https://github.com/NakisaInc/docker.git .
+

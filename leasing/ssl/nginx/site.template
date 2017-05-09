@@ -1,8 +1,13 @@
+# disable checking of client request body size, specified in the “Content-Length” request header field
+client_max_body_size 0;
+
+# disable HTTP
 server {
     listen 80;
     return 301 https://$host$request_uri;
 }
 
+# HTTPS server block
 server {
 
     listen 443;
@@ -27,9 +32,9 @@ server {
       proxy_set_header        X-Forwarded-Proto $scheme;
 
       # Fix the “It appears that your reverse proxy set up is broken" error.
-      proxy_pass          http://hanelly1:8080;
+      proxy_pass          http://slan:8080;
       proxy_read_timeout  90;
 
-      #proxy_redirect      http://hanelly1:8080 https://app.nakisa.com;
+      #proxy_redirect      http://slan:8080 https://app.nakisa.com;
     }
   }

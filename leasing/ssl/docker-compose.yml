@@ -42,12 +42,12 @@ services:
           - slandb
 # mysql --host=slandb --user=root --password=Nakisa_1 slan
 
-  ngnix:  
+  nginx:  
     image: nginx
     depends_on:
       - slan
     volumes:
-      - ./ngnix/:/etc/nginx/conf.d/external/
+      - ./nginx/:/etc/nginx/conf.d/external/
     ports:
       - "80:80"
       - "443:443"
