@@ -1,8 +1,13 @@
+# disable checking of client request body size, specified in the “Content-Length” request header field
+client_max_body_size 0;
+
+# disable HTTP
 server {
     listen 80;
     return 301 https://$host$request_uri;
 }
 
+# HTTPS server block
 server {
 
     listen 443;
