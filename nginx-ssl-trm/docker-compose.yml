@@ -1,11 +1,10 @@
 version: '2'
 
 services:
-  ngnix:  
-    image: nginx:1.5.11
-    restart: always
+  nginx:  
+    image: nginx
     volumes:
-      - ./ngnix/:/etc/nginx/conf.d/external/
+      - ./nginx/:/etc/nginx/conf.d/external/
     ports:
       - "80:80"
       - "443:443"

@@ -1,8 +1,13 @@
+# disable checking of client request body size, specified in the “Content-Length” request header field
+client_max_body_size 0;
+
+# disable HTTP
 server {
     listen 80;
     return 301 https://$host$request_uri;
 }
 
+# HTTPS server block
 server {
 
     listen 443;
@@ -19,17 +24,27 @@ server {
 
     access_log            /etc/nginx/conf.d/external/app.access.log;
 
-    location / {
+    location /hanelly/ {
 
       proxy_set_header        Host $host;
       proxy_set_header        X-Real-IP $remote_addr;
       proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header        X-Forwarded-Proto $scheme;
 
-      # Fix the “It appears that your reverse proxy set up is broken" error.
-      proxy_pass          http://slan:8080;
+      proxy_pass          http://hanelly:8080/hanelly/;
       proxy_read_timeout  90;
 
-      #proxy_redirect      http://slan:8080 https://app.nakisa.com;
+    }
+
+    location /grafana/ {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          http://grafana:3000/;
+      proxy_read_timeout  90;
+
     }
   }
