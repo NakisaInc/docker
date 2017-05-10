@@ -27,6 +27,8 @@ sudo add-apt-repository \
        ubuntu-$(lsb_release -cs) \
        main"
   
+sudo apt-get update
+
 sudo apt-get -y install docker-engine
  
 sudo curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
