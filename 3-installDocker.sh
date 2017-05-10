@@ -11,7 +11,6 @@ sudo apt-get install linux-aws linux-headers-aws linux-image-aws -y
  
 sudo apt-get install -y --no-install-recommends \
     linux-image-$(uname -r) \
-    linux-image-extra-$(uname -r) \
     linux-image-extra-virtual
  
 sudo apt-get install -y --no-install-recommends \
