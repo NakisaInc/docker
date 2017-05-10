@@ -19,5 +19,9 @@ sudo bash ./2-configureHost.sh
 # install docker service
 sudo bash ./3-installDocker.sh
 
+# install Nakisa application docker structure
+cd /nakisa/app
+sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
+
 # reboot system
 sudo reboot

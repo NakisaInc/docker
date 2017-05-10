@@ -1,0 +1,22 @@
+
+# docker-data cleanup
+# http://blog.yohanliyanage.com/2015/05/docker-clean-up-after-yourself/
+docker rm -v $(docker ps -a -q -f status=exited)
+
+docker rmi $(docker images -f "dangling=true" -q)
+
+docker run -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker --rm martin/docker-cleanup-volumes
+
+# NGINX timeouts
+# https://asdqwe.net/blog/solutions-504-gateway-timeout-nginx/
+Open your nginx.conf file located in /etc/nginx directory.
+Add this below piece of code under http { section:
+client_header_timeout 3000;
+client_body_timeout 3000;
+fastcgi_read_timeout 3000;
+client_max_body_size 32m;
+fastcgi_buffers 8 128k;
+fastcgi_buffer_size 128k;
+
+# nexus repository
+docker login -u docker -p docker devops.hq1.nakisa.net
