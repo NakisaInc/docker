@@ -1,4 +1,4 @@
-# disable checking of client request body size, specified in the “Content-Length” request header field
+# disable checking of client request body size, specified in the Content-Length request header field
 client_max_body_size 0;
 
 # disable HTTP
