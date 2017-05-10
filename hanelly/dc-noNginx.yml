@@ -14,10 +14,10 @@ services:
       nakisa:
         aliases:
           - es1
-  hanelly1:
+  hanelly:
     image: nakisa/hanelly:3.0.0-snapshot
     restart: always
-    hostname: hanelly1
+    hostname: hanelly
     ports:
         - "80:8080"
     volumes:
@@ -29,9 +29,9 @@ services:
     networks:
       nakisa:
         aliases:
-          - hanelly1
+          - hanelly
     environment:
-        CATALINA_OPTS: "-Dredis.host=redis1 -Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly1 -Djava.net.preferIPv4Stack=true -Xms4g -Xmx4g"
+        CATALINA_OPTS: "-Dredis.host=redis1 -Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms4g -Xmx4g"
   hanelly-db:
     image: mysql:5.7
     restart: always
