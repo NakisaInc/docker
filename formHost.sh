@@ -6,7 +6,7 @@
 # install git
 sudo apt-get install -y --no-install-recommends git
  
-# create /nakisaInstaller application directory and download the installer
+# create /nakisaInstaller installer directory and download the installer
 sudo mkdir /nakisaInstaller; cd /nakisaInstaller
 sudo git clone -b app3_2 https://github.com/NakisaInc/docker.git .
 
@@ -18,6 +18,11 @@ sudo bash ./2-configureHost.sh
 
 # install docker service
 sudo bash ./3-installDocker.sh
+
+# install Nakisa application docker structure and remove /nakisaInstaller installer directory
+cd /nakisa/app
+sudo git clone -b app3_2 https://github.com/NakisaInc/docker.git .
+sudo rm -rf /nakisaInstaller
 
 # reboot system
 sudo reboot

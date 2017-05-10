@@ -7,7 +7,10 @@ sudo ln -s /nakisa/docker-data /var/lib/docker
 
 sudo apt-get update
  
+sudo apt-get install linux-aws linux-headers-aws linux-image-aws -y
+ 
 sudo apt-get install -y --no-install-recommends \
+    linux-image-$(uname -r) \
     linux-image-extra-$(uname -r) \
     linux-image-extra-virtual
  
@@ -36,8 +39,3 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
  
 sudo docker-compose --version
-
-# install Nakisa application docker structure
-cd /nakisa/app
-sudo git clone -b app3_2 https://github.com/NakisaInc/docker.git .
-
