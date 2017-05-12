@@ -12,6 +12,9 @@ services:
   hanelly:
     image: nakisa/hanelly:3.0.0-snapshot
     restart: always
+    ports:
+      - "80:8080"
+      - "7000:4000"
     volumes:
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
         - ./agent:/usr/local/tomcat/agent/
