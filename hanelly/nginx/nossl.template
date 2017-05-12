@@ -1,0 +1,35 @@
+# disable checking of client request body size, specified in the Content-Length request header field
+client_max_body_size 0;
+
+# HTTP server block
+server {
+
+    listen 80;
+    server_name app.nakisa.com;
+
+    access_log            /etc/nginx/conf.d/external/app.access.log;
+
+    location /hanelly/ {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          http://hanelly:8080/hanelly/;
+      proxy_read_timeout  90;
+
+    }
+
+    location /grafana/ {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          http://grafana:3000/;
+      proxy_read_timeout  90;
+
+    }
+  }
