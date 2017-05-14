@@ -10,18 +10,18 @@ sudo apt-get install -y --no-install-recommends git
 sudo mkdir /nakisaInstaller; cd /nakisaInstaller
 sudo git clone https://github.com/NakisaInc/docker.git .
 
-# partition disk
+# partition disk (applicaton agnostic)
 sudo bash ./1-partitionDisk.sh
  
-# configure host
+# configure host (applicaton agnostic)
 sudo bash ./2-configureHost.sh
 
-# install docker service
+# install docker service (applicaton agnostic)
 sudo bash ./3-installDocker.sh
 
-# install Nakisa application docker structure
-cd /nakisa/app
-sudo git clone https://github.com/NakisaInc/docker.git .
+# install applicaton specific docker structure and images
+sudo bash ./4-installApplication.sh
 
 # reboot system
+sudo rm -rf /nakisaInstaller
 sudo reboot

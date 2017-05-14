@@ -10,16 +10,15 @@ services:
         - ./es:/usr/share/elasticsearch/data
   hanelly:
     image: nakisa/hanelly:3.0.0-snapshot
-    restart: always
     volumes:
-        - hanelly-data:/usr/local/tomcat/webapps/hanelly
+        - ./hanelly-data:/usr/local/tomcat/webapps/hanelly
         - ./agent:/usr/local/tomcat/agent/
     depends_on:
       - elasticsearch
       - hanelly-db
       - redis
     environment:
-        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
+        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dsecurity.preventcsrf=true -Dnak.cookie.useHttpOnly=true -Dnak.cookie.useSecure=true -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
   hanelly-db:
     image: mysql:5.7
     volumes:
@@ -43,7 +42,7 @@ services:
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
   nginx:
-    image: nginx:1.13
+    image: nginx:1.11.5
     depends_on:
       - hanelly
     volumes:
@@ -69,5 +68,3 @@ services:
     volumes:
       - ./redis:/data
 
-volumes:
-  hanelly-data:
