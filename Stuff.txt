@@ -20,3 +20,8 @@ fastcgi_buffer_size 128k;
 
 # nexus repository
 docker login -u docker -p docker devops.hq1.nakisa.net
+
+# Tomcat
+http://blog.sokolenko.me/2014/11/javavm-options-production.html
+
+#

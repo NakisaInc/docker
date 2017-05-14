@@ -6,6 +6,7 @@ sudo mkdir /nakisa/docker-data
 sudo ln -s /nakisa/docker-data /var/lib/docker
 
 sudo apt-get update
+sudo apt install htop
 
 sudo apt-get install linux-aws linux-headers-aws linux-image-aws -y
  
@@ -29,6 +30,7 @@ sudo add-apt-repository \
        ubuntu-$(lsb_release -cs) \
        main"
   
+# for some reasos need to do this again otherwise docker-engine install fails 
 sudo apt-get update
 
 sudo apt-get -y install docker-engine

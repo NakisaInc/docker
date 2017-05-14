@@ -29,7 +29,7 @@ services:
         aliases:
           - hanelly
     environment:
-        CATALINA_OPTS: "-Dredis.host=redis1 -Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms4g -Xmx4g"
+        CATALINA_OPTS: "-Dsecurity.preventcsrf=true -Dnak.cookie.useHttpOnly=true -Dnak.cookie.useSecure=true -Dredis.host=redis1 -Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms4g -Xmx4g"
   hanelly-db:
     image: mysql:5.7
     restart: always
