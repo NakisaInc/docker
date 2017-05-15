@@ -1,17 +1,26 @@
 version: '3'
 
+# Must declare a named volume which is mapped to Hanelly container directory
+# this is because the container directory is not empty and we don't want the host directory to overwrite it.
+volumes:
+  hanelly-data:
+
 services:
   elasticsearch:
     image: elasticsearch:5.2.0
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
     command: [ elasticsearch, -E, network.bind_host=0.0.0.0, -E, network.publish_host=elasticsearch, -E, cluster.name=elasticsearch, -E, script.inline=true, -E, script.stored=true, -E, script.max_compilations_per_minute=100000 ]
+    # ensure data, logs and JVM working directory are persisted externally to container for data persistence and problem troubleshooting post crash
+    # docker copies the contents of the host directories over to the container directory and overwrites it
     volumes:
-        - ./es:/usr/share/elasticsearch/data
+        - ./es-data:/usr/share/elasticsearch/data
+        - ./es-logs:/usr/share/elasticsearch/logs
+        - ./es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
   hanelly:
     image: nakisa/hanelly:3.0.0-snapshot
     volumes:
-        - ./hanelly-data:/usr/local/tomcat/webapps/hanelly
+        - hanelly-data:/usr/local/tomcat/webapps/hanelly
         - ./agent:/usr/local/tomcat/agent/
     depends_on:
       - elasticsearch
