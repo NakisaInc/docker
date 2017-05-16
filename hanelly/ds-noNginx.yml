@@ -2,39 +2,42 @@ version: '3'
 
 # Must declare a named volume which is mapped to Hanelly container directory
 # this is because the container directory is not empty and we don't want the host directory to overwrite it.
+# named volumes must be removed manually or they will stick around after 'docker stack rm'
 volumes:
   hanelly-data:
 
 services:
   elasticsearch:
     image: elasticsearch:5.2.0
-    restart: always
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
     command: [ elasticsearch, -E, network.bind_host=0.0.0.0, -E, network.publish_host=elasticsearch, -E, cluster.name=elasticsearch, -E, script.inline=true, -E, script.stored=true, -E, script.max_compilations_per_minute=100000 ]
     # ensure data, logs and JVM working directory are persisted externally to container for data persistence and problem troubleshooting post crash
-    # docker copies the contents of the host directories over to the container directory and overwrites it
     volumes:
+        # docker copies the contents of each host directory over to the container directory and overwrites it
         - ./es-data:/usr/share/elasticsearch/data
         - ./es-logs:/usr/share/elasticsearch/logs
-        - ./es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
+        # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
   hanelly:
     image: nakisa/hanelly:3.0.0-snapshot
     ports:
       - "80:8080"
       - "7000:4000"
     volumes:
-        - ./hanelly-data:/usr/local/tomcat/webapps/hanelly
         - ./agent:/usr/local/tomcat/agent/
+        # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        - hanelly-data:/usr/local/tomcat/webapps/hanelly
     depends_on:
       - elasticsearch
       - hanelly-db
       - redis
     environment:
-        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dsecurity.preventcsrf=true -Dnak.cookie.useHttpOnly=true -Dnak.cookie.useSecure=true -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Xms2g -Xmx2g"
+        JAVA_OPTS: "-Dfile.encoding='UTF-8'"
+        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dfile.encoding='UTF-8' -Xms2g -Xmx2g"
   hanelly-db:
     image: mysql:5.7
-    restart: always
+    # must figure out a way to set memory allocation for mySQL like we do for ES and Hanelly
     volumes:
         - ./mysql:/var/lib/mysql
     environment:
@@ -44,14 +47,14 @@ services:
         MYSQL_PASSWORD: hanelly
   db-monitor:
     image: prom/mysqld-exporter:v0.10.0
-    restart: always
+    # must figure out a way to set memory allocation for dmMonitor like we do for ES and Hanelly
     environment:
       DATA_SOURCE_NAME: "hanelly:hanelly@(hanelly-db:3306)/hanelly"
     depends_on:
       - hanelly-db
   cadvisor:
     image: google/cadvisor:v0.25.0
-    restart: always
+    # must figure out a way to set memory allocation for cAdvisor like we do for ES and Hanelly
     volumes:
       - "/:/rootfs:ro"
       - "/var/run:/var/run"
@@ -59,12 +62,12 @@ services:
       - "/var/lib/docker/:/var/lib/docker:ro"
   prometheus:
     image: prom/prometheus:v1.6.0
-    restart: always
+    # must figure out a way to set memory allocation for Prometheus like we do for ES and Hanelly
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
   grafana:
     image: grafana/grafana:4.2.0
-    restart: always
+    # must figure out a way to set memory allocation for Grafana like we do for ES and Hanelly
     volumes:
       - ./grafana-startup:/var/lib/nakisa
       - ./grafana:/var/lib/grafana
@@ -74,7 +77,12 @@ services:
     entrypoint: bash /var/lib/nakisa/setup.sh
   redis:
     image: redis:3.2.8
-    restart: always
+    # must figure out a way to set memory allocation for Redis like we do for ES and Hanelly
     volumes:
-      - ./redis:/data
+      - ./redis-data:/data
+      - ./redis-logs:/var/logs/redis
+      
+# Add iDoc Listener
+# Add Backup & Restore
+# Add Queue
 

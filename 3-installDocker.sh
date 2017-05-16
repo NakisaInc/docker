@@ -16,6 +16,7 @@ sudo apt-get install -y --no-install-recommends \
     curl \
     unzip \
 	htop \
+	smem \
     software-properties-common
  
 curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
