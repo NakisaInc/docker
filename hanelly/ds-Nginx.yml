@@ -11,7 +11,8 @@ services:
     image: elasticsearch:5.2.0
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
-    command: [ elasticsearch, -E, network.bind_host=0.0.0.0, -E, network.publish_host=elasticsearch, -E, cluster.name=elasticsearch, -E, script.inline=true, -E, script.stored=true, -E, script.max_compilations_per_minute=100000 ]
+    # need to disable swap for ES as per: but seems to crash ES https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
     volumes:
         # docker copies the contents of each host directory over to the container directory and overwrites it
