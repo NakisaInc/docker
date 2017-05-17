@@ -34,7 +34,7 @@ services:
         - ./agent:/usr/local/tomcat/agent/
         - ./bnr-data:/nakisa/backup
         - ./idocs-data:/nakisa/idocs
-        - ./redis:/nakisa/redis
+        - ./redis-data:/nakisa/redis
         # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
     environment:
@@ -101,7 +101,7 @@ services:
     environment:
         nak.app.name: "hanelly"
         nak.app.image: "3.0.0-snapshot"
-        nak.app.service.url: "http://hanelly1:8080/hanelly/app/services/BackupRecoveryService/backup"
+        nak.app.service.url: "http://hanelly:8080/hanelly/app/services/BackupRecoveryService/backup"
         nak.authentication.token: "NakisaInternal"
         nak.volume.path.backup: "/nakisa/backup"
         nak.app.storage.external: "/nakisa/storage"
