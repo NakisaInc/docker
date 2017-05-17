@@ -32,8 +32,8 @@ services:
       - taskmanager
     volumes:
         - ./agent:/usr/local/tomcat/agent/
-        - ./backup/transfer:/nakisa/backup
-        - ./idocs/idocs:/nakisa/idocs
+        - ./bnr-data:/nakisa/backup
+        - ./idocs-data:/nakisa/idocs
         - ./redis:/nakisa/redis
         # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
@@ -50,7 +50,7 @@ services:
     image: mysql:5.7
     # must figure out a way to set memory allocation for mySQL like we do for ES and Hanelly
     volumes:
-        - ./mysql:/var/lib/mysql
+        - ./mysql-data:/var/lib/mysql
     # need to get rid of password in the clear!!! 
     environment:
         MYSQL_ROOT_PASSWORD: hanelly
@@ -84,8 +84,8 @@ services:
     ports:
       - "10002:10002"
     volumes:
-        - ./idocs/idocs:/data
-        - ./idocs/logs:/idoc-listener/logs
+        - ./idocs-data:/data
+        - ./idocs-logs:/idoc-listener/logs
     environment:
         nak.app.url: "http://hanelly:8080/hanelly/app"
         nak.volume.path.idoc: "/data"
@@ -95,9 +95,9 @@ services:
     ports:
       - "10001:10001"
     volumes:
-        - ./backup/transfer:/nakisa/backup
-        - ./backup/logs:/nakisa-backup/logs
-        - ./backup/storage:/nakisa/storage/fakeStorage
+        - ./bnr-data:/nakisa/backup
+        - ./bnr-logs:/nakisa-backup/logs
+        - ./bnr-storage:/nakisa/storage/fakeStorage
     environment:
         nak.app.name: "hanelly"
         nak.app.image: "3.0.0-snapshot"
@@ -125,7 +125,7 @@ services:
     ports:
       - "10000:10000"
     volumes:
-        - ./queue/logs:/nakisa-queue/logs
+        - ./tm-logs:/nakisa-queue/logs
     environment:
         nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
         nak.authentication.token: "NakisaInternal"
