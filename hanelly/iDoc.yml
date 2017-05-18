@@ -1,0 +1,74 @@
+version: '2'
+services:
+  elasticsearch1:
+    image: elasticsearch:5.2.0
+    hostname: es1
+    environment:
+      ES_JAVA_OPTS: "-Xms${MEMORY}g -Xmx${MEMORY}g"
+    command: elasticsearch -Enetwork.host=es1 -Etransport.host=es1 -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+    volumes:
+        - ./es:/usr/share/elasticsearch/data
+    networks:
+      nakisa:
+        aliases:
+          - es1
+  hanelly1:
+    image: devops.hq1.nakisa.net/hanelly:${TAG}
+    hostname: hanelly1
+    ports:
+      - "${EXTERNAL_PORT}:8080"
+    volumes:
+        - ./idocs/idocs:/nakisa/idocs
+    depends_on:
+      - elasticsearch1
+      - hanelly-db
+      - redis1
+    networks:
+      nakisa:
+        aliases:
+          - hanelly1
+    environment:
+        CATALINA_OPTS: "-Dredis.host=redis1 -Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly1 -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.volume.path.idoc=/nakisa/idocs -Xms${MEMORY}g -Xmx${MEMORY}g"
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+    networks:
+      nakisa:
+        aliases:
+          - hanelly-db
+  redis1:
+    image: redis:3.2.8
+    volumes:
+        - ./redis:/data
+    networks:
+      nakisa:
+        aliases:
+          - redis1
+  idoclistener1:
+    image: devops.hq1.nakisa.net/tools:idoc-listener-1.0.0-snapshot
+    hostname: idoclistener1
+    ports:
+      - "10002:10002"
+    volumes:
+        - ./idocs/idocs:/data
+        - ./idocs/logs:/idoc-listener/logs
+    depends_on:
+      - hanelly1
+    environment:
+        nak.app.url: "http://hanelly1:8080/hanelly/app"
+        nak.volume.path.idoc: "/data"
+        nak.authentication.token: "NakisaInternal"
+    networks:
+      nakisa:
+        aliases:
+          - idl1
+
+networks:
+  nakisa:
+    driver: bridge

@@ -18,13 +18,13 @@ services:
         # docker copies the contents of each host directory over to the container directory and overwrites it
         - ./es-data:/usr/share/elasticsearch/data
         - ./es-logs:/usr/share/elasticsearch/logs
-        # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
   hanelly:
     image: nakisa/hanelly:3.0.0-snapshot
     volumes:
         - ./agent:/usr/local/tomcat/agent/
-        # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
     depends_on:
       - elasticsearch

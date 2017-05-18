@@ -23,20 +23,18 @@ services:
     # https://asdqwe.net/blog/solutions-504-gateway-timeout-nginx/    
     command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"
   hanelly:
-    image: nakisa/hanelly:3.0.0-snapshot
+    image: nakisa/hanelly:3.0.0-rc1-snapshot
     depends_on:
       - hanelly-db
       - redis
       - elasticsearch
-      - backupmanager
-      - taskmanager
     volumes:
         - ./agent:/usr/local/tomcat/agent/
-        - ./bnr-data:/nakisa/backup
         - ./idocs-data:/nakisa/idocs
-        - ./redis-data:/nakisa/redis
-        # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
+    ports:
+      - "8080:8080"
     environment:
         nak.authentication.token: "NakisaInternal"
         nak.queue.url: "http://taskmanager:10000/queue-manager"
@@ -45,7 +43,7 @@ services:
         nak.volume.path.redis: "/nakisa/redis"
         nak.volume.path.backup: "/nakisa/backup"
         JAVA_OPTS: "-Dfile.encoding='UTF-8'"
-        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dfile.encoding='UTF-8' -Xms2g -Xmx2g"
+        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.volume.path.idoc=/nakisa/idocs -Dfile.encoding='UTF-8' -Xms2g -Xmx2g"
   hanelly-db:
     image: mysql:5.7
     # must figure out a way to set memory allocation for mySQL like we do for ES and Hanelly
@@ -69,7 +67,7 @@ services:
         # docker copies the contents of each host directory over to the container directory and overwrites it
         - ./es-data:/usr/share/elasticsearch/data
         - ./es-logs:/usr/share/elasticsearch/logs
-        # the following volume would is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
@@ -78,7 +76,7 @@ services:
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
   idoclistener:
     # need a tagged image at CR
-    image: nakisa/tools:idoc-listener
+    image: nakisa/tools:idoc-listener-1.0.0-snapshot
     depends_on:
       - hanelly
     ports:
@@ -89,45 +87,6 @@ services:
     environment:
         nak.app.url: "http://hanelly:8080/hanelly/app"
         nak.volume.path.idoc: "/data"
-        nak.authentication.token: "NakisaInternal"
-  backupmanager:
-    image: nakisa/tools:backup-management
-    ports:
-      - "10001:10001"
-    volumes:
-        - ./bnr-data:/nakisa/backup
-        - ./bnr-logs:/nakisa-backup/logs
-        - ./bnr-storage:/nakisa/storage/fakeStorage
-    environment:
-        nak.app.name: "hanelly"
-        nak.app.image: "3.0.0-snapshot"
-        nak.app.service.url: "http://hanelly:8080/hanelly/app/services/BackupRecoveryService/backup"
-        nak.authentication.token: "NakisaInternal"
-        nak.volume.path.backup: "/nakisa/backup"
-        nak.app.storage.external: "/nakisa/storage"
-        aws.accesskey: "change to AWS account access key"
-        aws.secretkey: "change to AWS account secret key"
-        aws.bucket: "nakisa-dev-br-ca-central-1"
-        aws.customer: "testCustomer2"
-        aws.region: "ca-central-1"
-        aws.installation: "testInstallation2"
-        aws.availabilityzone: "nozone"
-        aws.vpcnetwork: "novpc"
-        aws.customernetwork: "nonetwork"
-        aws.subnettype: "nosubnet"
-        nak.default.backup.schedule.cron: "0 0 0 1/1 * ? *"
-        nak.default.backup.sons.count: "7"
-        nak.default.backup.fathers.count: "4"
-        nak.default.backup.grandfathers.count: "13"
-        nak.default.backup.local.storage: "true"
-  taskmanager:
-    image: nakisa/tools:task-manager
-    ports:
-      - "10000:10000"
-    volumes:
-        - ./tm-logs:/nakisa-queue/logs
-    environment:
-        nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
         nak.authentication.token: "NakisaInternal"
   cadvisor:
     image: google/cadvisor:v0.25.0
