@@ -17,7 +17,6 @@ services:
     volumes:
       - ./nginx/:/etc/nginx/conf.d/external/
     ports:
-      - "80:80"
       - "443:443"
     # possibly need 504 GW timeout config improvements:
     # https://asdqwe.net/blog/solutions-504-gateway-timeout-nginx/    
@@ -33,8 +32,6 @@ services:
         - ./idocs-data:/nakisa/idocs
         # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
-    ports:
-      - "8080:8080"
     environment:
         JAVA_OPTS: "-Dfile.encoding='UTF-8'"
         CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.volume.path.idoc=/nakisa/idocs -Dfile.encoding='UTF-8' -Xms2g -Xmx2g"
