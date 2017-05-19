@@ -5,8 +5,11 @@ sudo mkdir /nakisa/app
 sudo mkdir /nakisa/docker-data
 sudo ln -s /nakisa/docker-data /var/lib/docker
 
+# upgrade current packages to latest
+sudo apt-get update -y
+#sudo apt-get dist-upgrade -y
+
 # install Linux tools and dependencies
-sudo apt-get update
 sudo apt-get install -y linux-aws linux-headers-aws linux-image-aws
 sudo apt-get install -y --no-install-recommends \
     linux-image-$(uname -r) \
@@ -15,8 +18,8 @@ sudo apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     unzip \
-	htop \
-	smem \
+    htop \
+    smem \
     software-properties-common
  
 curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
