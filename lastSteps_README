@@ -3,11 +3,23 @@ sudo mv ~/cert.key /nakisa/app/hanelly/nginx
  
 # modify docker-compose.yml file if you need to change memory allocation for Elastic Search or Hanelly (defaults to 2GB each)
 # look for  ES_JAVA_OPTS: "-Xms4g -Xmx4g" and CATALINA_OPTS: "-Xms4g -Xmx4g" and change the 4g to xg as needed for Elastic Search and TomCat respectively.
-sudo nano /nakisa/app/hanelly/docker-compose.yml
+sudo nano /nakisa/app/hanelly/ds-Nginx.yml
  
-# launch the docker containers
+# DO NOT USE: launch the docker containers (using deprecated docker-compose method)
 # to compose up without NGNIX or HTTPS/SSL support replace last command below with: sudo docker-compose -f dc-noNginx.yml up -d
-sudo docker login -u devopsnakisa -p nakisa.1; cd /nakisa/app/hanelly; sudo docker-compose up -d
+# sudo docker login -u devopsnakisa -p nakisa.1; cd /nakisa/app/hanelly; sudo docker-compose up -d
+
+# launch the docker containers using latest stack method with NGINX, use other docker stack .yml files to start without NGINX or NGINX HTTP only mode
+sudo docker login -u devopsnakisa -p nakisa.1; cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Nginx.yml NHAN
  
-# confirm containers have launched
+# confirm all containers have launched
 sudo docker ps
+
+# Other useful commands
+sudo docker stack services NHAN
+sudo docker stack ps NHAN
+sudo docker exec -it <container stack qualified name> NHAN
+sudo docker stack rm NHAN
+sudo docker logs <container name> -f
+sudo docker volumes ls
+

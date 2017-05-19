@@ -5,11 +5,11 @@ sudo parted -s /dev/xvdb mklabel gpt
 sudo parted -s /dev/xvdc mklabel gpt
  
 # --align optimal: http://unix.stackexchange.com/a/49274/16704
-# make xvdb 100% (of 16GB) for /swap, xvdc1 16GB for /tmp
+# make xvdb 100% (of 16GB) for /swap, 
 sudo parted -s --align optimal /dev/xvdb mkpart primary linux-swap 0% 100%
-sudo parted -s --align optimal /dev/xvdc mkpart primary ext4 0% 16GB
  
-# make xvdc2 the rest of available application disk space for /nakisa
+# make xvdc1 16GB for /tmp and xvdc2 the rest of available application disk space for /nakisa
+sudo parted -s --align optimal /dev/xvdc mkpart primary ext4 0% 16GB
 sudo parted -s --align optimal /dev/xvdc mkpart primary ext4 16GB 100%
  
 # ext4 them all
@@ -18,7 +18,7 @@ sudo swapon /dev/xvdb1
 sudo mkfs.ext4 /dev/xvdc1
 sudo mkfs.ext4 /dev/xvdc2
  
-# make/nakisa directories
+# make /nakisa directory
 sudo mkdir /nakisa
 
 # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/3/html/System_Administration_Guide/s1-swap-adding.html

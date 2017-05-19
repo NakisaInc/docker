@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  nginx:  
+    image: nginx
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/external/
+    ports:
+      - "80:80"
+      - "443:443"
+    command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"

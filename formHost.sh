@@ -1,28 +1,27 @@
 #!/bin/bash
 
 # to get this installation script:
-# wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh | sudo bash
+# wget -O - https://raw.githubusercontent.com/NakisaInc/docker/master/formHost.sh | sudo bash
 
 # install git
 sudo apt-get install -y --no-install-recommends git
  
-# create /nakisaInstaller installer directory and download the installer
+# create /nakisaInstaller application directory and download the installer
 sudo mkdir /nakisaInstaller; cd /nakisaInstaller
-sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
+sudo git clone -b Hanelly-3.0.0-CR https://github.com/NakisaInc/docker.git .
 
-# partition disk
+# partition disk (applicaton agnostic)
 sudo bash ./1-partitionDisk.sh
  
-# configure host
+# configure host (applicaton agnostic)
 sudo bash ./2-configureHost.sh
 
-# install docker service
+# install docker service (applicaton agnostic)
 sudo bash ./3-installDocker.sh
 
-# install Nakisa application docker structure and remove /nakisaInstaller installer directory
-cd /nakisa/app
-sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
-sudo rm -rf /nakisaInstaller
+# install applicaton specific docker structure and images
+sudo bash ./4-installApplication.sh
 
 # reboot system
+sudo rm -rf /nakisaInstaller
 sudo reboot
