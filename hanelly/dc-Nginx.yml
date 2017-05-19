@@ -15,7 +15,7 @@ services:
         aliases:
           - es1
   hanelly:
-    image: nakisa/hanelly:3.0.0-snapshot
+    image: nakisa/hanelly:3.0.0
     restart: always
     hostname: hanelly
     volumes:
@@ -53,6 +53,24 @@ services:
       nakisa:
         aliases:
           - redis1
+  idoclistener:
+    # need a tagged image at CR
+    image: nakisa/tools:idoc-listener-1.0.0
+    depends_on:
+      - hanelly
+    ports:
+      - "10002:10002"
+    volumes:
+        - ./idocs-data:/data
+        - ./idocs-logs:/idoc-listener/logs
+    environment:
+        nak.app.url: "http://hanelly:8080/hanelly/app"
+        nak.volume.path.idoc: "/data"
+        nak.authentication.token: "NakisaInternal"
+    networks:
+      nakisa:
+        aliases:
+          - idoclistener
   nginx:  
     image: nginx:1.11.5
     restart: always

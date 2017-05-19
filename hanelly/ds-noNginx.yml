@@ -10,7 +10,7 @@ volumes:
 
 services:
   hanelly:
-    image: nakisa/hanelly:3.0.0-rc1-snapshot
+    image: nakisa/hanelly:3.0.0
     depends_on:
       - hanelly-db
       - redis
@@ -58,7 +58,7 @@ services:
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
   idoclistener:
     # need a tagged image at CR
-    image: nakisa/tools:idoc-listener-1.0.0-snapshot
+    image: nakisa/tools:idoc-listener-1.0.0
     depends_on:
       - hanelly
     ports:
