@@ -3,7 +3,7 @@
 # install Nakisa application docker structure
 # add more directories for component logs and JVM working dirs as they are defined/found
 cd /nakisa/app
-sudo git clone -b Hanelly-3.0.0-CR https://github.com/NakisaInc/docker.git .
+sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
 cd /nakisa/app/hanelly
 sudo mkdir mysql-data
 sudo mkdir redis-data; sudo mkdir redis-logs;
