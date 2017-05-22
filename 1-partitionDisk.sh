@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# update & upgrade OS
-# force no prompt https://github.com/shalecraig/vagrant-pebble/blob/master/sources/pebble_vm_provision_as_root.sh
+# update & upgrade OS (non-interactive)
+# https://github.com/shalecraig/vagrant-pebble/blob/master/sources/pebble_vm_provision_as_root.sh
 sudo apt-get -y update
 sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes --option Dpkg::Options::="--force-confdef" --option Dpkg::Options::="--force-confold" upgrade
 sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes --option Dpkg::Options::="--force-confdef" --option Dpkg::Options::="--force-confold" dist-upgrade
