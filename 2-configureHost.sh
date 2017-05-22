@@ -30,6 +30,8 @@ echo "" >> ~/appendedFile
 echo "# Set ceiling for number of open files to maximum allowed by system" >> ~/appendedFile
 echo "fs.file-max = 65536" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
+# set for running os just in case
+sudo sysctl -w fs.file-max = 65536
 
 # Increase Elastic Search virtual memory
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
@@ -38,3 +40,5 @@ echo "" >> ~/appendedFile
 echo "# Set Elastic Search virtual memory and preserve setting over reboot" >> ~/appendedFile
 echo "vm.max_map_count = 262144" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/sysctl.conf
+# set for running os just in case
+sudo sysctl -w vm.max_map_count=262144
