@@ -1,0 +1,126 @@
+version: '2'
+services:
+  elasticsearch1:
+    image: elasticsearch:5.2.0
+    hostname: es1
+    environment:
+      ES_JAVA_OPTS: "-Xms${MEMORY}g -Xmx${MEMORY}g"
+    command: elasticsearch -Enetwork.host=es1 -Etransport.host=es1 -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=1000000
+    volumes:
+        - ./es:/usr/share/elasticsearch/data
+    networks:
+      nakisa:
+        aliases:
+          - es1
+  hanelly1:
+    image: devops.hq1.nakisa.net/hanelly:${TAG}
+    hostname: hanelly1
+    ports:
+      - "${EXTERNAL_PORT}:8080"
+    volumes:
+        - ./backup/transfer:/nakisa/backup
+        - ./idocs/idocs:/nakisa/idocs
+        - ./redis:/nakisa/redis
+    depends_on:
+      - elasticsearch1
+      - hanelly-db
+      - redis1
+      - taskmanager1
+      - backupmanager1
+    networks:
+      nakisa:
+        aliases:
+          - hanelly1
+    environment:
+        CATALINA_OPTS: "-Dredis.host=redis1 -Ddynamic.embedded=false -Ddynamic.host=es1 -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly1 -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=${TOKEN} -Dnak.queue.url=http://taskmanager1:10000/queue-manager -Dnak.backup.app.url=http://backupmanager1:10001/backup-manager -Dnak.volume.path.idoc=/nakisa/idocs -Dnak.volume.path.redis=/nakisa/redis -Dnak.volume.path.backup=/nakisa/backup -Xms${MEMORY}g -Xmx${MEMORY}g"
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+    networks:
+      nakisa:
+        aliases:
+          - hanelly-db
+  redis1:
+    image: redis:3.2.8
+    volumes:
+        - ./redis:/data
+    networks:
+      nakisa:
+        aliases:
+          - redis1
+  taskmanager1:
+    image: devops.hq1.nakisa.net/tools:task-manager
+    hostname: taskmanager1
+    ports:
+      - "10000:10000"
+    volumes:
+        - ./queue/logs:/nakisa-queue/logs
+    environment:
+        nakisa.application.service.url: "http://hanelly1:8080/hanelly/app/services/QueueService/"
+        nak.authentication.token: "${TOKEN}"
+    networks:
+      nakisa:
+        aliases:
+          - tm1
+  idoclistener1:
+    image: devops.hq1.nakisa.net/tools:idoc-listener
+    hostname: idoclistener1
+    ports:
+      - "10002:10002"
+    volumes:
+        - ./idocs/idocs:/data
+        - ./idocs/logs:/idoc-listener/logs
+    depends_on:
+      - hanelly1
+    environment:
+        nak.app.url: "http://hanelly1:8080/hanelly/app"
+        nak.volume.path.idoc: "/data"
+        nak.authentication.token: "${TOKEN}"
+    networks:
+      nakisa:
+        aliases:
+          - idl1
+  backupmanager1:
+    image: devops.hq1.nakisa.net/tools:backup-management
+    hostname: backupmanager1
+    ports:
+      - "10001:10001"
+    volumes:
+        - ./backup/transfer:/nakisa/backup
+        - ./backup/logs:/nakisa-backup/logs
+        - ./backup/storage:/nakisa/storage/fakeStorage
+    environment:
+        nak.app.name: "hanelly"
+        nak.app.image: "${IMAGE}"
+        nak.app.service.url: "http://hanelly1:8080/hanelly/app/services/BackupRecoveryService/backup"
+        nak.authentication.token: "${TOKEN}"
+        nak.volume.path.backup: "/nakisa/backup"
+        nak.app.storage.external: "/nakisa/storage"
+        aws.accesskey: "${AWS_ACCESS_KEY}"
+        aws.secretkey: "${AWS_SECRET_KEY}"
+        aws.bucket: "${AWS_BUCKET}"
+        aws.customer: "${AWS_CUSTOMER}"
+        aws.region: "${AWS_REGION}"
+        aws.installation: "${AWS_INSALLATION}"
+        aws.availabilityzone: "${AWS_AVL_ZONE}"
+        aws.vpcnetwork: "${AWS_VPC_NETWORK}"
+        aws.customernetwork: "${AWS_CUSTOMER_NETWORK}"
+        aws.subnettype: "${AWS_SUBNET_TYPE}"
+        nak.default.backup.schedule.cron: "0 0 0 1/1 * ? *"
+        nak.default.backup.sons.count: "7"
+        nak.default.backup.fathers.count: "4"
+        nak.default.backup.grandfathers.count: "13"
+        nak.default.backup.local.storage: "false"
+    networks:
+      nakisa:
+        aliases:
+          - brm1
+networks:
+  nakisa:
+    driver: bridge
