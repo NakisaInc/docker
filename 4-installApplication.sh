@@ -9,11 +9,12 @@ sudo mkdir mysql-data
 sudo mkdir redis-data; sudo mkdir redis-logs;
 sudo mkdir es-data;    sudo mkdir es-logs;
 sudo mkdir idocs-data; sudo mkdir idocs-logs;
-sudo mkdir bnr-data;   sudo mkdir bnr-logs;   sudo mkdir bnr-storage;
+# check with Aizaz temp etc.
+sudo mkdir br-data;    sudo mkdir br-logs;    sudo mkdir br-storage;
 sudo mkdir tm-logs
 sudo mkdir grafana
 
-# download all application specific docker images
+# download application specific docker images - common for cloud and on-prem
 sudo docker login -u devopsnakisa -p nakisa.1
 sudo docker swarm init
 sudo docker pull nginx:1.11.5
@@ -24,6 +25,8 @@ sudo docker pull elasticsearch:5.2.0
 sudo docker pull nakisa/tools:idoc-listener-1.0.0
 sudo docker pull nakisa/tools:backup-management
 sudo docker pull nakisa/tools:task-manager
+
+# download application specific docker images - cloud only (monitorinng)
 sudo docker pull google/cadvisor:v0.25.0
 sudo docker pull prom/mysqld-exporter:v0.10.0
 sudo docker pull prom/prometheus:v1.6.0

@@ -4,7 +4,7 @@
 # https://underyx.me/2015/05/18/raising-the-maximum-number-of-file-descriptors
 cat /etc/security/limits.conf > ~/appendedFile
 echo "" >> ~/appendedFile
-echo "# Set ceiling for maximum nunmber of open files for root and all other users" >> ~/appendedFile
+echo "# Set ceiling for maximum number of open files for root and all other users" >> ~/appendedFile
 echo "# cat /proc/sys/fs/file-max returns the max possible ceiling for the system" >> ~/appendedFile
 echo "# although if you use too high a number it will ignore it - not sure why" >> ~/appendedFile
 echo "*    soft nofile 65536" >> ~/appendedFile
