@@ -7,10 +7,11 @@ sudo nano /nakisa/app/hanelly/ds-Nginx.yml
  
 # DO NOT USE: launch the docker containers (using deprecated docker-compose method)
 # to compose up without NGNIX or HTTPS/SSL support replace last command below with: sudo docker-compose -f dc-noNginx.yml up -d
-# sudo docker login -u devopsnakisa -p nakisa.1; cd /nakisa/app/hanelly; sudo docker-compose up -d
+# sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here; cd /nakisa/app/hanelly; sudo docker-compose up -d
 
 # launch the docker containers using latest stack method with NGINX, use other docker stack .yml files to start without NGINX or NGINX HTTP only mode
-sudo docker login -u devopsnakisa -p nakisa.1; cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Nginx.yml NHAN
+# sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here;
+cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Nginx.yml NHAN
  
 # confirm all containers have launched
 sudo docker ps
