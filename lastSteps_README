@@ -1,6 +1,7 @@
-# wait until system reboots, log in again and ftp the *.nakisa.cloud private key into ~/ and move it into the /nakisa/hanelly/ssl/nginx directory
-sudo mv ~/cert.key /nakisa/app/hanelly/nginx
- 
+# wait until system reboots, log in again and ftp the *.nakisa.cloud private key into ~/ and move it into the /nakisa/app/hanelly/apache-ssl directory
+sudo mv ~/cert.key /nakisa/app/hanelly/apache-ssl
+sudo mv ~/cert.crt /nakisa/app/hanelly/apache-ssl
+
 # modify ds-Nginx.yml file if you need to change memory allocation for Elastic Search or Hanelly (defaults to 2GB each)
 # look for  ES_JAVA_OPTS: "-Xms2g -Xmx2g" and CATALINA_OPTS: "-Xms2g -Xmx2g" and change the 4g to xg as needed for Elastic Search and TomCat respectively.
 sudo nano /nakisa/app/hanelly/ds-Nginx.yml
