@@ -17,7 +17,7 @@ services:
       - ./apache-data:/etc/apache2/sites-enabled
       - ./apache-ssl:/etc/apache2/ssl
       - ./apache-log:/var/log/apache2
-#      - ./apache-shib:/etc/shibboleth
+      - ./apache-shib:/usr/local/shibboleth
     ports:
       - "80:80"
       - "443:443"
