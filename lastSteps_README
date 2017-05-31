@@ -1,19 +1,29 @@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# START: DEPRECATED IN FAVOR OF APACHE 2.4 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	# modify ds-Nginx.yml file if you need to change memory allocation for Elastic Search or Hanelly (defaults to 2GB each)
+	# look for  ES_JAVA_OPTS: "-Xms2g -Xmx2g" and CATALINA_OPTS: "-Xms2g -Xmx2g" and change the 4g to xg as needed for Elastic Search and TomCat respectively.
+	#sudo nano /nakisa/app/hanelly/ds-Nginx.yml
+	 
+	# DO NOT USE: launch the docker containers (using deprecated docker-compose method)
+	# to compose up without NGNIX or HTTPS/SSL support replace last command below with: sudo docker-compose -f dc-noNginx.yml up -d
+	# sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here; cd /nakisa/app/hanelly; sudo docker-compose up -d
+
+	# launch the docker containers using latest stack method with NGINX, use other docker stack .yml files to start without NGINX or NGINX HTTP only mode
+	#sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here; 
+	#cd /nakisa/app/hanelly; 
+	#sudo docker stack deploy -c ds-Nginx.yml NHAN
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# END: DEPRECATED IN FAVOR OF APACHE 2.4 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
 # wait until system reboots, log in again and ftp the *.nakisa.cloud private key into ~/ and move it into the /nakisa/app/hanelly/apache-ssl directory
 sudo mv ~/cert.key /nakisa/app/hanelly/apache-ssl
 sudo mv ~/cert.crt /nakisa/app/hanelly/apache-ssl
 
-# modify ds-Nginx.yml file if you need to change memory allocation for Elastic Search or Hanelly (defaults to 2GB each)
-# look for  ES_JAVA_OPTS: "-Xms2g -Xmx2g" and CATALINA_OPTS: "-Xms2g -Xmx2g" and change the 4g to xg as needed for Elastic Search and TomCat respectively.
-sudo nano /nakisa/app/hanelly/ds-Nginx.yml
- 
-# DO NOT USE: launch the docker containers (using deprecated docker-compose method)
-# to compose up without NGNIX or HTTPS/SSL support replace last command below with: sudo docker-compose -f dc-noNginx.yml up -d
-# sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here; cd /nakisa/app/hanelly; sudo docker-compose up -d
-
-# launch the docker containers using latest stack method with NGINX, use other docker stack .yml files to start without NGINX or NGINX HTTP only mode
-#sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here; 
 cd /nakisa/app/hanelly; 
-sudo docker stack deploy -c ds-Nginx.yml NHAN
+sudo docker stack deploy -c ds-Apache.yml NHAN
  
 # confirm all containers have launched
 sudo docker ps
