@@ -23,7 +23,7 @@ services:
       - "443:443"
 
   hanelly:
-    image: nakisa/hanelly:3.0.0
+    image: nakisa/hanelly:3.0.1-snapshot
     depends_on:
       - hanelly-db
       - redis
@@ -72,7 +72,7 @@ services:
 
   idoclistener:
     # need a tagged image at CR
-    image: nakisa/tools:idoc-listener-1.0.0
+    image: nakisa/tools:idoc-listener-1.1.0-snapshot
     depends_on:
       - hanelly
     ports:
