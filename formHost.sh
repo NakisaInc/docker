@@ -19,9 +19,11 @@ sudo bash ./2-configureHost.sh
 # install docker service (applicaton agnostic)
 sudo bash ./3-installDocker.sh
 
-# install applicaton specific docker structure and images
-sudo bash ./4-installApplication.sh
+# provide next steps to user
+echo '# log into docker'
+echo 'sudo docker login -u <docker-userid> -p <docker-password>'
+echo ''
+echo '# install applicaton specific docker structure and images - will perform reboot when done'
+echo 'sudo bash ./installApplication.sh'
 
-# reboot system
-sudo rm -rf /nakisaInstaller
-sudo reboot
+
