@@ -5,12 +5,8 @@ sudo mv ~/cert.key /nakisa/app/hanelly/nginx
 # look for  ES_JAVA_OPTS: "-Xms2g -Xmx2g" and CATALINA_OPTS: "-Xms2g -Xmx2g" and change the 4g to xg as needed for Elastic Search and TomCat respectively.
 sudo nano /nakisa/app/hanelly/ds-Nginx.yml
  
-# DO NOT USE: launch the docker containers (using deprecated docker-compose method)
-# to compose up without NGNIX or HTTPS/SSL support replace last command below with: sudo docker-compose -f dc-noNginx.yml up -d
-# sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here; cd /nakisa/app/hanelly; sudo docker-compose up -d
-
 # launch the docker containers using latest stack method with NGINX, use other docker stack .yml files to start without NGINX or NGINX HTTP only mode
-# sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here;
+sudo docker login -u <insert-docker-userid-here> -p <insert-docker-pw-here>
 cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Nginx.yml NHAN
  
 # confirm all containers have launched

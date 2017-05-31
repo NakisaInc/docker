@@ -15,10 +15,6 @@ sudo mkdir tm-logs
 sudo mkdir grafana
 
 # download application specific docker images - common for cloud and on-prem
-
-# docekr login required
-# sudo docker login -u insert-docker-userid-here -p insert-docker-pw-here
-
 sudo docker swarm init
 sudo docker pull nginx:1.11.5
 sudo docker pull nakisa/hanelly:3.0.0
