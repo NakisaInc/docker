@@ -21,9 +21,9 @@ sudo mkdir grafana
 sudo cp -rn apache/* apache-data; sudo rm -rf apache
 
 # download all application specific docker images
-#sudo docker pull nginx:1.11.5
 sudo docker swarm init
 sudo docker pull nakisa/apache:2.4-shib
+sudo docker pull nginx:1.11.5
 sudo docker pull nakisa/hanelly:3.0.1-snapshot
 sudo docker pull mysql:5.7
 sudo docker pull redis:3.2.8
