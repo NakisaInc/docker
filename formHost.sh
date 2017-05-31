@@ -24,6 +24,6 @@ echo '# log into docker'
 echo 'sudo docker login -u <docker-userid> -p <docker-password>'
 echo ''
 echo '# install applicaton specific docker structure and images - will perform reboot when done'
-echo 'sudo bash ./installApplication.sh'
+echo 'sudo bash /nakisaInstaller/installApplication.sh'
 
 

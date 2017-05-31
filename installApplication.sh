@@ -36,6 +36,9 @@ sudo docker pull prom/mysqld-exporter:v0.10.0
 sudo docker pull prom/prometheus:v1.6.0
 sudo docker pull grafana/grafana:4.2.0
 
+echo '# when reboot completes complete last steps documented in'
+echo 'cd /nakisa/app; more lastSteps_README'
+
 # reboot system
 sudo rm -rf /nakisaInstaller
 sudo reboot
