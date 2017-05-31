@@ -15,6 +15,8 @@ sudo mkdir bnr-data;   sudo mkdir bnr-logs;   sudo mkdir bnr-storage;
 sudo mkdir tm-logs
 sudo mkdir grafana
 
+sudo cp -rn apache/* apache-data; sudo rm -rf apache
+
 # download all application specific docker images
 
 # login to dockerhub required
