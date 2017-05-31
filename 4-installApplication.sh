@@ -18,10 +18,6 @@ sudo mkdir grafana
 sudo cp -rn apache/* apache-data; sudo rm -rf apache
 
 # download all application specific docker images
-
-# login to dockerhub required
-# sudo docker login -u insert-docker-user-id-here -p insert-docker-pw-here
-
 sudo docker swarm init
 sudo docker pull nakisa/apache:2.4-shib
 #sudo docker pull nginx:1.11.5
