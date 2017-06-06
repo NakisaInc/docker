@@ -13,9 +13,9 @@ services:
     image: nakisa/apache:2.4-shib
     depends_on:
       - hanelly
-    volumes: 
+    volumes:
       - ./apache-ssl:/etc/apache2/ssl
-      - ./apache-data:/etc/apache2/sites-enabled
+      - ./apache-conf:/etc/apache2/sites-enabled
       - ./apache-logs:/var/log/apache2
       - ./apache-shib:/usr/local/shibboleth
     ports:
@@ -105,4 +105,3 @@ services:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"
       GF_SERVER_DOMAIN: "grafana"
     entrypoint: bash /var/lib/nakisa/setup.sh
-
