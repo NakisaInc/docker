@@ -23,7 +23,7 @@ services:
       - "443:443"
 
   hanelly:
-    image: nakisa/hanelly:${HANELLY_IMAGE_TAG}
+    image: nakisa/hanelly:${HANELLY_IMG_TAG}
     depends_on:
       - hanelly-db
       - redis
