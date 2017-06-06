@@ -1,0 +1,107 @@
+version: '3'
+
+# Must declare a named volume which is mapped to Hanelly container directory
+# this is because the container directory is not empty and we don't want the host directory to overwrite it.
+# named volumes must be removed manually or they will stick around after 'docker stack rm'
+volumes:
+  hanelly-data:
+  # need more here for JVM working dirs for all containers that have them...
+  # but need to also understand named volume cleanup very well before we go creating tons of named volumes that stick around
+
+services:
+  apache-shib:
+    image: nakisa/apache:2.4-shib
+    depends_on:
+      - hanelly
+    volumes:
+      - ./apache-ssl:/etc/apache2/ssl
+      - ./apache-conf:/etc/apache2/sites-enabled
+      - ./apache-logs:/var/log/apache2
+      - ./apache-shib:/usr/local/shibboleth
+    ports:
+      - "80:80"
+      - "443:443"
+
+  hanelly:
+    image: nakisa/hanelly:${HANELLY_IMAGE_TAG}
+    depends_on:
+      - hanelly-db
+      - redis
+      - elasticsearch
+    volumes:
+        - ./agent:/usr/local/tomcat/agent/
+        - ./idocs-data:/nakisa/idocs
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        - hanelly-data:/usr/local/tomcat/webapps/hanelly
+    environment:
+        JAVA_OPTS: "-Dfile.encoding='UTF-8'"
+        CATALINA_OPTS: "-javaagent:/usr/local/tomcat/agent/jmx_prometheus_javaagent-0.8.jar=4000:/usr/local/tomcat/agent/tomcat.yml -Dredis.host=redis -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.volume.path.idoc=/nakisa/idocs -Dnak.idoc.app.url=http://idoclistener1:10002/idoc-listener -Dfile.encoding='UTF-8' ${HANELLY_MEM_ALLOC}"
+
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - ./mysql-data:/var/lib/mysql
+    # parametrize password in the clear
+    environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  elasticsearch:
+    image: elasticsearch:5.2.0
+    volumes:
+        # docker copies the contents of each host directory over to the container directory and overwrites it
+        - ./es-data:/usr/share/elasticsearch/data
+        - ./es-logs:/usr/share/elasticsearch/logs
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
+    environment:
+      ES_JAVA_OPTS: "${ES_MEM_ALLOC}"
+    # need to disable swap for ES as per: but seems to crash ES https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+    # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
+
+  idoclistener:
+    image: nakisa/tools:${IDOC_IMG_TAG}
+    depends_on:
+      - hanelly
+    ports:
+      - "10002:10002"
+    volumes:
+        - ./idocs-data:/data
+        - ./idocs-logs:/idoc-listener/logs
+    environment:
+        nak.app.url: "http://hanelly:8080/hanelly/app"
+        nak.volume.path.idoc: "/data"
+        nak.authentication.token: "NakisaInternal"
+
+  cadvisor:
+    image: google/cadvisor:v0.25.0
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+
+  db-monitor:
+    image: prom/mysqld-exporter:v0.10.0
+    depends_on:
+      - hanelly-db
+    environment:
+      DATA_SOURCE_NAME: "hanelly:${MYSQL_PASSWORD}@(hanelly-db:3306)/hanelly"
+
+  prometheus:
+    image: prom/prometheus:v1.6.0
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:4.2.0
+    volumes:
+      - ./grafana-startup:/var/lib/nakisa
+      - ./grafana:/var/lib/grafana
+    environment:
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"
+      GF_SERVER_DOMAIN: "grafana"
+    entrypoint: bash /var/lib/nakisa/setup.sh
