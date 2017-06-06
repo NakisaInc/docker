@@ -3,6 +3,8 @@
 # Must be logged into docker to execute the below
 # sudo docker login -u <docker-userid> -p <docker-password>
 
+# create required host directories to persist data and logs
+cd /nakisa/app/hanelly
 sudo mkdir apache-shib; sudo mkdir apache-logs;
 
 # download all application specific docker images

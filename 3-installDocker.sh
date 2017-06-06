@@ -24,5 +24,5 @@ sudo curl -sSL https://get.docker.com/ | sh
 # install Nakisa application docker structure
 cd /nakisa/app
 sudo git clone https://github.com/NakisaInc/docker.git .
-cd /nakisa/app/hanelly
+
 

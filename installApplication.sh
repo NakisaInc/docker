@@ -4,6 +4,7 @@
 # sudo docker login -u <docker-userid> -p <docker-password>
 
 # create required host directories to persist data and logs
+cd /nakisa/app/hanelly
 sudo mkdir apache-shib; sudo mkdir apache-logs;
 sudo mkdir mysql-data
 sudo mkdir redis-data;  sudo mkdir redis-logs;
