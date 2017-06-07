@@ -25,8 +25,8 @@
 # export NAK_APACHE_CONF="hanelly-nossl.conf"
 # export NAK_STACK_FILE="ds-demo-http.yml"
 
-# export NAK_HANELLY_MEM_ALLOC="-Xms1560m -Xmx1560m"
-# export NAK_ES_MEM_ALLOC="-Xms1560m -Xmx1560m"
+# export NAK_HANELLY_MEM_ALLOC="-Xms1536m -Xmx1536m"
+# export NAK_ES_MEM_ALLOC="-Xms1536m -Xmx1536m"
 
 # export NAK_HANELLY_IMG_TAG="3.0.1-snapshot"
 # export NAK_IDOC_IMG_TAG="idoc-listener-1.1.0-snapshot"
@@ -46,8 +46,8 @@
 # export NAK_APACHE_CONF="hanelly-ssl.conf"
 # export NAK_STACK_FILE="ds-demo-https.yml"
 
-# export NAK_HANELLY_MEM_ALLOC="-Xms1560m -Xmx1560m"
-# export NAK_ES_MEM_ALLOC="-Xms1560m -Xmx1560m"
+# export NAK_HANELLY_MEM_ALLOC="-Xms1536m -Xmx1536m"
+# export NAK_ES_MEM_ALLOC="-Xms1536m -Xmx1536m"
 
 # export NAK_HANELLY_IMG_TAG="3.0.1-snapshot"
 # export NAK_IDOC_IMG_TAG="idoc-listener-1.1.0-snapshot"
