@@ -5,11 +5,6 @@ sudo mkdir /nakisa/app
 sudo mkdir /nakisa/docker-data
 sudo ln -s /nakisa/docker-data /var/lib/docker
 
-# upgrade current packages to latest
-sudo apt-get update -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes --option Dpkg::Options::="--force-confdef" --option Dpkg::Options::="--force-confold" upgrade
-sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes --option Dpkg::Options::="--force-confdef" --option Dpkg::Options::="--force-confold" dist-upgrade
-
 # install Linux tools and dependencies
 sudo apt-get install -y linux-aws linux-headers-aws linux-image-aws
 sudo apt-get install -y --no-install-recommends \
@@ -25,3 +20,9 @@ sudo apt-get install -y --no-install-recommends \
  
 # install docker services
 sudo curl -sSL https://get.docker.com/ | sh
+
+# install Nakisa application docker structure
+cd /nakisa/app
+sudo git clone https://github.com/NakisaInc/docker.git .
+
+

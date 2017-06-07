@@ -1,13 +1,13 @@
-# wait until system reboots, log in again and ftp the *.nakisa.cloud private key into ~/ and move it into the /nakisa/hanelly/ssl/nginx directory
-sudo mv ~/cert.key /nakisa/app/hanelly/nginx
- 
-# modify ds-Nginx.yml file if you need to change memory allocation for Elastic Search or Hanelly (defaults to 2GB each)
+# if first installation then ftp the *.nakisa.cloud private key into ~/ and move it into the /nakisa/app/hanelly/apache-ssl directory
+sudo mv ~/cert.key /nakisa/app/hanelly/apache-ssl
+
+# modify ds-Apache.yml file if you need to change memory allocation for Elastic Search or Hanelly (defaults to 2GB each)
 # look for  ES_JAVA_OPTS: "-Xms2g -Xmx2g" and CATALINA_OPTS: "-Xms2g -Xmx2g" and change the 4g to xg as needed for Elastic Search and TomCat respectively.
-sudo nano /nakisa/app/hanelly/ds-Nginx.yml
- 
-# launch the docker containers using latest stack method with NGINX, use other docker stack .yml files to start without NGINX or NGINX HTTP only mode
-sudo docker login -u <insert-docker-userid-here> -p <insert-docker-pw-here>
-cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Nginx.yml NHAN
+# also modify the images instantiated to the release desired
+sudo nano /nakisa/app/hanelly/ds-Apache.yml
+
+# launch docker stack
+cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Apache.yml NHAN
  
 # confirm all containers have launched
 sudo docker ps
@@ -18,5 +18,6 @@ sudo docker stack ps NHAN
 sudo docker exec -it <container stack qualified name> NHAN
 sudo docker stack rm NHAN
 sudo docker logs <container name> -f
-sudo docker volumes ls
+sudo docker volume ls
+sudo docker volume rm NHAN_hanelly-data
 
