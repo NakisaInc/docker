@@ -3,17 +3,6 @@
 # Must be logged into docker to execute the below
 # sudo docker login -u <docker-userid> -p <docker-password>
 
-# create required host directories to persist data and logs
-cd /nakisa/app/hanelly
-sudo mkdir apache-shib; sudo mkdir apache-logs;
-sudo mkdir mysql-data
-sudo mkdir redis-data;  sudo mkdir redis-logs;
-sudo mkdir es-data;     sudo mkdir es-logs;
-sudo mkdir idocs-data;  sudo mkdir idocs-logs;
-sudo mkdir bnr-data;    sudo mkdir bnr-logs;    sudo mkdir bnr-storage;
-sudo mkdir tm-logs
-sudo mkdir grafana
-
 # download all application specific docker images
 sudo docker swarm init
 sudo docker pull nakisa/apache:2.4-shib                      # based off Apache 2.4.25

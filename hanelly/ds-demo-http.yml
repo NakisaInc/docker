@@ -10,7 +10,7 @@ volumes:
 
 services:
   apache-shib:
-    image: nakisa/apache:2.4-shib
+    image: nakisa/apache:${NAK_APACSHIB_IMG_TAG}
     depends_on:
       - hanelly
     volumes:
@@ -22,10 +22,9 @@ services:
       - "80:80"
 
   hanelly:
-    image: nakisa/hanelly:3.0.1-snapshot
+    image: nakisa/hanelly:${NAK_HANELLY_IMG_TAG}
     depends_on:
       - hanelly-db
-      - redis
       - elasticsearch
     volumes:
         - ./agent:/usr/local/tomcat/agent/
@@ -35,7 +34,7 @@ services:
 
     environment:
         JAVA_OPTS: "-Dfile.encoding='UTF-8'"
-        CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dfile.encoding='UTF-8' -Xms1560m -Xmx1560m"
+        CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dfile.encoding='UTF-8' ${NAK_HANELLY_MEM_ALLOC}"
 
   hanelly-db:
     image: mysql:5.7
@@ -43,10 +42,10 @@ services:
         - ./mysql-data:/var/lib/mysql
     # parametrize password in the clear
     environment:
-        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_ROOT_PASSWORD: ${NAK_MYSQL_ROOT_PASSWORD}
         MYSQL_DATABASE: hanelly
         MYSQL_USER: hanelly
-        MYSQL_PASSWORD: hanelly
+        MYSQL_PASSWORD: ${NAK_MYSQL_PASSWORD}
 
   elasticsearch:
     image: elasticsearch:5.2.0
@@ -57,7 +56,7 @@ services:
         # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
     environment:
-      ES_JAVA_OPTS: "-Xms1560m -Xmx1560m"
+      ES_JAVA_OPTS: "${NAK_ES_MEM_ALLOC}"
     # need to disable swap for ES as per: but seems to crash ES https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html
     command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash

@@ -1,0 +1,8 @@
+# set docker id/pw in the environment variable
+# export NAK_DOCKR_ID="<docker-login-id>"
+# export NAK_DOCKR_PW="<docker-login-pw>"
+# use sudo docker login -u ${NAK_DOCKR_ID} -p ${NAK_DOCKR_ID}
+# Note: these environment variable are session specific and would have to recreated for a new session/reboot
+echo 'set docker id/pw environment variables before proceeding'
+echo 'export NAK_DOCKR_ID="<docker-login-id>"'
+echo 'export NAK_DOCKR_PW="<docker-login-pw>"'
