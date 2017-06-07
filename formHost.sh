@@ -1,5 +1,5 @@
 #!/bin/bash
-echo 'set docker id/pw environment variables before proceeding using following'
+echo 'set docker id/pw environment variables BEFORE proceeding as following'
 echo 'export NAK_DOCKR_ID="<docker-login-id>"'
 echo 'export NAK_DOCKR_PW="<docker-login-pw>"'
 read -rsp $'Press CTL+C to abort ...\nPress any key to continnue ...\n' -n 1 key

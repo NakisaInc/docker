@@ -8,7 +8,7 @@ sudo nano /nakisa/app/hanelly/ds-Apache.yml
 
 # launch docker stack
 cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Apache.yml NHAN
- 
+
 # confirm all containers have launched
 sudo docker ps
 
@@ -19,4 +19,3 @@ sudo docker exec -it <container stack qualified name> NHAN
 sudo docker stack rm NHAN
 sudo docker logs <container name> -f
 sudo docker volumes ls
-

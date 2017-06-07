@@ -20,7 +20,7 @@ services:
       - "80:80"
       - "443:443"
     # possibly need 504 GW timeout config improvements:
-    # https://asdqwe.net/blog/solutions-504-gateway-timeout-nginx/    
+    # https://asdqwe.net/blog/solutions-504-gateway-timeout-nginx/
     command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"
   hanelly:
     image: nakisa/hanelly:3.0.1-snapshot
@@ -41,7 +41,7 @@ services:
     # must figure out a way to set memory allocation for mySQL like we do for ES and Hanelly
     volumes:
         - ./mysql-data:/var/lib/mysql
-    # need to get rid of password in the clear!!! 
+    # need to get rid of password in the clear!!!
     environment:
         MYSQL_ROOT_PASSWORD: hanelly
         MYSQL_DATABASE: hanelly
@@ -110,5 +110,3 @@ services:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"
       GF_SERVER_DOMAIN: "grafana"
     entrypoint: bash /var/lib/nakisa/setup.sh
-      
-

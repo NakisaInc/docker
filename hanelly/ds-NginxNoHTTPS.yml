@@ -38,7 +38,7 @@ services:
     # must figure out a way to set memory allocation for mySQL like we do for ES and Hanelly
     volumes:
         - ./mysql-data:/var/lib/mysql
-    # need to get rid of password in the clear!!! 
+    # need to get rid of password in the clear!!!
     environment:
         MYSQL_ROOT_PASSWORD: hanelly
         MYSQL_DATABASE: hanelly
@@ -107,5 +107,3 @@ services:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"
       GF_SERVER_DOMAIN: "grafana"
     entrypoint: bash /var/lib/nakisa/setup.sh
-      
-
