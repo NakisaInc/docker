@@ -7,7 +7,7 @@ sudo mv ~/cert.key /nakisa/app/hanelly/apache-ssl
 sudo nano /nakisa/app/hanelly/ds-Apache.yml
 
 # launch docker stack
-cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Apache.yml NHAN
+cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Apache-${NAK_RELEASE_TAG}.yml NHAN
  
 # confirm all containers have launched
 sudo docker ps

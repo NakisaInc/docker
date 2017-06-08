@@ -21,8 +21,4 @@ sudo apt-get install -y --no-install-recommends \
 # install docker services
 sudo curl -sSL https://get.docker.com/ | sh
 
-# install Nakisa application docker structure
-cd /nakisa/app
-sudo git clone https://github.com/NakisaInc/docker.git .
-
 
