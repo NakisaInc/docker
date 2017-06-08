@@ -6,6 +6,13 @@
 # persist Nakisa environemental variables across reboot
 set | grep NAK >> ~/.bashrc
 set | grep NAK >> ~/.profile
+<<<<<<< HEAD
+=======
+
+# persist Nakisa environemental variables across reboot
+set | grep NAK >> ~/.bashrc
+set | grep NAK >> ~/.profile
+>>>>>>> 450f03d036c3cf894ae730a2ec87dba344b7ee67
 
 # install git
 sudo apt-get install -y --no-install-recommends git
@@ -22,10 +29,17 @@ sudo bash /nakisaInstaller/2-configureHost.sh
 
 # install docker service (applicaton agnostic)
 sudo bash /nakisaInstaller/3-installDocker.sh
+<<<<<<< HEAD
 
 # install applicaton specific docker structure and images - will perform reboot when done
 sudo bash /nakisaInstaller/4-installApplication.sh
 
+=======
+
+# install applicaton specific docker structure and images - will perform reboot when done
+sudo bash /nakisaInstaller/4-installApplication.sh
+
+>>>>>>> 450f03d036c3cf894ae730a2ec87dba344b7ee67
 echo '    ............... ....      .......    ............  ...................... ..............     .... .......      ......................   '
 echo '   ......................   .........    ....................................................   .............      .......................  '
 echo '   ,8MNNDNNO...7NMDNNDO..     .. M?..    . +DMDMD ...... ZDNNMDI:8DDNNNNNNNNNDN:.,8DDNNNM8,.     .~8MNNNNMD~     ..+NNNNDNN=....:8NNDND...  '
