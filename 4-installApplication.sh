@@ -16,7 +16,7 @@ sudo mkdir tm-logs
 sudo mkdir grafana
 
 # log into docker
-sudo docker login -u $NAK_DOCKER_ID -p $NAK_DOCKER_PW
+sudo docker login -u ${NAK_DOCKER_ID} -p ${NAK_DOCKER_PW}
 
 # download all application specific docker images for all 3.0.x solutions
 sudo docker swarm init
@@ -35,3 +35,7 @@ sudo docker pull google/cadvisor:v0.25.0
 sudo docker pull prom/mysqld-exporter:v0.10.0
 sudo docker pull prom/prometheus:v1.6.0
 sudo docker pull grafana/grafana:4.2.0
+
+# copy private key into Apache and NGINX folders
+sudo cp ~/cert.key /nakisa/app/hanelly/apache-ssl
+sudo mv ~/cert.key /nakisa/app/hanelly/nginx
