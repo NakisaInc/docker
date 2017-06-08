@@ -4,8 +4,8 @@ services:
   apache-shib:
     image: nakisa/apache:2.4-shib
     volumes: 
-      - ./apache-data:/etc/apache2/sites-enabled
       - ./apache-ssl:/etc/apache2/ssl
+      - ./apache-conf:/etc/apache2/sites-enabled
       - ./apache-logs:/var/log/apache2
       - ./apache-shib:/usr/local/shibboleth
     ports:

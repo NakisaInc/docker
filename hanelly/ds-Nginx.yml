@@ -23,7 +23,7 @@ services:
     # https://asdqwe.net/blog/solutions-504-gateway-timeout-nginx/    
     command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"
   hanelly:
-    image: nakisa/hanelly:3.0.1-snapshot
+    image: nakisa/hanelly:3.0.0
     depends_on:
       - hanelly-db
       - redis
@@ -68,7 +68,7 @@ services:
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
   idoclistener:
     # need a tagged image at CR
-    image: nakisa/tools:idoc-listener-1.1.0-snapshot
+    image: nakisa/tools:idoc-listener-1.0.0
     depends_on:
       - hanelly
     ports:
