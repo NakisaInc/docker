@@ -2,7 +2,7 @@
 
 # install Nakisa application docker structure
 cd /nakisa/app
-sudo git clone -b Hanelly-${NAK_RELEASE_TAG} https://github.com/NakisaInc/docker.git .
+sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
 
 # create required host directories to persist data and logs
 cd /nakisa/app/hanelly
