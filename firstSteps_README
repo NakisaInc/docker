@@ -1,7 +1,9 @@
 # Following environmental variables must be set prior to running formHost.sh
-NAK_RELEASE_TAG="3.0.0"
+NAK_RELEASE_TAG="3.0.1"
 NAK_DOCKER_ID="<docker_userid>"
 NAK_DOCKER_PW="<docker_password>"
+NAK_DOCKER_ID="devopsnakisa"
+NAK_DOCKER_PW="Nakisa#1"
 
-set | grep NAK >> ~/.bashrc
+set | grep NAK >> ~/.bash_login
 set | grep NAK >> ~/.profile

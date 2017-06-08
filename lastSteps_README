@@ -12,12 +12,25 @@ cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Apache-${NAK_RELEASE_TAG}
 # confirm all containers have launched
 sudo docker ps
 
-# Other useful commands
-sudo docker stack services NHAN
+######################################## USEFUL DOCKER COMMANDS ########################################
+
+# show stack
 sudo docker stack ps NHAN
+sudo docker stack services NHAN
+
+# log into docker container, look at docker logs
 sudo docker exec -it <container stack qualified name> NHAN
-sudo docker stack rm NHAN
 sudo docker logs <container name> -f
+
+# stack remove and deploy
+sudo docker stack rm NHAN
+sudo docker stack deploy -c ds-Apache-${NAK_RELEASE_TAG}.yml NHAN
+
+# volumes
 sudo docker volume ls
+sudo docker volume prune
 sudo docker volume rm NHAN_hanelly-data
 
+# retart docker services - to enable cleanup of dangling resources
+sudo docker service stop
+sudo docker service start

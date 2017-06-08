@@ -16,7 +16,7 @@ sudo mkdir tm-logs
 sudo mkdir grafana
 
 # log into docker
-sudo docker login -u ${NAK_DOCKER_ID} -p ${NAK_DOCKER_PW}
+sudo docker login -u $NAK_DOCKER_ID -p $NAK_DOCKER_PW
 
 # download all application specific docker images for all 3.0.x solutions
 sudo docker swarm init
