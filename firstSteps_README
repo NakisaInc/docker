@@ -4,4 +4,4 @@ NAK_DOCKER_ID="<docker_userid>"
 NAK_DOCKER_PW="<docker_password>"
 
 set | grep NAK >> ~/.bashrc
-set | grep NAK >> ~/.bash_profile
+set | grep NAK >> ~/.profile
