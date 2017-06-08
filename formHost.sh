@@ -4,8 +4,8 @@
 # wget -O - https://raw.githubusercontent.com/NakisaInc/docker/master/formHost.sh | sudo bash
 
 # persist Nakisa environemental variables across reboot
-set | grep NAK > ~/.bashrc
-set | grep NAK > ~/.bash_profile
+set | grep NAK >> ~/.bashrc
+set | grep NAK >> ~/.profile
 
 # install git
 sudo apt-get install -y --no-install-recommends git
