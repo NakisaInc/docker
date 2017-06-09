@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# install Nakisa application docker structure
-cd /nakisa/app
-sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
-
 # create required host directories to persist data and logs
 cd /nakisa/app/hanelly
 sudo mkdir apache-shib; sudo mkdir apache-logs;
@@ -30,8 +26,8 @@ sudo docker pull redis:3.2.8
 sudo docker pull elasticsearch:5.2.0
 sudo docker pull nakisa/tools:idoc-listener-1.0.0
 sudo docker pull nakisa/tools:idoc-listener-1.1.0
-sudo docker pull nakisa/tools:backup-management-1.0.0
-sudo docker pull nakisa/tools:task-manager-1.0.0
+#sudo docker pull nakisa/tools:backup-management-1.0.0
+#sudo docker pull nakisa/tools:task-manager-1.0.0
 sudo docker pull google/cadvisor:v0.25.0
 sudo docker pull prom/mysqld-exporter:v0.10.0
 sudo docker pull prom/prometheus:v1.6.0
