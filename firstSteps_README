@@ -1,4 +1,7 @@
+#!/bin/bash
+
 # Following environmental variables must be set prior to running formHost.sh
-NAK_RELEASE_TAG="3.0.1"
-NAK_DOCKER_ID="<docker_userid>"
-NAK_DOCKER_PW="<docker_password>"
+NAK_SOLUTION_RELEASE_HANELLY=3.0.1
+NAK_INSTALLATION_TYPE=X-SmallMonitored
+NAK_DOCKER_ID=<docker_userid>
+NAK_DOCKER_PW=<docker_password>

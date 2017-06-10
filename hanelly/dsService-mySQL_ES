@@ -1,0 +1,25 @@
+
+  hanelly-db:
+    image: <NAK_IMAGE_MYSQL>
+    volumes:
+        - /nakisa/app-volumes/mysql-data:/var/lib/mysql
+    # parametrize password in the clear
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+
+  elasticsearch:
+    image: <NAK_IMAGE_ES>
+    volumes:
+        # docker copies the contents of each host directory over to the container directory and overwrites it
+        - /nakisa/app-volumes/es-data:/usr/share/elasticsearch/data
+        - /nakisa/app-volumes/es-logs:/usr/share/elasticsearch/logs
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
+    environment:
+      ES_JAVA_OPTS: "-Xms<NAK_MEMORY_ES> -Xmx<NAK_MEMORY_ES>"
+    # need to disable swap for ES as per: but seems to crash ES https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+    # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash

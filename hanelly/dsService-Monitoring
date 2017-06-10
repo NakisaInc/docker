@@ -1,0 +1,30 @@
+
+  cadvisor:
+    image: <NAK_IMAGE_CADVISOR>
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+
+  db-monitor:
+    image: <NAK_IMAGE_DBMONITOR>
+    depends_on:
+      - hanelly-db
+    environment:
+      DATA_SOURCE_NAME: "hanelly:hanelly@(hanelly-db:3306)/hanelly"
+
+  prometheus:
+    image: <NAK_IMAGE_PROMETHEUS>
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: <NAK_IMAGE_GRAFANA>
+    volumes:
+      - ./grafana-startup:/var/lib/nakisa
+      - /nakisa/app-volumes/grafana:/var/lib/grafana
+    environment:
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"
+      GF_SERVER_DOMAIN: "grafana"
+    entrypoint: bash /var/lib/nakisa/setup.sh

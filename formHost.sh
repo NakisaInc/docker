@@ -15,20 +15,23 @@ sudo mkdir /nakisaInstaller; cd /nakisaInstaller
 sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
 
 # partition disk (applicaton agnostic)
-sudo bash /nakisaInstaller/1-partitionDisk.sh
+. /nakisaInstaller/1-partitionDisk.sh
  
 # configure host (applicaton agnostic)
-sudo bash /nakisaInstaller/2-configureHost.sh
+. /nakisaInstaller/2-configureHost.sh
 
 # install docker service (applicaton agnostic)
-sudo bash /nakisaInstaller/3-installDocker.sh
+. /nakisaInstaller/3-installDocker.sh
 
 # install Nakisa application docker structure
 cd /nakisa/app
 sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
 
 # install applicaton specific docker structure and images - will perform reboot when done
-sudo bash /nakisaInstaller/4-installApplication.sh
+. /nakisaInstaller/4-installApplication.sh
+
+# install applicaton specific docker structure and images - will perform reboot when done
+. /nakisaInstaller/5-generateStackFile.sh
 
 echo '    ............... ....      .......    ............  ...................... ..............     .... .......      ......................   '
 echo '   ......................   .........    ....................................................   .............      .......................  '

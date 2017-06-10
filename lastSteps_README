@@ -1,11 +1,3 @@
-# if first installation then ftp the *.nakisa.cloud private key into ~/ and move it into the /nakisa/app/hanelly/apache-ssl directory
-sudo mv ~/cert.key /nakisa/app/hanelly/apache-ssl
-
-# modify ds-Apache.yml file if you need to change memory allocation for Elastic Search or Hanelly (defaults to 2GB each)
-# look for  ES_JAVA_OPTS: "-Xms2g -Xmx2g" and CATALINA_OPTS: "-Xms2g -Xmx2g" and change the 4g to xg as needed for Elastic Search and TomCat respectively.
-# also modify the images instantiated to the release desired
-sudo nano /nakisa/app/hanelly/ds-Apache-${NAK_RELEASE_TAG}.yml
-
 # launch docker stack
 cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Apache-${NAK_RELEASE_TAG}.yml NHAN
  

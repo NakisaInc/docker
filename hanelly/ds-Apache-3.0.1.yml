@@ -15,9 +15,9 @@ services:
       - hanelly
     volumes: 
       - ./apache-ssl:/etc/apache2/ssl
-      - ./apache-conf:/etc/apache2/sites-enabled
-      - ./apache-logs:/var/log/apache2
-      - ./apache-shib:/usr/local/shibboleth
+      - /nakisa/app-volumes/apache-conf:/etc/apache2/sites-enabled
+      - /nakisa/app-volumes/apache-logs:/var/log/apache2
+      - /nakisa/app-volumes/apache-shib:/usr/local/shibboleth
     ports:
       - "80:80"
       - "443:443"
@@ -30,7 +30,7 @@ services:
       - elasticsearch
     volumes:
         - ./agent:/usr/local/tomcat/agent/
-        - ./idocs-data:/nakisa/idocs
+        - /nakisa/app-volumes/idocs-data:/nakisa/idocs
         # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
     environment:
@@ -40,7 +40,7 @@ services:
   hanelly-db:
     image: mysql:5.7
     volumes:
-        - ./mysql-data:/var/lib/mysql
+        - /nakisa/app-volumes/mysql-data:/var/lib/mysql
     # parametrize password in the clear
     environment:
         MYSQL_ROOT_PASSWORD: hanelly
@@ -52,8 +52,8 @@ services:
     image: elasticsearch:5.2.0
     volumes:
         # docker copies the contents of each host directory over to the container directory and overwrites it
-        - ./es-data:/usr/share/elasticsearch/data
-        - ./es-logs:/usr/share/elasticsearch/logs
+        - /nakisa/app-volumes/es-data:/usr/share/elasticsearch/data
+        - /nakisa/app-volumes/es-logs:/usr/share/elasticsearch/logs
         # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
     environment:
@@ -69,8 +69,8 @@ services:
     ports:
       - "10002:10002"
     volumes:
-        - ./idocs-data:/data
-        - ./idocs-logs:/idoc-listener/logs
+        - /nakisa/app-volumes/idocs-data:/data
+        - /nakisa/app-volumes/idocs-logs:/idoc-listener/logs
     environment:
         nak.app.url: "http://hanelly:8080/hanelly/app"
         nak.volume.path.idoc: "/data"
@@ -100,7 +100,7 @@ services:
     image: grafana/grafana:4.2.0
     volumes:
       - ./grafana-startup:/var/lib/nakisa
-      - ./grafana:/var/lib/grafana
+      - /nakisa/app-volumes/grafana:/var/lib/grafana
     environment:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"
       GF_SERVER_DOMAIN: "grafana"
