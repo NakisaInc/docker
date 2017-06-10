@@ -1,8 +1,16 @@
 #!/bin/bash
 
 # Following environmental variables must be set prior to running formHost.sh
-NAK_SOLUTION_RELEASE_HANELLY=3.0.1
+NAK_SOLUTION_RELEASE_HANELLY=3.0.0
 NAK_INSTALLATION_TYPE=X-SmallMonitored
 NAK_DOCKER_ID=<docker_userid>
 NAK_DOCKER_PW=<docker_password>
+NAK_DOCKER_ID=devopsnakisa
+NAK_DOCKER_PW=Nakisa#1
 
+# ftp the *.nakisa.cloud private key into ~/ so that the installation script can find it and move it to the correct location later
+ls -la ~/               # ensure cert.key is present
+ 
+# run Nakisa installer for Hanelly 3.0.x builds
+wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh | sudo bash
+ 
