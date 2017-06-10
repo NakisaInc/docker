@@ -1,5 +1,5 @@
 # launch docker stack
-cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Apache-${NAK_RELEASE_TAG}.yml NHAN
+cd /nakisa/app/hanelly; sudo docker stack deploy -c ds-Hanelly-${NAK_SOLUTION_RELEASE_HANELLY}-${NAK_INSTALLATION_TYPE}.yml NHAN
  
 # confirm all containers have launched
 sudo docker ps
@@ -16,7 +16,7 @@ sudo docker logs <container name> -f
 
 # stack remove and deploy
 sudo docker stack rm NHAN
-sudo docker stack deploy -c ds-Apache-${NAK_RELEASE_TAG}.yml NHAN
+sudo docker stack deploy -c <stack yml file> NHAN
 
 # volumes
 sudo docker volume ls

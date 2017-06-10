@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # create required host directories to persist data, logs and configurations
-
+sudo mkdir /nakisa/app-volumes
 sudo mkdir /nakisa/app-volumes/apache-shib
 sudo mkdir /nakisa/app-volumes/apache-conf
 sudo mkdir /nakisa/app-volumes/apache-logs
@@ -54,4 +54,4 @@ sudo docker pull grafana/grafana:4.2.0
 
 # copy private key into Apache and NGINX folders
 sudo cp ~/cert.key /nakisa/app/hanelly/apache-ssl
-sudo mv ~/cert.key /nakisa/app/hanelly/nginx
+sudo cp ~/cert.key /nakisa/app/hanelly/nginx

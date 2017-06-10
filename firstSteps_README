@@ -5,3 +5,4 @@ NAK_SOLUTION_RELEASE_HANELLY=3.0.1
 NAK_INSTALLATION_TYPE=X-SmallMonitored
 NAK_DOCKER_ID=<docker_userid>
 NAK_DOCKER_PW=<docker_password>
+

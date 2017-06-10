@@ -24,7 +24,7 @@ sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
 . /nakisaInstaller/3-installDocker.sh
 
 # install Nakisa application docker structure
-cd /nakisa/app
+sudo mkdir /nakisa/app; cd /nakisa/app
 sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
 
 # install applicaton specific docker structure and images - will perform reboot when done
