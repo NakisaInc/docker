@@ -6,6 +6,9 @@
 # persist Nakisa environemental variables across reboot
 set | grep NAK >> ~/.bashrc
 set | grep NAK >> ~/.profile
+echo 'Persisting NAK_ environmental variables over reboot'
+tail ~/.bashrc
+tail ~/.profile
 
 # install git
 sudo apt-get install -y --no-install-recommends git

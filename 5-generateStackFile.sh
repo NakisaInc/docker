@@ -66,11 +66,17 @@ if [ $NAK_INSTALLATION_TYPE = "DemoHTTP" ] && [ $NAK_INSTALLATION_TYPE = "Traini
 then
   cat dsService-Hanelly_noProxy | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' >> ~/ds-Generated
 else
-  cat dsService-Apache  | sed 's,<NAK_IMAGE_APACHE>, '"${NAK_IMAGE_APACHE} "',g' >> ~/ds-Generated
+  cat dsService-Apache  | sed 's,<NAK_IMAGE_APACHE>,'"${NAK_IMAGE_APACHE}"',g' >> ~/ds-Generated
   cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
 fi
 
 cat dsService-mySQL_ES | sed 's,<NAK_IMAGE_MYSQL>,'"${NAK_IMAGE_MYSQL}"',g' | sed 's,<NAK_IMAGE_ES>,'"${NAK_IMAGE_ES}"',g' | sed 's,<NAK_MEMORY_ES>,'"${NAK_MEMORY_ES}"',g' >> ~/ds-Generated
+
+# add Redis if 3.0.0
+if [ $NAK_SOLUTION_RELEASE_HANELLY = "3.0.0" ]
+then
+  sudo cat dsService-Redis >> ~/ds-Generated
+fi
 
 # always add iDoc Listener except for DemoHTTP and DemoHTTPS
 if [ $NAK_INSTALLATION_TYPE != "DemoHTTP" ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]

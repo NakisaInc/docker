@@ -1,0 +1,6 @@
+
+  redis:
+    image: redis:3.2.8
+    volumes:
+      - /nakisa/app-volumes/redis-data:/data
+      - /nakisa/app-volumes/redis-logs:/var/logs/redis
