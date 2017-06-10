@@ -10,5 +10,5 @@ NAK_DOCKER_PW=<docker_password>
 ls -la ~/               # ensure cert.key is present
  
 # run Nakisa installer for Hanelly 3.0.x builds
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh | sudo bash
+wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh > ~/formHost.sh; . ~/formHost.sh
  
