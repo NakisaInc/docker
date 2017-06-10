@@ -3,7 +3,6 @@
     image: <NAK_IMAGE_HANELLY>
     depends_on:
       - hanelly-db
-      - redis
       - elasticsearch
     volumes:
         - ./agent:/usr/local/tomcat/agent/
