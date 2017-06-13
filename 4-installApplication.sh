@@ -19,7 +19,7 @@ sudo mkdir /nakisa/app-volumes/idocs-logs
 #sudo mkdir /nakisa/app-volumes/tm-logs
 sudo mkdir /nakisa/app-volumes/prometheus-agent
 sudo mkdir /nakisa/app-volumes/prometheus-conf
-sudo mkdir /nakisa/app-volumes/grafana
+sudo mkdir /nakisa/app-volumes/grafana-data
 sudo mkdir /nakisa/app-volumes/grafana-startup
 
 # if Apache config present in apache-conf persisted volume then keep it as modification may have been made that are needed (eg. SSO SAML ADFDS support)
