@@ -3,7 +3,7 @@
     depends_on:
       - hanelly
     volumes: 
-      - ./apache-ssl:/etc/apache2/ssl
+      - /nakisa/app-volumes/apache-ssl:/etc/apache2/ssl
       - /nakisa/app-volumes/apache-conf:/etc/apache2/sites-enabled
       - /nakisa/app-volumes/apache-logs:/var/log/apache2
       - /nakisa/app-volumes/apache-shib:/usr/local/shibboleth
