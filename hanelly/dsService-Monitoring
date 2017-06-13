@@ -23,7 +23,7 @@
     image: <NAK_IMAGE_GRAFANA>
     volumes:
       - /nakisa/app-volumes/grafana-startup:/var/lib/nakisa
-      - /nakisa/app-volumes/grafana:/var/lib/grafana
+      - /nakisa/app-volumes/grafana-data:/var/lib/grafana
     environment:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"
       GF_SERVER_DOMAIN: "grafana"
