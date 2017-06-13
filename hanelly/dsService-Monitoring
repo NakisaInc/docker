@@ -17,12 +17,12 @@
   prometheus:
     image: <NAK_IMAGE_PROMETHEUS>
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /nakisa/app-volumes/prometheus-conf:/etc/prometheus
 
   grafana:
     image: <NAK_IMAGE_GRAFANA>
     volumes:
-      - ./grafana-startup:/var/lib/nakisa
+      - /nakisa/app-volumes/grafana-startup:/var/lib/nakisa
       - /nakisa/app-volumes/grafana:/var/lib/grafana
     environment:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"

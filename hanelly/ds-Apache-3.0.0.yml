@@ -14,7 +14,7 @@ services:
     depends_on:
       - hanelly
     volumes: 
-      - ./apache-ssl:/etc/apache2/ssl
+      - /nakisa/app-volumes/apache-ssl:/etc/apache2/ssl
       - /nakisa/app-volumes/apache-conf:/etc/apache2/sites-enabled
       - /nakisa/app-volumes/apache-logs:/var/log/apache2
       - /nakisa/app-volumes/apache-shib:/usr/local/shibboleth
@@ -29,7 +29,7 @@ services:
       - redis
       - elasticsearch
     volumes:
-        - ./agent:/usr/local/tomcat/agent/
+        - /nakisa/app-volumes/prometheus-agent:/usr/local/tomcat/agent/
         - /nakisa/app-volumes/idocs-data:/nakisa/idocs
         # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
@@ -100,12 +100,12 @@ services:
   prometheus:
     image: prom/prometheus:v1.6.0
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /nakisa/app-volumes/prometheus:/etc/prometheus
 
   grafana:
     image: grafana/grafana:4.2.0
     volumes:
-      - ./grafana-startup:/var/lib/nakisa
+      - /nakisa/app-volumes/grafana-startup:/var/lib/nakisa
       - /nakisa/app-volumes/grafana:/var/lib/grafana
     environment:
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:/grafana"

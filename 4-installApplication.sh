@@ -2,6 +2,7 @@
 
 # create required host directories to persist data, logs and configurations
 sudo mkdir /nakisa/app-volumes
+sudo mkdir /nakisa/app-volumes/apache-ssl
 sudo mkdir /nakisa/app-volumes/apache-shib
 sudo mkdir /nakisa/app-volumes/apache-conf
 sudo mkdir /nakisa/app-volumes/apache-logs
@@ -16,16 +17,28 @@ sudo mkdir /nakisa/app-volumes/idocs-logs
 #sudo mkdir /nakisa/app-volumes/bnr-logs
 #sudo mkdir /nakisa/app-volumes/bnr-storage
 #sudo mkdir /nakisa/app-volumes/tm-logs
+sudo mkdir /nakisa/app-volumes/prometheus-agent
+sudo mkdir /nakisa/app-volumes/prometheus-conf
 sudo mkdir /nakisa/app-volumes/grafana
+sudo mkdir /nakisa/app-volumes/grafana-startup
 
-# copy out of box Apache config into apache-conf persisted volume
+# if Apache config present in apache-conf persisted volume then keep it as modification may have been made that are needed (eg. SSO SAML ADFDS support)
 if [ -f "/nakisa/app-volumes/apache-conf/hanelly-ssl.conf" ]
 then
   echo "Apache configuration file found: /nakisa/app-volumes/apache-conf/hanelly-ssl.conf will keep it"
+# if notheing there then copy out of box Apache config into apache-conf persisted volume
 else
   echo "Copying Apache configuration files from: /nakisa/app/hanelly/apache-conf-OOB"
-  sudo cp -r /nakisa/app/hanelly/apache-conf-OOB/* /nakisa/app-volumes/apache-conf/.
+  sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-conf/* /nakisa/app-volumes/apache-conf/.
 fi
+
+# copy *.nakisa.cloud certificate into apache-ssl persisted volume
+sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-ssl/* /nakisa/app-volumes/apache-ssl/.
+
+# copy OOB configs and dependencies for monitoring solution to persisted volumes
+sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/prometheus-agent/* /nakisa/app-volumes/prometheus-agent/.
+sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/prometheus-conf/* /nakisa/app-volumes/prometheus-conf/.
+sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/grafana-startup/* /nakisa/app-volumes/grafana-startup/.
 
 # log into docker
 sudo docker login -u ${NAK_DOCKER_ID} -p ${NAK_DOCKER_PW}
