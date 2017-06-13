@@ -7,8 +7,8 @@ case $NAK_INSTALLATION_TYPE in
   "DemoHTTP")             NAK_MEMORY_MIN_HANELLY=1500m; NAK_MEMORY_MAX_HANELLY=1500m; NAK_MEMORY_ES=1500m;;
   "DemoHTTPS")            NAK_MEMORY_MIN_HANELLY=1500m; NAK_MEMORY_MAX_HANELLY=1500m; NAK_MEMORY_ES=1500m;;
   "Training")             NAK_MEMORY_MIN_HANELLY=3000m; NAK_MEMORY_MAX_HANELLY=3000m; NAK_MEMORY_ES=3500m;;
-  "X-SmallUnmonitored")   NAK_MEMORY_MIN_HANELLY=2500m; NAK_MEMORY_MAX_HANELLY=2500m; NAK_MEMORY_ES=3000m;;
-  "X-SmallMonitored")     NAK_MEMORY_MIN_HANELLY=3000m; NAK_MEMORY_MAX_HANELLY=3000m; NAK_MEMORY_ES=2500m;;
+  "XSmallUnmonitored")   NAK_MEMORY_MIN_HANELLY=2500m; NAK_MEMORY_MAX_HANELLY=2500m; NAK_MEMORY_ES=3000m;;
+  "XSmallMonitored")     NAK_MEMORY_MIN_HANELLY=3000m; NAK_MEMORY_MAX_HANELLY=3000m; NAK_MEMORY_ES=2500m;;
   "Small")                NAK_MEMORY_MIN_HANELLY=5g;    NAK_MEMORY_MAX_HANELLY=5g;    NAK_MEMORY_ES=5g;;
   "Medium")               NAK_MEMORY_MIN_HANELLY=10g;   NAK_MEMORY_MAX_HANELLY=10g;   NAK_MEMORY_ES=10g;;
   "Large")                NAK_MEMORY_MIN_HANELLY=22g;   NAK_MEMORY_MAX_HANELLY=22g;   NAK_MEMORY_ES=26g;;
@@ -42,8 +42,6 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.0.0
            ;;
   "3.0.1") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.1
-           NAK_IMAGE_MYSQL=mysql:5.7
-           NAK_IMAGE_ES=elasticsearch:5.2.0
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
            ;;
 #  "3.0.2") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.2
@@ -53,9 +51,9 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
 #           ;;
   "3.0.2-snapshot")
            NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.2-snapshot
-           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.2.0-snapshot
-           NAK_IMAGE_BACKUP_RESTORE=backup-management-1.1.0-snapshot
-           NAK_IMAGE_TASK_MANAGER=task-manager-1.1.0-snapshot
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
+#           NAK_IMAGE_BACKUP_RESTORE=backup-management-1.1.0-snapshot
+#           NAK_IMAGE_TASK_MANAGER=task-manager-1.1.0-snapshot
            ;;
 esac
 
@@ -105,7 +103,7 @@ fi
 # add Backup & Restore for all customer installation types
 if [ $NAK_INSTALLATION_TYPE != "MicroHTTP" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP" ] && 
    [ $NAK_INSTALLATION_TYPE != "DemoHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
-   [ $NAK_INSTALLATION_TYPE != "Training"  ] && [ $NAK_INSTALLATION_TYPE != "X-Small Unmonitored" ]
+   [ $NAK_INSTALLATION_TYPE != "Training"  ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
 then
 echo ''
 # sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,  '"${NAK_IMAGE_TASK_MANAGER}  "',g' >> ~/ds-Generated
@@ -114,7 +112,7 @@ fi
 # add Monitoring for all customer installation types
 if [ $NAK_INSTALLATION_TYPE != "MicroHTTP" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP" ] && 
    [ $NAK_INSTALLATION_TYPE != "DemoHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ] &&
-   [ $NAK_INSTALLATION_TYPE != "Training"  ] && [ $NAK_INSTALLATION_TYPE != "X-Small Unmonitored" ]
+   [ $NAK_INSTALLATION_TYPE != "Training"  ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
 then
   sudo cat dsService-Monitoring | sed 's,<NAK_IMAGE_CADVISOR>,'"${NAK_IMAGE_CADVISOR}"',g' | sed 's,<NAK_IMAGE_DBMONITOR>,'"${NAK_IMAGE_DBMONITOR}"',g' | sed 's,<NAK_IMAGE_PROMETHEUS>,'"${NAK_IMAGE_PROMETHEUS}"',g' | sed 's,<NAK_IMAGE_GRAFANA>,'"${NAK_IMAGE_GRAFANA}"',g' >> ~/ds-Generated
 fi
