@@ -110,7 +110,7 @@ services:
       nak.default.backup.sons.count: "7"
       nak.default.backup.fathers.count: "4"
       nak.default.backup.grandfathers.count: "13"
-      nak.default.backup.local.storage: "false"
+      nak.default.backup.local.storage: "${NAK_ENABLE_LOCAL_STORAGE}"
 
   cadvisor:
     image: google/cadvisor:v0.25.0
