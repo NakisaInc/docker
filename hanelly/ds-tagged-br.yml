@@ -29,6 +29,7 @@ services:
       - redis
       - elasticsearch
     volumes:
+      - ./bnr-data:/nakisa/backup
       - ./agent:/usr/local/tomcat/agent/
       - ./idocs-data:/nakisa/idocs
       # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
@@ -63,21 +64,17 @@ services:
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
 
   taskmanager:
-    image: devops.hq1.nakisa.net/tools:${NAK_TASKMGR_IMG_TAG}
-    ports:
-      - "10000:10000"
+    image: nakisa/tools:${NAK_TASKMGR_IMG_TAG}
     volumes:
-      - ./queue/logs:/nakisa-queue/logs
+      - ./tm-logs:/nakisa-queue/logs
     environment:
       nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
       nak.authentication.token: "${NAK_AUTH_TOKEN}"
 
   idoclistener:
-    image: devops.hq1.nakisa.net/tools:${NAK_IDOC_IMG_TAG}
+    image: nakisa/tools:${NAK_IDOC_IMG_TAG}
     depends_on:
       - hanelly
-    ports:
-      - "10002:10002"
     volumes:
       - ./idocs-data:/data
       - ./idocs-logs:/idoc-listener/logs
@@ -87,13 +84,11 @@ services:
       nak.authentication.token: "${NAK_AUTH_TOKEN}"
 
   backupmanager:
-    image: devops.hq1.nakisa.net/tools:${NAK_BACREC_IMG_TAG}
-    ports:
-      - "10001:10001"
+    image: nakisa/tools:${NAK_BACREC_IMG_TAG}
     volumes:
-      - ./backup/transfer:/nakisa/backup
-      - ./backup/logs:/nakisa-backup/logs
-      - ./backup/storage:/nakisa/storage/fakeStorage
+      - ./bnr-data:/nakisa/backup
+      - ./bnr-logs:/nakisa-backup/logs
+      - ./bnr-storage:/nakisa/storage/fakeStorage
     environment:
       nak.app.name: "hanelly"
       nak.app.image: "${NAK_HANELLY_IMG_TAG}"
