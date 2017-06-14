@@ -26,7 +26,7 @@ sudo mkdir /nakisa/app-volumes/grafana-startup
 if [ -f "/nakisa/app-volumes/apache-conf/hanelly-ssl.conf" ]
 then
   echo "Apache configuration file found: /nakisa/app-volumes/apache-conf/hanelly-ssl.conf will keep it"
-# if notheing there then copy out of box Apache config into apache-conf persisted volume
+# if nothing there then copy out of box Apache config into apache-conf persisted volume
 else
   echo "Copying Apache configuration files from: /nakisa/app/hanelly/apache-conf-OOB"
   sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-conf/* /nakisa/app-volumes/apache-conf/.
@@ -66,5 +66,5 @@ sudo docker pull prom/prometheus:v1.6.0
 sudo docker pull grafana/grafana:4.2.0
 
 # copy private key into Apache and NGINX folders
-sudo cp ~/cert.key /nakisa/app/hanelly/apache-ssl
+sudo cp ~/cert.key /nakisa/app-volumes/apache-ssl
 sudo cp ~/cert.key /nakisa/app/hanelly/nginx
