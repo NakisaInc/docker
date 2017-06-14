@@ -3,12 +3,14 @@
 # set memory variables to use based on $NAK_INSTALLATION_TYPE
 case $NAK_INSTALLATION_TYPE in
   "MicroHTTP")            NAK_MEMORY_MIN_HANELLY=400m;  NAK_MEMORY_MAX_HANELLY=400m;  NAK_MEMORY_ES=400m;;
+  "MicroHTTPS")           NAK_MEMORY_MIN_HANELLY=400m;  NAK_MEMORY_MAX_HANELLY=400m;  NAK_MEMORY_ES=400m;;
   "MiniHTTP")             NAK_MEMORY_MIN_HANELLY=800m;  NAK_MEMORY_MAX_HANELLY=800m;  NAK_MEMORY_ES=800m;;
+  "MiniHTTPS")            NAK_MEMORY_MIN_HANELLY=800m;  NAK_MEMORY_MAX_HANELLY=800m;  NAK_MEMORY_ES=800m;;
   "DemoHTTP")             NAK_MEMORY_MIN_HANELLY=1500m; NAK_MEMORY_MAX_HANELLY=1500m; NAK_MEMORY_ES=1500m;;
   "DemoHTTPS")            NAK_MEMORY_MIN_HANELLY=1500m; NAK_MEMORY_MAX_HANELLY=1500m; NAK_MEMORY_ES=1500m;;
   "Training")             NAK_MEMORY_MIN_HANELLY=3000m; NAK_MEMORY_MAX_HANELLY=3000m; NAK_MEMORY_ES=3500m;;
-  "XSmallUnmonitored")   NAK_MEMORY_MIN_HANELLY=2500m; NAK_MEMORY_MAX_HANELLY=2500m; NAK_MEMORY_ES=3000m;;
-  "XSmallMonitored")     NAK_MEMORY_MIN_HANELLY=3000m; NAK_MEMORY_MAX_HANELLY=3000m; NAK_MEMORY_ES=2500m;;
+  "XSmallUnmonitored")    NAK_MEMORY_MIN_HANELLY=2500m; NAK_MEMORY_MAX_HANELLY=2500m; NAK_MEMORY_ES=3000m;;
+  "XSmallMonitored")      NAK_MEMORY_MIN_HANELLY=3000m; NAK_MEMORY_MAX_HANELLY=3000m; NAK_MEMORY_ES=2500m;;
   "Small")                NAK_MEMORY_MIN_HANELLY=5g;    NAK_MEMORY_MAX_HANELLY=5g;    NAK_MEMORY_ES=5g;;
   "Medium")               NAK_MEMORY_MIN_HANELLY=10g;   NAK_MEMORY_MAX_HANELLY=10g;   NAK_MEMORY_ES=10g;;
   "Large")                NAK_MEMORY_MIN_HANELLY=22g;   NAK_MEMORY_MAX_HANELLY=22g;   NAK_MEMORY_ES=26g;;
@@ -94,25 +96,28 @@ then
 fi
 
 # always add iDoc Listener except for DemoHTTP and DemoHTTPS
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP" ] && 
-   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
+if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] && 
+   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] && 
+   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
 then
   sudo cat dsService-iDocListener | sed 's,<NAK_IMAGE_IDOC_LISTENER>,'"${NAK_IMAGE_IDOC_LISTENER}"',g' >> ~/ds-Generated
 fi
 
 # add Backup & Restore for all customer installation types
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP" ] && 
-   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
-   [ $NAK_INSTALLATION_TYPE != "Training"  ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
+if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] && 
+   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] && 
+   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
+   [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
 then
 echo ''
 # sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,  '"${NAK_IMAGE_TASK_MANAGER}  "',g' >> ~/ds-Generated
 fi
 
 # add Monitoring for all customer installation types
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP" ] && 
-   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ] &&
-   [ $NAK_INSTALLATION_TYPE != "Training"  ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
+if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] && 
+   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] && 
+   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ] &&
+   [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
 then
   sudo cat dsService-Monitoring | sed 's,<NAK_IMAGE_CADVISOR>,'"${NAK_IMAGE_CADVISOR}"',g' | sed 's,<NAK_IMAGE_DBMONITOR>,'"${NAK_IMAGE_DBMONITOR}"',g' | sed 's,<NAK_IMAGE_PROMETHEUS>,'"${NAK_IMAGE_PROMETHEUS}"',g' | sed 's,<NAK_IMAGE_GRAFANA>,'"${NAK_IMAGE_GRAFANA}"',g' >> ~/ds-Generated
 fi
