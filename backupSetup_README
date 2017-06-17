@@ -3,9 +3,9 @@ sudo apt-get install cron
 sudo service cron start
 
 # download backup scripts
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backupDailyDBOnly.sh  > ~/backupDailyDBOnly.sh
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backupWeeklyFull.sh   > ~/backupWeeklyFull.sh
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backupMonthlyFull.sh  > ~/backupMonthlyFull.sh
+wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup_OOBScripts/backupDailyDBOnly.sh  > ~/backupDailyDBOnly.sh
+wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup_OOBScripts/backupWeeklyFull.sh   > ~/backupWeeklyFull.sh
+wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup_OOBScripts/backupMonthlyFull.sh  > ~/backupMonthlyFull.sh
 
 # for each backup script: ~/backupDailyDBOnly, ~/backupWeeklyFull, ~/backupMonthlyFull
 # set the following  variables to the directories which need to be copied
