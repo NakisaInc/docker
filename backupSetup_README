@@ -5,7 +5,7 @@ sudo service cron start
 # download backup scripts
 wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backupDailyDBOnly.sh  > ~/backupDailyDBOnly.sh
 wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backupWeeklyFull.sh   > ~/backupWeeklyFull.sh
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backupMonthlyFull.sh  > ~/backupMonthlyFullFull.sh
+wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backupMonthlyFull.sh  > ~/backupMonthlyFull.sh
 
 # for each backup script: ~/backupDailyDBOnly, ~/backupWeeklyFull, ~/backupMonthlyFull
 # set the following  variables to the directories which need to be copied
@@ -30,10 +30,10 @@ sudo crontab -e
   0   4    *          *     1,2,3,4,5,6   ~/backupDailyDBOnly     # Daily   Data backup  @9pm PST: Sun-Fri
 
 # manually execute each backup script to ensure it is working correctly and backing up the required directories
-sudo chmod +x /nakisa/app/backupDailyDBOnly /nakisa/app/backupWeeklyFull /nakisa/app/backupMonthlyFull
-. /nakisa/app/backupDailyDBOnly
-. /nakisa/app/backupWeeklyFull
-. /nakisa/app/backupMonthlyFull
+sudo chmod +x ~/backupDailyDBOnly.sh ~/backupWeeklyFull.sh ~/backupMonthlyFull.sh
+. ~/backupDailyDBOnly
+. ~/backupWeeklyFull
+. ~/backupMonthlyFull
 # check for any error messages when running the above in case incorrect directories were specified
 # check the following backup logs in ~/ to ensure :
 # back
