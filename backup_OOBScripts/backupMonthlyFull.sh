@@ -85,7 +85,7 @@ sudo echo ''                                                            >> ~/bac
 sudo mount /dev/xvdd1
 
 # tar and compress into EBS backup volume, log action and backup the log
-sudo tar -zcf /nakisa_backup/backup_`date +"%Y.%m%b.%d_%H-%M-%S.%N"`.tar.gz /nakisa/backupMonthlyFull
+sudo tar -zcf /nakisa_backup/backupMonthly_`date +"%Y.%m%b.%d_%H-%M-%S.%N"`.tar.gz /nakisa/backupMonthlyFull
 sudo echo 'Tarred: '`date +"%Y.%m%b.%d_%H-%M-%S.%N"` >> ~/backupMonthlyFullTime
 sudo echo '================================================================================' >> ~/backupMonthlyFullLog
 sudo cat ~/backupMonthlyFullTime       >> ~/backupMonthlyFullLog
