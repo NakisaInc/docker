@@ -35,10 +35,12 @@ sudo chmod +x ~/backupDailyDBOnly.sh ~/backupWeeklyFull.sh ~/backupMonthlyFull.s
 . ~/backupWeeklyFull
 . ~/backupMonthlyFull
 # check for any error messages when running the above in case incorrect directories were specified
-# check the following backup logs in ~/ to ensure :
-# back
-# check the copied content in /nakisa/backupDBOnly and /nakisa/backupFull directories as well as the tar files in /nakisa_backup
-# you will need to mount the /nakisa_backup directory because the backup scripts unmount it when completed
+# check the following backup logs in ~/ to ensure correct log capture and copied directory sizings are similar to original sizings:
+#    ~/backupDailyDBOnlyLog, ~/backupWeeklyFullLog and ~/backupMonthlyFullLog
+# check the copied content in /nakisa/backupDailyDBOnly, /nakisa/backupWeeklyFull and /nakisa/backupMonthlyFull directories
+# as well as the existance of tar files in /nakisa_backup
+
+# mount the /nakisa_backup directory because the backup scripts unmount it when they finish running (for snapshot purposes)
 sudo mount /dev/xvdd1
 
 
