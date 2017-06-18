@@ -3,9 +3,7 @@ sudo apt-get install cron
 sudo service cron start
 
 # download backup scripts
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup_OOBScripts/backupDailyDBOnly.sh  > ~/backupDailyDBOnly.sh
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup_OOBScripts/backupWeeklyFull.sh   > ~/backupWeeklyFull.sh
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup_OOBScripts/backupMonthlyFull.sh  > ~/backupMonthlyFull.sh
+wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup.sh  > ~/backup.sh
 
 # for each backup script: ~/backupDailyDBOnly, ~/backupWeeklyFull, ~/backupMonthlyFull
 # set the following  variables to the directories which need to be copied
@@ -25,15 +23,20 @@ sudo crontab -e
 # add the following lines to the crontab file and save it - the jobs are now scheduled
 # eg. Coty Prod: 9pm PST or 4am UTC (next day)
 # min hour dayOfMonth month dayOfWeek
-  0   5    1          *     *             ~/backupMonthlyFull     # Monthly Full backup @10pm PST: 1st of the month
-  0   4    *          *     0             ~/backupWeeklyFull      # Weekly  Full backup  @9pm PST: Sat
-  0   4    *          *     1,2,3,4,5,6   ~/backupDailyDBOnly     # Daily   Data backup  @9pm PST: Sun-Fri
+  0   5    1          *     *             ~/backup.sh MonthlyFull    # Monthly Full backup @10pm PST: 1st of the month
+  0   4    *          *     0             ~/backup.sh WeeklyFull     # Weekly  Full backup  @9pm PST: Sat
+  0   4    *          *     1,2,3,4,5,6   ~/backup.sh DailyDBOnly    # Daily   Data backup  @9pm PST: Sun-Fri
 
+  0,15,30,45   *    *          *     *             ~/backup.sh MonthlyFull    # Monthly Full backup @10pm PST: 1st of the month
+  5,10,20,25,35,40,50,55   *    *          *     *             ~/backup.sh WeeklyFull     # Weekly  Full backup  @9pm PST: Sat
+  *   *    *          *     *   ~/backup.sh DailyDBOnly    # Daily   Data backup  @9pm PST: Sun-Fri
+
+  
 # manually execute each backup script to ensure it is working correctly and backing up the required directories
-sudo chmod +x ~/backupDailyDBOnly.sh ~/backupWeeklyFull.sh ~/backupMonthlyFull.sh
-. ~/backupDailyDBOnly
-. ~/backupWeeklyFull
-. ~/backupMonthlyFull
+sudo chmod +x ~/backup.sh
+. ~/backup.sh DailyDBOnly
+. ~/backup.sh WeeklyFull
+. ~/backup.sh MonthlyFull
 # check for any error messages when running the above in case incorrect directories were specified
 # check the following backup logs in ~/ to ensure correct log capture and copied directory sizings are similar to original sizings:
 #    ~/backupDailyDBOnlyLog, ~/backupWeeklyFullLog and ~/backupMonthlyFullLog
