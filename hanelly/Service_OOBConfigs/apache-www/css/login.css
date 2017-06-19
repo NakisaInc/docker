@@ -1,0 +1,99 @@
+@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
+
+html {
+	height: 100%;
+	font-family: "Myriad Web Pro", sans-serif;
+	font-size: small;
+}
+
+/*******************
+BODY STYLING
+*******************/
+
+.login-page {
+	height: 100%;
+	margin: 0;
+	background: rgb(113,189,221); /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover, rgba(113,189,221,1) 0%, rgba(0,155,222,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(113,189,221,1)), color-stop(100%,rgba(0,155,222,1))); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(113,189,221,1) 0%,rgba(0,155,222,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover, rgba(113,189,221,1) 0%,rgba(0,155,222,1) 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover, rgba(113,189,221,1) 0%,rgba(0,155,222,1) 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center, rgba(113,189,221,1) 0%,rgba(0,155,222,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#71bddd', endColorstr='#009bde',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+#unsupported-browser {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 1000;
+}
+
+#unsupported-browser .shadow {
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	z-index: -1;
+	opacity: 0.7;
+}
+
+#unsupported-browser .text-box {
+	top: 40%;
+	position: absolute;
+	background-color: white;
+	padding: 30px 10px;
+	margin: 0px auto 0px -250px;
+	text-align: center;
+	width: 500px;
+	left: 50%;
+    border: 1px solid #bbb;
+}
+
+#unsupported-browser .close-x {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	color: #000;
+}
+
+#unsupported-browser .close-x:hover {
+	color: #777;
+}
+
+#nakisa-hanelly-header {
+    top: 50px;
+    left: 56px;
+    position: fixed;
+}
+
+#nakisa-hanelly {
+	color: rgb(9, 142, 201);
+	text-decoration: none;
+}
+
+#maintenance-floating {
+	margin-right: -135px;
+	position: absolute;
+	right: 40%;
+	width: 400px;
+	border-radius: 0 20px;
+	background-color: white;
+	box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+	padding: 10px 30px;
+	color: rgba(0, 0, 0, 0.75);
+	box-sizing: content-box;
+}
+
+#maintenance-floating * {
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+    font-family: 'Myriad Web Pro', 'Arial Unicode MS', sans-serif;
+}
+

@@ -3,6 +3,7 @@
     depends_on:
       - hanelly
     volumes: 
+      - /nakisa/app-volumes/apache-www:/var/www/html
       - /nakisa/app-volumes/apache-ssl:/etc/apache2/ssl
       - /nakisa/app-volumes/apache-conf:/etc/apache2/sites-enabled
       - /nakisa/app-volumes/apache-logs:/var/log/apache2

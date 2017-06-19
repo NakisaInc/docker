@@ -1,0 +1,45 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HANELLY | a Nakisa solution</title>
+
+<link rel="stylesheet" type="text/css" href="../css/login.css">
+<link rel="stylesheet" type="text/css" href="../css/login-ext.css">
+
+<script type="text/javascript" src="vanguard-base.js"></script>
+<script>
+
+$(document).ready(function() {
+
+});
+
+</script>
+</head>
+
+<body class="login-page">
+
+  <a id='nakisa-hanelly' href="http://www.nakisa.com">
+    <img id="nakisa-hanelly-header" src="../images/logo/login-logo.png">
+  </a>
+   
+	<div id="login-floating" style="top: 250px; left: 18%; width: 60%;">
+      <div class="login-centeredImage" style="display: none;">
+          <img src="../images/login/companylogo.png" onload="this.parentNode.style.display = 'block';" 
+          onerror="this.parentNode.style.display = 'none';">
+      </div>
+      <span class="login-action">Either you do not have permission to access the content or a technical error has occurred. Please contact your support team if you need further assistance.</span>
+      <div class="login-footer" style="display:inline;">
+		  <form class="login-form" action="./default.html" method="post">
+			<button class="loginButton" type="submit" class="button" autofocus>Go to Home screen</button>
+	      </form>
+	      <span>&nbsp;</span>
+	      <form class="login-form" action="./logout" method="post">
+	      	<button class="loginButton" type="submit" class="button" autofocus>Go to Login screen</button>
+	      </form>
+      </div>
+	   <br>
+	</div>
+</body>
+</html>
