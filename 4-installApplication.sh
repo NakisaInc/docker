@@ -2,6 +2,7 @@
 
 # create required host directories to persist data, logs and configurations
 sudo mkdir /nakisa/app-volumes
+sudo mkdir /nakisa/app-volumes/apache-www
 sudo mkdir /nakisa/app-volumes/apache-ssl
 sudo mkdir /nakisa/app-volumes/apache-shib
 sudo mkdir /nakisa/app-volumes/apache-conf
@@ -35,6 +36,9 @@ fi
 
 # copy *.nakisa.cloud certificate into apache-ssl persisted volume
 sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-ssl/* /nakisa/app-volumes/apache-ssl/.
+
+# copy apache maintenance page
+sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-www/* /nakisa/app-volumes/apache-www/.
 
 # copy OOB configs and dependencies for monitoring solution to persisted volumes
 sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/prometheus-agent/* /nakisa/app-volumes/prometheus-agent/.
