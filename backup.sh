@@ -29,56 +29,67 @@ NUM_MONTHLY_BACKUPS_TO_KEEP=13
 # prepare backup directory for all artifacts
 sudo rm -rf /nakisa/backup${NAK_BACKUP_TYPE}
 sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}
-sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/images
-sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF
-sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/tomcat-logs
 sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/mysql-data
-sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/apache-shib
-sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/apache-conf
+if [ $NAK_BACKUP_TYPE != "DailyDBOnly" ]
+then
+  sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/images
+  sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF
+  sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/tomcat-logs
+  sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/apache-shib
+  sudo mkdir  /nakisa/backup${NAK_BACKUP_TYPE}/apache-conf
+fi
 
-sudo echo 'Sizings of originals:'                                              > ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/images/portraits`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/data-batches`   >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/effective`      >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/builds`         >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/build-archives` >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/log`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/auditlog`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_TOMCAT_LOGS_DIRECTORY}`                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s ${NAK_BACKUP_MYSQL_DIRECTORY}`                          >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-sudo echo `sudo du -s ${NAK_BACKUP_APACHE_SHIB_DIRECTORY}`                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-sudo echo `sudo du -s ${NAK_BACKUP_APACHE_CONF_DIRECTORY}`                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-sudo echo ''                                                                  >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+sudo echo 'Sizings of originals:'                                                > ~/backup${NAK_BACKUP_TYPE}CopySizing
+sudo echo `sudo du -s ${NAK_BACKUP_MYSQL_DIRECTORY}`                            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+if [ $NAK_BACKUP_TYPE != "DailyDBOnly" ]
+then
+  sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/images/portraits`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/data-batches`   >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/effective`      >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/builds`         >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/build-archives` >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/log`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/auditlog`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_TOMCAT_LOGS_DIRECTORY}`                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_APACHE_SHIB_DIRECTORY}`                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s ${NAK_BACKUP_APACHE_CONF_DIRECTORY}`                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+fi
+sudo echo ''                                                                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
 
 # backup all artifacts: data, configs, logs
 sudo echo -ne 'Start: '`date +"%Y.%m%b.%d_%H-%M-%S.%N"`'     ' > ~/backup${NAK_BACKUP_TYPE}Time
-#sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/images/portraits       /nakisa/backup${NAK_BACKUP_TYPE}/images/.
-#sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/data-batches   /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
-#sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/effective      /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
-#sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/builds         /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
-#sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/build-archives /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
-#sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/log            /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
-#sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/auditlog       /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
-#sudo cp -r ${NAK_BACKUP_TOMCAT_LOGS_DIRECTORY}/.                  /nakisa/backup${NAK_BACKUP_TYPE}/tomcat-logs/.
-#sudo cp -r ${NAK_BACKUP_MYSQL_DIRECTORY}                          /nakisa/backup${NAK_BACKUP_TYPE}/.
-sudo cp -r ${NAK_BACKUP_APACHE_SHIB_DIRECTORY}                    /nakisa/backup${NAK_BACKUP_TYPE}/.
-sudo cp -r ${NAK_BACKUP_APACHE_CONF_DIRECTORY}                    /nakisa/backup${NAK_BACKUP_TYPE}/.
+sudo cp -r ${NAK_BACKUP_MYSQL_DIRECTORY}                            /nakisa/backup${NAK_BACKUP_TYPE}/.
+if [ $NAK_BACKUP_TYPE != "DailyDBOnly" ]
+then
+  sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/images/portraits       /nakisa/backup${NAK_BACKUP_TYPE}/images/.
+  sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/data-batches   /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
+  sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/effective      /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
+  sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/builds         /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
+  sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/build-archives /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
+  sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/log            /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
+  sudo cp -r ${NAK_BACKUP_HANELLY_DIRECTORY}/WEB-INF/auditlog       /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/.
+  sudo cp -r ${NAK_BACKUP_TOMCAT_LOGS_DIRECTORY}/.                  /nakisa/backup${NAK_BACKUP_TYPE}/tomcat-logs/.
+  sudo cp -r ${NAK_BACKUP_APACHE_SHIB_DIRECTORY}                    /nakisa/backup${NAK_BACKUP_TYPE}/.
+  sudo cp -r ${NAK_BACKUP_APACHE_CONF_DIRECTORY}                    /nakisa/backup${NAK_BACKUP_TYPE}/.
+fi
 sudo echo -ne 'End Copy: '`date +"%Y.%m%b.%d_%H-%M-%S.%N"`'     ' >> ~/backup${NAK_BACKUP_TYPE}Time
 
-sudo echo ''                                                            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-sudo echo 'Sizings of copies:'                                          >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/images/portraits`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/data-batches`   >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/effective`      >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/builds`         >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/build-archives` >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/log`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/auditlog`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/tomcat-logs`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-#sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/mysql-data`             >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/apache-shib`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/apache-conf`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
-sudo echo ''                                                            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+sudo echo 'Sizings of copies:'                                                   >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/mysql-data`               >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+if [ $NAK_BACKUP_TYPE != "DailyDBOnly" ]
+then
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/images/portraits`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/data-batches`   >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/effective`      >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/builds`         >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/build-archives` >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/log`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/WEB-INF/auditlog`       >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/tomcat-logs`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/apache-shib`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+  sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/apache-conf`            >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+fi
+sudo echo ''                                                                     >> ~/backup${NAK_BACKUP_TYPE}CopySizing
 
 # restore user access to Hanelly
 #
@@ -88,35 +99,36 @@ sudo echo ''                                                            >> ~/bac
 sudo mount /dev/xvdd1
 
 # tar and compress into EBS backup volume, log action and backup the log
-sudo tar -zcf /nakisa_backup/backupMonthly_`date +"%Y.%m%b.%d_%H-%M-%S.%N"`.tar.gz /nakisa/backup${NAK_BACKUP_TYPE}
+sudo tar -zcf /nakisa_backup/backup${NAK_BACKUP_TYPE}_`date +"%Y.%m%b.%d_%H-%M-%S.%N"`.tar.gz /nakisa/backup${NAK_BACKUP_TYPE}
 sudo echo 'Tarred: '`date +"%Y.%m%b.%d_%H-%M-%S.%N"` >> ~/backup${NAK_BACKUP_TYPE}Time
 sudo echo '================================================================================' >> ~/backup${NAK_BACKUP_TYPE}Log
 sudo cat ~/backup${NAK_BACKUP_TYPE}Time       >> ~/backup${NAK_BACKUP_TYPE}Log
-sudo echo ''                           >> ~/backup${NAK_BACKUP_TYPE}Log
+sudo echo ''                                  >> ~/backup${NAK_BACKUP_TYPE}Log
 sudo cat ~/backup${NAK_BACKUP_TYPE}CopySizing >> ~/backup${NAK_BACKUP_TYPE}Log
-sudo cp ~/backup${NAK_BACKUP_TYPE}Log /nakisa_backup/backup${NAK_BACKUP_TYPE}Log
-sudo rm ~/backup${NAK_BACKUP_TYPE}Log ~/backup${NAK_BACKUP_TYPE}Time ~/backup${NAK_BACKUP_TYPE}CopySizing
+sudo cp  ~/backup${NAK_BACKUP_TYPE}Log        /nakisa_backup/backup${NAK_BACKUP_TYPE}Log
+sudo rm  ~/backup${NAK_BACKUP_TYPE}Time       ~/backup${NAK_BACKUP_TYPE}CopySizing
+cd /nakisa_backup
 
 # remove old daily backups if any exist
-NUM_DAILY_BACKUPS_FOUND=`ls -F /nakisa-backup/*Daily*tar* | wc -l`
-if [ ${NUM_DAILY_BACKUPS_FOUND} -gt ${NUM_DAILY_BACKUPS_TO_KEEP} ]
-then
-  sudo rm `ls -F *tar* | head -1`
-fi
+NUM_DAILY_BACKUPS_FOUND=`ls -F *Daily*tar* | wc -l`
+while [[ $NUM_DAILY_BACKUPS_FOUND -gt $NUM_DAILY_BACKUPS_TO_KEEP ]]; do
+  sudo rm `ls -F *Daily*tar* | head -1`
+  NUM_DAILY_BACKUPS_FOUND=`ls -F *Daily*tar* | wc -l`
+done
 
 # remove old weekly backups if any exist
-NUM_WEEKLY_BACKUPS_FOUND=`ls -F /nakisa-backup/*Weekly*tar* | wc -l`
-if [ ${NUM_WEEKLY_BACKUPS_FOUND} -gt ${NUM_WEEKLY_BACKUPS_TO_KEEP} ]
-then
-  sudo rm `ls -F *tar* | head -1`
-fi
+NUM_WEEKLY_BACKUPS_FOUND=`ls -F *Weekly*tar* | wc -l`
+while [[ $NUM_WEEKLY_BACKUPS_FOUND -gt $NUM_WEEKLY_BACKUPS_TO_KEEP ]]; do
+  sudo rm `ls -F *Weekly*tar* | head -1`
+  NUM_WEEKLY_BACKUPS_FOUND=`ls -F *Weekly*tar* | wc -l`
+done
 
 # remove old monthly backups if any exist
-NUM_MONTHLY_BACKUPS_FOUND=`ls -F /nakisa-backup/*Monthly*tar* | wc -l`
-if [ ${NUM_MONTHLY_BACKUPS_FOUND} -gt ${NUM_MONTHLY_BACKUPS_TO_KEEP} ]
-then
-  sudo rm `ls -F *tar* | head -1`
-fi
+NUM_MONTHLY_BACKUPS_FOUND=`ls -F *Monthly*tar* | wc -l`
+while [[ $NUM_MONTHLY_BACKUPS_FOUND -gt $NUM_MONTHLY_BACKUPS_TO_KEEP ]]; do
+  sudo rm `ls -F *Monthly*tar* | head -1`
+  NUM_MONTHLY_BACKUPS_FOUND=`ls -F *Monthly*tar* | wc -l`
+done
 
 # unmount EBS backup volume when not in use so that scheduled snapshot can take an image
 sudo umount -d /dev/xvdd1
