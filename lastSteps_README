@@ -26,3 +26,7 @@ sudo docker volume rm NHAN_hanelly-data
 # retart docker services - to enable cleanup of dangling resources
 sudo docker service stop
 sudo docker service start
+
+# trigger Apache redirect to maintenance page and remove trigger
+sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
+sudo rm /nakisa/app-volumes/apache-www/maintenance.enable

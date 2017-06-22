@@ -46,12 +46,19 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
   "3.0.1") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.1
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
            ;;
-#  "3.0.2") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.2
-#           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-#           NAK_IMAGE_BACKUP_RESTORE=tbd
-#           NAK_IMAGE_TASK_MANAGER=tbd
-#           ;;
+  "3.0.2") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.2
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
+           ;;
+  "3.0.3") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.3
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
+           NAK_IMAGE_BACKUP_RESTORE=tbd
+           NAK_IMAGE_TASK_MANAGER=tbd
+           ;;
   "3.0.2-snapshot")
+           NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.2-snapshot
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
+           ;;
+  "3.0.3-snapshot")
            NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.2-snapshot
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
 #           NAK_IMAGE_BACKUP_RESTORE=backup-management-1.1.0-snapshot
@@ -63,7 +70,7 @@ esac
 # below code is failsafe and generates full stack for unexpected $NAK_INSTALLATION_TYPE
 cd /nakisa/app/hanelly; cp dsService- ~/ds-Generated
 
-# always add Apache container except for DemoHTTP and Training installation types
+# always add Apache container except for HTTP and Training installation types
 # 3.0.0 has Redis dependency
 if [ $NAK_SOLUTION_RELEASE_HANELLY = "3.0.0" ]
 then
@@ -95,7 +102,7 @@ then
   sudo cat dsService-Redis >> ~/ds-Generated
 fi
 
-# always add iDoc Listener except for DemoHTTP and DemoHTTPS
+# always add iDoc Listener except for Micro, Mini and Demo installation types
 if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] && 
    [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] && 
    [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
@@ -113,11 +120,8 @@ echo ''
 # sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,  '"${NAK_IMAGE_TASK_MANAGER}  "',g' >> ~/ds-Generated
 fi
 
-# add Monitoring for all customer installation types
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] && 
-   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] && 
-   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ] &&
-   [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
+# add Monitoring if selected - proof of concept at this stage only.
+if [ $NAK_INSTALLATION_MONITORING_POC = "yes"  ] || [ $NAK_INSTALLATION_MONITORING_POC = "Yes"  ]
 then
   sudo cat dsService-Monitoring | sed 's,<NAK_IMAGE_CADVISOR>,'"${NAK_IMAGE_CADVISOR}"',g' | sed 's,<NAK_IMAGE_DBMONITOR>,'"${NAK_IMAGE_DBMONITOR}"',g' | sed 's,<NAK_IMAGE_PROMETHEUS>,'"${NAK_IMAGE_PROMETHEUS}"',g' | sed 's,<NAK_IMAGE_GRAFANA>,'"${NAK_IMAGE_GRAFANA}"',g' >> ~/ds-Generated
 fi

@@ -2,8 +2,7 @@
 NAK_BACKUP_TYPE=$1
 
 # stop user access to Hanelly
-#
-#
+# sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
 
 # Set environemental variables to identify the directories to be backed up
 #
@@ -25,6 +24,10 @@ NAK_BACKUP_APACHE_CONF_DIRECTORY=/nakisa/app-volumes/apache-conf
 NUM_DAILY_BACKUPS_TO_KEEP=10
 NUM_WEEKLY_BACKUPS_TO_KEEP=5
 NUM_MONTHLY_BACKUPS_TO_KEEP=13
+
+# set userod and password for mySQL DB
+MYSQL_USERID=usr
+MYSQL_PASSWORD=pwd
 
 # prepare backup directory for all artifacts
 sudo rm -rf /nakisa/backup${NAK_BACKUP_TYPE}
@@ -58,6 +61,7 @@ sudo echo ''                                                                    
 
 # backup all artifacts: data, configs, logs
 sudo echo -ne 'Start: '`date +"%Y.%m%b.%d_%H-%M-%S.%N"`'     ' > ~/backup${NAK_BACKUP_TYPE}Time
+# sudo mysql -u ${MYSQL_USERID} -h localhost -p ${MYSQL_PASSWORD} > FILE_DUMP.sql
 sudo cp -r ${NAK_BACKUP_MYSQL_DIRECTORY}                            /nakisa/backup${NAK_BACKUP_TYPE}/.
 if [ $NAK_BACKUP_TYPE != "DailyDBOnly" ]
 then
@@ -92,8 +96,7 @@ fi
 sudo echo ''                                                                     >> ~/backup${NAK_BACKUP_TYPE}CopySizing
 
 # restore user access to Hanelly
-#
-#
+# sudo rm /nakisa/app-volumes/apache-www/maintenance.enable
 
 # mount EBS backup volume to tarball the backup data to it
 sudo mount /dev/xvdd1

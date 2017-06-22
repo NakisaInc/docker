@@ -19,10 +19,10 @@ sudo mkdir /nakisa/app-volumes/idocs-logs
 #sudo mkdir /nakisa/app-volumes/bnr-logs
 #sudo mkdir /nakisa/app-volumes/bnr-storage
 #sudo mkdir /nakisa/app-volumes/tm-logs
-sudo mkdir /nakisa/app-volumes/prometheus-agent
-sudo mkdir /nakisa/app-volumes/prometheus-conf
-sudo mkdir /nakisa/app-volumes/grafana-data
-sudo mkdir /nakisa/app-volumes/grafana-startup
+#sudo mkdir /nakisa/app-volumes/prometheus-agent         # monitoring PoC only - not for customer use
+#sudo mkdir /nakisa/app-volumes/prometheus-conf          # monitoring PoC only - not for customer use
+#sudo mkdir /nakisa/app-volumes/grafana-data             # monitoring PoC only - not for customer use
+#sudo mkdir /nakisa/app-volumes/grafana-startup          # monitoring PoC only - not for customer use  
 
 # if Apache config present in apache-conf persisted volume then keep it as modification may have been made that are needed (eg. SSO SAML ADFDS support)
 if [ -f "/nakisa/app-volumes/apache-conf/hanelly-ssl.conf" ]
@@ -37,13 +37,13 @@ fi
 # copy *.nakisa.cloud certificate into apache-ssl persisted volume
 sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-ssl/* /nakisa/app-volumes/apache-ssl/.
 
-# copy apache maintenance page
+# copy apache maintenance page into apache-www persisted volume
 sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-www/* /nakisa/app-volumes/apache-www/.
 
 # copy OOB configs and dependencies for monitoring solution to persisted volumes
 sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/prometheus-agent/* /nakisa/app-volumes/prometheus-agent/.
-sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/prometheus-conf/* /nakisa/app-volumes/prometheus-conf/.
-sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/grafana-startup/* /nakisa/app-volumes/grafana-startup/.
+sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/prometheus-conf/*  /nakisa/app-volumes/prometheus-conf/.
+sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/grafana-startup/*  /nakisa/app-volumes/grafana-startup/.
 
 # log into docker
 sudo docker login -u ${NAK_DOCKER_ID} -p ${NAK_DOCKER_PW}
@@ -54,7 +54,9 @@ sudo docker pull nakisa/apache:2.4-shib                      # based off Apache 
 sudo docker pull nginx:1.11.5
 sudo docker pull nakisa/hanelly:3.0.0
 sudo docker pull nakisa/hanelly:3.0.1
+sudo docker pull nakisa/hanelly:3.0.2
 sudo docker pull nakisa/hanelly:3.0.2-snapshot
+sudo docker pull nakisa/hanelly:3.0.3-snapshot
 sudo docker pull mysql:5.7
 sudo docker pull redis:3.2.8
 sudo docker pull elasticsearch:5.2.0
@@ -65,10 +67,10 @@ sudo docker pull nakisa/tools:backup-management-1.0.0
 sudo docker pull nakisa/tools:backup-management-1.1.0-snapshot
 sudo docker pull nakisa/tools:task-manager-1.0.0
 sudo docker pull nakisa/tools:task-manager-1.1.0-snapshot
-sudo docker pull google/cadvisor:v0.25.0
-sudo docker pull prom/mysqld-exporter:v0.10.0
-sudo docker pull prom/prometheus:v1.6.0
-sudo docker pull grafana/grafana:4.2.0
+#sudo docker pull google/cadvisor:v0.25.0
+#sudo docker pull prom/mysqld-exporter:v0.10.0
+#sudo docker pull prom/prometheus:v1.6.0
+#sudo docker pull grafana/grafana:4.2.0
 
 # copy private key into Apache and NGINX folders
 sudo cp ~/cert.key /nakisa/app-volumes/apache-ssl
