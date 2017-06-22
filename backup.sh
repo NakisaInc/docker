@@ -2,7 +2,7 @@
 NAK_BACKUP_TYPE=$1
 
 # stop user access to Hanelly
-# sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
+sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
 
 # Set environemental variables to identify the directories to be backed up
 #
@@ -96,7 +96,7 @@ fi
 sudo echo ''                                                                     >> ~/backup${NAK_BACKUP_TYPE}CopySizing
 
 # restore user access to Hanelly
-# sudo rm /nakisa/app-volumes/apache-www/maintenance.enable
+sudo rm /nakisa/app-volumes/apache-www/maintenance.enable
 
 # mount EBS backup volume to tarball the backup data to it
 sudo mount /dev/xvdd1

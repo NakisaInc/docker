@@ -5,8 +5,7 @@ sudo service cron start
 # download backup scripts
 wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup.sh  > ~/backup.sh
 
-# for each backup script: ~/backupDailyDBOnly, ~/backupWeeklyFull, ~/backupMonthlyFull
-# set the following  variables to the directories which need to be copied
+# in the ~/backup.sh script set the following  variables to the directories which need to be copied
 NAK_BACKUP_HANELLY_DIRECTORY=
 NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=
 NAK_BACKUP_MYSQL_DIRECTORY=

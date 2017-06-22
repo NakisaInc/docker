@@ -17,7 +17,7 @@ case $NAK_INSTALLATION_TYPE in
   *)                      NAK_MEMORY_MIN_HANELLY=1500m; NAK_MEMORY_MAX_HANELLY=1500m; NAK_MEMORY_ES=1500m;;
 esac
 
-# set image variables to use based on $NAK_INSTALLATION_TYPE 
+# set image variables to use based on $NAK_INSTALLATION_TYPE
 # first set major.minor release level image dependencies
 case $NAK_SOLUTION_RELEASE_HANELLY in
   "3.0"*)  NAK_IMAGE_APACHE=nakisa/apache:2.4-shib
@@ -103,16 +103,16 @@ then
 fi
 
 # always add iDoc Listener except for Micro, Mini and Demo installation types
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] && 
-   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] && 
+if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] &&
+   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] &&
    [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
 then
   sudo cat dsService-iDocListener | sed 's,<NAK_IMAGE_IDOC_LISTENER>,'"${NAK_IMAGE_IDOC_LISTENER}"',g' >> ~/ds-Generated
 fi
 
 # add Backup & Restore for all customer installation types
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] && 
-   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] && 
+if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] &&
+   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] &&
    [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
    [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
 then
@@ -121,9 +121,6 @@ echo ''
 fi
 
 # add Monitoring if selected - proof of concept at this stage only.
-if [ $NAK_INSTALLATION_MONITORING_POC = "yes"  ] || [ $NAK_INSTALLATION_MONITORING_POC = "Yes"  ]
-then
-  sudo cat dsService-Monitoring | sed 's,<NAK_IMAGE_CADVISOR>,'"${NAK_IMAGE_CADVISOR}"',g' | sed 's,<NAK_IMAGE_DBMONITOR>,'"${NAK_IMAGE_DBMONITOR}"',g' | sed 's,<NAK_IMAGE_PROMETHEUS>,'"${NAK_IMAGE_PROMETHEUS}"',g' | sed 's,<NAK_IMAGE_GRAFANA>,'"${NAK_IMAGE_GRAFANA}"',g' >> ~/ds-Generated
-fi
+#sudo cat dsService-Monitoring | sed 's,<NAK_IMAGE_CADVISOR>,'"${NAK_IMAGE_CADVISOR}"',g' | sed 's,<NAK_IMAGE_DBMONITOR>,'"${NAK_IMAGE_DBMONITOR}"',g' | sed 's,<NAK_IMAGE_PROMETHEUS>,'"${NAK_IMAGE_PROMETHEUS}"',g' | sed 's,<NAK_IMAGE_GRAFANA>,'"${NAK_IMAGE_GRAFANA}"',g' >> ~/ds-Generated
 
 sudo mv ~/ds-Generated /nakisa/app/hanelly/ds-Hanelly-$NAK_SOLUTION_RELEASE_HANELLY-$NAK_INSTALLATION_TYPE.yml

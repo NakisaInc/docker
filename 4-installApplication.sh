@@ -19,10 +19,10 @@ sudo mkdir /nakisa/app-volumes/idocs-logs
 #sudo mkdir /nakisa/app-volumes/bnr-logs
 #sudo mkdir /nakisa/app-volumes/bnr-storage
 #sudo mkdir /nakisa/app-volumes/tm-logs
-#sudo mkdir /nakisa/app-volumes/prometheus-agent         # monitoring PoC only - not for customer use
-#sudo mkdir /nakisa/app-volumes/prometheus-conf          # monitoring PoC only - not for customer use
-#sudo mkdir /nakisa/app-volumes/grafana-data             # monitoring PoC only - not for customer use
-#sudo mkdir /nakisa/app-volumes/grafana-startup          # monitoring PoC only - not for customer use  
+sudo mkdir /nakisa/app-volumes/prometheus-agent         # monitoring PoC only - not for customer use
+sudo mkdir /nakisa/app-volumes/prometheus-conf          # monitoring PoC only - not for customer use
+sudo mkdir /nakisa/app-volumes/grafana-data             # monitoring PoC only - not for customer use
+sudo mkdir /nakisa/app-volumes/grafana-startup          # monitoring PoC only - not for customer use  
 
 # if Apache config present in apache-conf persisted volume then keep it as modification may have been made that are needed (eg. SSO SAML ADFDS support)
 if [ -f "/nakisa/app-volumes/apache-conf/hanelly-ssl.conf" ]
