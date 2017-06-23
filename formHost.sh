@@ -1,5 +1,5 @@
 #!/bin/bash
-$NAK_PARTITION_DISKS=$1
+NAK_PARTITION_DISKS=$1
 
 # to get and run this installation script:
 # wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh > ~/formHost.sh
@@ -58,7 +58,7 @@ echo '    ..      ....            ...   .                ...   .  ...       ....
 echo '   ......... .................    .  ................    . .  .....................................................    ............         '
 echo ''
 echo '--------------------------------------------------------------------------------------------------------------------------------------------'
-echo '# when reboot completes carry out last steps documented in'
+echo '# when reboot completes carry out last steps documented in:'
 echo 'cd /nakisa/app; more lastSteps_README'
 echo '--------------------------------------------------------------------------------------------------------------------------------------------'
 
