@@ -1,7 +1,10 @@
 #!/bin/bash
+$NAK_PARTITION_DISKS=$1
 
-# to get this installation script:
-# wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh > ~/formHost.sh; . ~/formHost.sh
+# to get and run this installation script:
+# wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh > ~/formHost.sh
+# . ~/formHost.sh partition3Disks                   # AWS 3-disk host formation
+# . ~/formHost.sh asIs                              # use host with as is disk partitions
 
 # persist Nakisa environemental variables across reboot
 set | grep NAK >> ~/.bashrc
@@ -12,7 +15,14 @@ echo 'Persisting NAK_ environmental variables over reboot'
 sudo apt-get install -y --no-install-recommends git
  
 # partition disk (applicaton agnostic)
-wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/1-partitionDisk.sh > ~/1-partitionDisk.sh; . ~/1-partitionDisk.sh;
+if [ $NAK_PARTITION_DISKS = "partition3Disks" ]
+then
+  wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/1-partitionDisk.sh > ~/1-partitionDisk.sh
+  . ~/1-partitionDisk.sh
+  sudo rm ~/1-partitionDisk.sh
+else
+  sudo mkdir /nakisa
+fi
 
 # now that disk is properly partitioned install Nakisa application directory structure
 sudo mkdir /nakisa/app; cd /nakisa/app
@@ -24,11 +34,10 @@ sudo git clone -b Hanelly-3.0 https://github.com/NakisaInc/docker.git .
 # install docker service (applicaton agnostic)
 . /nakisa/app/3-installDocker.sh
 
-
 # install applicaton specific docker structure and images - will perform reboot when done
 . /nakisa/app/4-installApplication.sh
 
-# install applicaton specific docker structure and images - will perform reboot when done
+# generate docker stack file based on environment variables
 . /nakisa/app/5-generateStackFile.sh
 
 echo '    ............... ....      .......    ............  ...................... ..............     .... .......      ......................   '
@@ -49,12 +58,12 @@ echo '    ..      ....            ...   .                ...   .  ...       ....
 echo '   ......... .................    .  ................    . .  .....................................................    ............         '
 echo ''
 echo '--------------------------------------------------------------------------------------------------------------------------------------------'
-echo '# when reboot completes complete last steps documented in'
+echo '# when reboot completes carry out last steps documented in'
 echo 'cd /nakisa/app; more lastSteps_README'
 echo '--------------------------------------------------------------------------------------------------------------------------------------------'
 
 # cleanup temporary installation files and reboot system
-sudo rm ~/formHost.sh; sudo rm ~/1-partitionDisk.sh
+sudo rm ~/formHost.sh
 sudo reboot
 
 
