@@ -25,9 +25,10 @@ NUM_DAILY_BACKUPS_TO_KEEP=10
 NUM_WEEKLY_BACKUPS_TO_KEEP=5
 NUM_MONTHLY_BACKUPS_TO_KEEP=13
 
-# set userod and password for mySQL DB
+# set userid and password for mySQL DB
 MYSQL_USERID=usr
 MYSQL_PASSWORD=pwd
+MYSQL_ROOT_PASSWORD=pwd
 
 # prepare backup directory for all artifacts
 sudo rm -rf /nakisa/backup${NAK_BACKUP_TYPE}

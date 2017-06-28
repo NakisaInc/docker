@@ -9,6 +9,8 @@ sudo mkdir /nakisa/app-volumes/apache-conf
 sudo mkdir /nakisa/app-volumes/apache-logs
 sudo mkdir /nakisa/app-volumes/tomcat-logs
 sudo mkdir /nakisa/app-volumes/mysql-data
+sudo mkdir /nakisa/app-volumes/mysql-logs
+sudo mkdir /nakisa/app-volumes/mysql-dump
 sudo mkdir /nakisa/app-volumes/redis-data               # 3.0.0 CR solution only, deprecated subsequently
 sudo mkdir /nakisa/app-volumes/redis-logs               # 3.0.0 CR solution only, deprecated subsequently
 sudo mkdir /nakisa/app-volumes/es-data

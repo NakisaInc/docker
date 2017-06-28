@@ -18,7 +18,7 @@ sudo apt-get install -y --no-install-recommends git
 if [ $NAK_PARTITION_DISKS = "partition3Disks" ]
 then
   wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/1-partitionDisk.sh > ~/1-partitionDisk.sh
-  . ~/1-partitionDisk.sh
+  . ~/1-partitionDisk.sh ${NAK_PARTITION_DEVICE_PREFIX}
   sudo rm ~/1-partitionDisk.sh
 else
   sudo mkdir /nakisa
