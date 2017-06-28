@@ -10,6 +10,7 @@ NAK_PARTITION_DEVICE_PREFIX=$2
 
 # If no parameter specifying device name prefix then assume it is xvd which is the default for AWS EC2s
 if [ -z $NAK_PARTITION_DEVICE_PREFIX ]
+then
   NAK_PARTITION_DEVICE_PREFIX=xvd
 fi
 
