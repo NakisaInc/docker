@@ -32,9 +32,9 @@ sudo mkdir /nakisa
 # ensure the following lines is present in etc/fstab file and append next four
 #LABEL=cloudimg-rootfs   /   ext4    defaults,discard    0   0
 cat /etc/fstab > ~/appendedFile
-echo "/dev/${NAK_PARTITION_DEVICE_PREFIX}1  swap    swap    defaults    0   0" >> ~/appendedFile
-echo "/dev/${NAK_PARTITION_DEVICE_PREFIX}1  /tmp    ext4    defaults    0   0" >> ~/appendedFile
-echo "/dev/${NAK_PARTITION_DEVICE_PREFIX}2  /nakisa ext4    defaults    0   0" >> ~/appendedFile
+echo "/dev/${NAK_PARTITION_DEVICE_PREFIX}b1  swap    swap    defaults    0   0" >> ~/appendedFile
+echo "/dev/${NAK_PARTITION_DEVICE_PREFIX}c1  /tmp    ext4    defaults    0   0" >> ~/appendedFile
+echo "/dev/${NAK_PARTITION_DEVICE_PREFIX}c2  /nakisa ext4    defaults    0   0" >> ~/appendedFile
 sudo mv ~/appendedFile /etc/fstab
 
 # mount all volumes and swap
