@@ -17,7 +17,7 @@ sudo parted -s --align optimal /dev/${NAK_PARTITION_DEVICE_PREFIX}b mkpart prima
 
 # make device c1 16GB for /tmp and device c2 the rest of available application disk space for /nakisa
 sudo parted -s --align optimal /dev/${NAK_PARTITION_DEVICE_PREFIX}c mkpart primary ext4 0% 16GB
-sudo parted -s --align optimal /dev/x${NAK_PARTITION_DEVICE_PREFIX}c mkpart primary ext4 16GB 100%
+sudo parted -s --align optimal /dev/${NAK_PARTITION_DEVICE_PREFIX}c mkpart primary ext4 16GB 100%
 
 # ext4 them all
 sudo mkswap /dev/${NAK_PARTITION_DEVICE_PREFIX}b1

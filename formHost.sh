@@ -1,10 +1,17 @@
 #!/bin/bash
 NAK_PARTITION_DISKS=$1
+NAK_PARTITION_DEVICE_PREFIX=$2
 
 # to get and run this installation script:
 # wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/formHost.sh > ~/formHost.sh
-# . ~/formHost.sh partition3Disks                   # AWS 3-disk host formation
+# . ~/formHost.sh partition3Disks                   # AWS 3-disk host formation (device name prefix by default is xvd)
+# . ~/formHost.sh partition3Disks sd                # generic server 3-disk host formation with device name prefix specified
 # . ~/formHost.sh asIs                              # use host with as is disk partitions
+
+# If no parameter specifying device name prefix then assume it is xvd which is the default for AWS EC2s
+if [ -z $NAK_PARTITION_DEVICE_PREFIX ]
+  NAK_PARTITION_DEVICE_PREFIX=xvd
+fi
 
 # persist Nakisa environemental variables across reboot
 set | grep NAK >> ~/.bashrc
