@@ -4,7 +4,7 @@
     volumes:
         - /nakisa/app-volumes/mysql-data:/var/lib/mysql
         - /nakisa/app-volumes/mysql-logs:/var/log/mysql
-        - /nakisa/app-volumes/mysql-dump:~/
+        - /nakisa/app-volumes/mysql-dump:/var/backups
     # parametrize password in the clear
     environment:
         MYSQL_ROOT_PASSWORD: hanelly
