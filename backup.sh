@@ -12,6 +12,7 @@ NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=/opt/tomcat/logs
 NAK_BACKUP_MYSQL_DIRECTORY=/nakisa/mysql
 NAK_BACKUP_APACHE_SHIB_DIRECTORY=/nakisa/app/hanelly/apache-shib
 NAK_BACKUP_APACHE_CONF_DIRECTORY=/nakisa/app/hanelly/apache-data     # with hanelly-ssl.conf file
+# need mysql dump directory
 #
 # Hanelly 3.0 directories - standardized
 NAK_BACKUP_HANELLY_DIRECTORY=/nakisa/docker-data/volumes/NHAN_hanelly-data/_data
@@ -19,13 +20,14 @@ NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=/nakisa/app-volumes/tomcat-logs
 NAK_BACKUP_MYSQL_DIRECTORY=/nakisa/app-volumes/mysql-data
 NAK_BACKUP_APACHE_SHIB_DIRECTORY=/nakisa/app-volumes/apache-shib
 NAK_BACKUP_APACHE_CONF_DIRECTORY=/nakisa/app-volumes/apache-conf
+# need mysql dump directory coming in 3.0.3 stack compose
 
 # set limits on number of backups to keep
 NUM_DAILY_BACKUPS_TO_KEEP=10
 NUM_WEEKLY_BACKUPS_TO_KEEP=5
 NUM_MONTHLY_BACKUPS_TO_KEEP=13
 
-# set userid and password for mySQL DB
+# set userid and password for mySQL DB - develop later when mysql dump persisted volumes are supported
 MYSQL_USERID=usr
 MYSQL_PASSWORD=pwd
 MYSQL_ROOT_PASSWORD=pwd

@@ -5,7 +5,7 @@ sudo service cron start
 # download backup scripts
 wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup.sh  > ~/backup.sh
 
-# in the ~/backup.sh script set the following  variables to the directories which need to be copied
+# in the /nakisa/app/backup.sh script set the following  variables to the directories which need to be copied
 NAK_BACKUP_HANELLY_DIRECTORY=
 NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=
 NAK_BACKUP_MYSQL_DIRECTORY=
@@ -19,6 +19,11 @@ NUM_MONTHLY_BACKUPS_TO_KEEP=13
 MYSQL_USERID=
 MYSQL_PASSWORD=
 
+# manually execute each backup script to ensure it is working correctly and backing up the required directories
+sudo chmod +x /nakisa/app/backup.sh
+. /nakisa/app/backup.sh DailyDBOnly
+. /nakisa/app/backup.sh WeeklyFull
+. /nakisa/app/backup.sh MonthlyFull
 
 # setup cron job to run daily, weekly and monthly backup scripts
 sudo crontab -e
@@ -26,23 +31,17 @@ sudo crontab -e
 # add the following lines to the crontab file and save it - the jobs are now scheduled
 # eg. Coty Prod: 9pm PST or 4am UTC (next day)
 # min hour dayOfMonth month dayOfWeek
-  0   5    1          *     *             ~/backup.sh MonthlyFull    # Monthly Full backup @10pm PST: 1st of the month
-  0   4    *          *     0             ~/backup.sh WeeklyFull     # Weekly  Full backup  @9pm PST: Sat
-  0   4    *          *     1,2,3,4,5,6   ~/backup.sh DailyDBOnly    # Daily   Data backup  @9pm PST: Sun-Fri
-#  0,15,30,45               *    *          *     *   ~/backup.sh MonthlyFull    # Monthly test every 15 minutes
-#  5,10,20,25,35,40,50,55   *    *          *     *   ~/backup.sh WeeklyFull     # Weekly  test every  5 minutes
-#  *                        *    *          *     *   ~/backup.sh DailyDBOnly    # Daily   test every  1 minutes
+  0   5    1          *     *             /nakisa/app/backup.sh MonthlyFull    # Monthly Full backup @10pm PST: 1st of the month
+  0   4    *          *     0             /nakisa/app/backup.sh WeeklyFull     # Weekly  Full backup  @9pm PST: Sat
+  0   4    *          *     1,2,3,4,5,6   /nakisa/app/backup.sh DailyDBOnly    # Daily   Data backup  @9pm PST: Sun-Fri
+#  0,15,30,45               *    *          *     *   /nakisa/app/backup.sh MonthlyFull    # Monthly test every 15 minutes
+#  5,10,20,25,35,40,50,55   *    *          *     *   /nakisa/app/backup.sh WeeklyFull     # Weekly  test every  5 minutes
+#  *                        *    *          *     *   /nakisa/app/backup.sh DailyDBOnly    # Daily   test every  1 minutes
 
   
-# manually execute each backup script to ensure it is working correctly and backing up the required directories
-sudo chmod +x ~/backup.sh
-. ~/backup.sh DailyDBOnly
-. ~/backup.sh WeeklyFull
-. ~/backup.sh MonthlyFull
-
 # check for any error messages when running the above in case incorrect directories were specified
-# check the following backup logs in ~/ to ensure correct log capture and copied directory sizings are similar to original sizings:
-#    ~/backupDailyDBOnlyLog, ~/backupWeeklyFullLog and ~/backupMonthlyFullLog
+# check the following backup logs in /nakisa/app/ to ensure correct log capture and copied directory sizings are similar to original sizings:
+#    /nakisa/backupDailyDBOnlyLog, /nakisa/backupWeeklyFullLog and /nakisa/backupMonthlyFullLog
 # check the copied content in /nakisa/backupDailyDBOnly, /nakisa/backupWeeklyFull and /nakisa/backupMonthlyFull directories
 # as well as the existance of tar files in /nakisa_backup
 # mount the /nakisa_backup directory because the backup scripts unmount it when they finish running (for snapshot purposes)
