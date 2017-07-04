@@ -8,9 +8,10 @@
     volumes:
         - /nakisa/app-volumes/prometheus-agent:/usr/local/tomcat/agent/
         - /nakisa/app-volumes/idocs-data:/nakisa/idocs
+        - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
         # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
         - hanelly-data:/usr/local/tomcat/webapps/hanelly
-        - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
+        - tomcat-conf:/usr/local/tomcat/conf
     ports:
         - "80:8080"
     environment:
