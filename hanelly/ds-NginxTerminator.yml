@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:1.11.5
+    # must figure out a way to set memory allocation for NGINX like we do for ES and Hanelly
+    volumes:
+      - /nakisa/app-volumes/nginx/:/etc/nginx/conf.d/external/
+    ports:
+      - "80:80"
+      - "443:443"
+    # possibly need 504 GW timeout config improvements:
+    # https://asdqwe.net/blog/solutions-504-gateway-timeout-nginx/    
+    command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"

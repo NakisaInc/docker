@@ -23,6 +23,12 @@
         #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
     environment:
       ES_JAVA_OPTS: "-Xms<NAK_MEMORY_ES> -Xmx<NAK_MEMORY_ES>"
+      - bootstrap.memory_lock=true
     # need to disable swap for ES as per: but seems to crash ES https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html
     command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
-    # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
+#    mem_limit: 6000000000
+#    memswap_limit: 6000000000 
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
