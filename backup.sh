@@ -3,6 +3,7 @@ NAK_BACKUP_TYPE=$1
 
 # stop user access to Hanelly
 sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
+#sleep 5m               # uncomment after testing is completed and cronjob set up
 
 # Set environemental variables to identify the directories to be backed up
 #
@@ -82,6 +83,7 @@ fi
 sudo echo -ne 'End Copy: '`date +"%Y.%m%b.%d_%H-%M-%S.%N"`'     ' >> ~/backup${NAK_BACKUP_TYPE}Time
 
 sudo echo 'Sizings of copies:'                                                   >> ~/backup${NAK_BACKUP_TYPE}CopySizing
+sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/mysql`                    >> ~/backup${NAK_BACKUP_TYPE}CopySizing
 sudo echo `sudo du -s /nakisa/backup${NAK_BACKUP_TYPE}/mysql-data`               >> ~/backup${NAK_BACKUP_TYPE}CopySizing
 if [ $NAK_BACKUP_TYPE != "DailyDBOnly" ]
 then
@@ -102,7 +104,7 @@ sudo echo ''                                                                    
 sudo rm /nakisa/app-volumes/apache-www/maintenance.enable
 
 # mount EBS backup volume to tarball the backup data to it
-sudo mount /dev/xvdd1
+#sudo mount /dev/xvdd1
 
 # tar and compress into EBS backup volume, log action and backup the log
 sudo tar -zcf /nakisa_backup/backup${NAK_BACKUP_TYPE}_`date +"%Y.%m%b.%d_%H-%M-%S.%N"`.tar.gz /nakisa/backup${NAK_BACKUP_TYPE}
@@ -137,4 +139,4 @@ while [[ $NUM_MONTHLY_BACKUPS_FOUND -gt $NUM_MONTHLY_BACKUPS_TO_KEEP ]]; do
 done
 
 # unmount EBS backup volume when not in use so that scheduled snapshot can take an image
-sudo umount -d /dev/xvdd1
+#sudo umount -d /dev/xvdd1

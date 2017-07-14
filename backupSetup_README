@@ -25,6 +25,14 @@ sudo chmod +x /nakisa/app/backup.sh
 . /nakisa/app/backup.sh WeeklyFull
 . /nakisa/app/backup.sh MonthlyFull
 
+# check for any error messages when running the above in case incorrect directories were specified
+# check the following backup logs in /nakisa/app/ to ensure correct log capture and copied directory sizings are similar to original sizings:
+#    /nakisa/backupDailyDBOnlyLog, /nakisa/backupWeeklyFullLog and /nakisa/backupMonthlyFullLog
+# check the copied content in /nakisa/backupDailyDBOnly, /nakisa/backupWeeklyFull and /nakisa/backupMonthlyFull directories
+# as well as the existance of tar files in /nakisa_backup
+# mount the /nakisa_backup directory because the backup scripts unmount it when they finish running (for snapshot purposes)
+sudo mount /dev/xvdd1
+
 # setup cron job to run daily, weekly and monthly backup scripts
 sudo crontab -e
 
@@ -38,13 +46,6 @@ sudo crontab -e
 #  5,10,20,25,35,40,50,55   *    *          *     *   /nakisa/app/backup.sh WeeklyFull     # Weekly  test every  5 minutes
 #  *                        *    *          *     *   /nakisa/app/backup.sh DailyDBOnly    # Daily   test every  1 minutes
 
-  
-# check for any error messages when running the above in case incorrect directories were specified
-# check the following backup logs in /nakisa/app/ to ensure correct log capture and copied directory sizings are similar to original sizings:
-#    /nakisa/backupDailyDBOnlyLog, /nakisa/backupWeeklyFullLog and /nakisa/backupMonthlyFullLog
-# check the copied content in /nakisa/backupDailyDBOnly, /nakisa/backupWeeklyFull and /nakisa/backupMonthlyFull directories
-# as well as the existance of tar files in /nakisa_backup
-# mount the /nakisa_backup directory because the backup scripts unmount it when they finish running (for snapshot purposes)
-sudo mount /dev/xvdd1
+sudo crontab ls  
 
 
