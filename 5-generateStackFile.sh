@@ -54,15 +54,21 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
            ;;
   "3.0.4") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.4
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
+           ;;
+  "3.0.5") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.5
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
+           ;;
+  "3.0.6") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.6
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
 #           NAK_IMAGE_BACKUP_RESTORE=tbd
 #           NAK_IMAGE_TASK_MANAGER=tbd
            ;;
-  "3.0.3-snapshot")
-           NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.3-snapshot
+  "3.0.5-snapshot")
+           NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.5-snapshot
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
            ;;
-  "3.0.4-snapshot")
-           NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.4-snapshot
+  "3.0.6-snapshot")
+           NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.6-snapshot
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
 #           NAK_IMAGE_BACKUP_RESTORE=backup-management-1.1.0-snapshot
 #           NAK_IMAGE_TASK_MANAGER=task-manager-1.1.0-snapshot

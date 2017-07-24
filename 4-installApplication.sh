@@ -59,8 +59,10 @@ sudo docker pull nakisa/hanelly:3.0.1
 sudo docker pull nakisa/hanelly:3.0.2
 sudo docker pull nakisa/hanelly:3.0.3
 sudo docker pull nakisa/hanelly:3.0.4
-sudo docker pull nakisa/hanelly:3.0.3-snapshot
+sudo docker pull nakisa/hanelly:3.0.5
+sudo docker pull nakisa/hanelly:3.0.6
 sudo docker pull nakisa/hanelly:3.0.4-snapshot
+sudo docker pull nakisa/hanelly:3.0.5-snapshot
 sudo docker pull mysql:5.7
 sudo docker pull redis:3.2.8
 sudo docker pull elasticsearch:5.2.0
