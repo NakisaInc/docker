@@ -7,12 +7,12 @@ sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
 
 # Set environemental variables to identify the directories to be backed up
 #
-# Hanelly 2.2 directories - may be different per installation
+# Hanelly 2.2 directories - may be different per installation - please double check first before specifying
 NAK_BACKUP_HANELLY_DIRECTORY=/opt/tomcat/webapps/hanelly
 NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=/opt/tomcat/logs
 NAK_BACKUP_MYSQL_DIRECTORY=/nakisa/mysql
-NAK_BACKUP_APACHE_SHIB_DIRECTORY=/nakisa/app/hanelly/apache-shib
-NAK_BACKUP_APACHE_CONF_DIRECTORY=/nakisa/app/hanelly/apache-data     # with hanelly-ssl.conf file
+NAK_BACKUP_APACHE_SHIB_DIRECTORY=/nakisa/app-volumes/apache-shib
+NAK_BACKUP_APACHE_CONF_DIRECTORY=/nakisa/app-volumes/apache-conf     # with hanelly-ssl.conf file
 # need mysql dump directory
 #
 # Hanelly 3.0 directories - standardized
@@ -29,9 +29,9 @@ NUM_WEEKLY_BACKUPS_TO_KEEP=5
 NUM_MONTHLY_BACKUPS_TO_KEEP=13
 
 # set userid and password for mySQL DB - develop later when mysql dump persisted volumes are supported
-MYSQL_USERID=usr
-MYSQL_PASSWORD=pwd
-MYSQL_ROOT_PASSWORD=pwd
+#MYSQL_USERID=usr
+#MYSQL_PASSWORD=pwd
+#MYSQL_ROOT_PASSWORD=pwd
 
 # prepare backup directory for all artifacts
 sudo rm -rf /nakisa/backup${NAK_BACKUP_TYPE}
