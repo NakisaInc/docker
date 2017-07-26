@@ -92,7 +92,7 @@ cd /nakisa/app/hanelly; cp dsService- ~/ds-Generated
 #    cat dsService-HanellyRedis | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
 #  fi
 # 3.0.1 and later do not have Redis
-else
+#else
   if [ $NAK_INSTALLATION_TYPE = "MicroHTTP" ] || [ $NAK_INSTALLATION_TYPE = "MiniHTTP" ] ||
      [ $NAK_INSTALLATION_TYPE = "DemoHTTP"  ] || [ $NAK_INSTALLATION_TYPE = "Training" ]
   then
@@ -102,7 +102,7 @@ else
     cat dsService-Apache | sed 's,<NAK_IMAGE_APACHE>,'"${NAK_IMAGE_APACHE}"',g' >> ~/ds-Generated
     cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
   fi
-fi
+#fi
 
 cat dsService-mySQL_ES | sed 's,<NAK_IMAGE_MYSQL>,'"${NAK_IMAGE_MYSQL}"',g' | sed 's,<NAK_IMAGE_ES>,'"${NAK_IMAGE_ES}"',g' | sed 's,<NAK_MEMORY_ES>,'"${NAK_MEMORY_ES}"',g' >> ~/ds-Generated
 
