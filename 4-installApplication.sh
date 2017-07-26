@@ -6,6 +6,7 @@ sudo mkdir /nakisa/app-volumes/apache-www
 sudo mkdir /nakisa/app-volumes/apache-ssl
 sudo mkdir /nakisa/app-volumes/apache-shib
 sudo mkdir /nakisa/app-volumes/apache-conf
+sudo mkdir /nakisa/app-volumes/apache-confNoSSL
 sudo mkdir /nakisa/app-volumes/apache-logs
 sudo mkdir /nakisa/app-volumes/tomcat-logs
 sudo mkdir /nakisa/app-volumes/mysql-data
@@ -33,7 +34,8 @@ then
 # if nothing there then copy out of box Apache config into apache-conf persisted volume
 else
   echo "Copying Apache configuration files from: /nakisa/app/hanelly/apache-conf-OOB"
-  sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-conf/* /nakisa/app-volumes/apache-conf/.
+  sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-conf/*      /nakisa/app-volumes/apache-conf/.
+  sudo cp -r /nakisa/app/hanelly/Service_OOBConfigs/apache-confNoSSL/* /nakisa/app-volumes/apache-confNoSSL/.
 fi
 
 # copy *.nakisa.cloud certificate into apache-ssl persisted volume
@@ -54,15 +56,16 @@ sudo docker login -u ${NAK_DOCKER_ID} -p ${NAK_DOCKER_PW}
 sudo docker swarm init
 sudo docker pull nakisa/apache:2.4-shib                      # based off Apache 2.4.25
 sudo docker pull nginx:1.11.5
-sudo docker pull nakisa/hanelly:3.0.0
-sudo docker pull nakisa/hanelly:3.0.1
-sudo docker pull nakisa/hanelly:3.0.2
-sudo docker pull nakisa/hanelly:3.0.3
+#sudo docker pull nakisa/hanelly:3.0.0
+#sudo docker pull nakisa/hanelly:3.0.1
+#sudo docker pull nakisa/hanelly:3.0.2
+#sudo docker pull nakisa/hanelly:3.0.3
 sudo docker pull nakisa/hanelly:3.0.4
-sudo docker pull nakisa/hanelly:3.0.5
+#sudo docker pull nakisa/hanelly:3.0.5
 sudo docker pull nakisa/hanelly:3.0.6
-sudo docker pull nakisa/hanelly:3.0.4-snapshot
-sudo docker pull nakisa/hanelly:3.0.5-snapshot
+sudo docker pull nakisa/hanelly:3.0.7
+sudo docker pull nakisa/hanelly:3.0.6-snapshot
+sudo docker pull nakisa/hanelly:3.0.7-snapshot
 sudo docker pull mysql:5.7
 sudo docker pull redis:3.2.8
 sudo docker pull elasticsearch:5.2.0
