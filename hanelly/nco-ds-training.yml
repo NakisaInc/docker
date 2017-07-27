@@ -37,8 +37,6 @@ services:
       # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
       - hanelly-data:/usr/local/tomcat/webapps/hanelly
       - tomcat-conf:/usr/local/tomcat/conf
-    ports:
-      - "80:8080"
     environment:
       JAVA_OPTS: "-Dfile.encoding='UTF-8'"
       CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=${NAK_AUTH_TOKEN} -Dnak.volume.path.idoc=/nakisa/idocs -Dnak.idoc.app.url=http://idoclistener:10002/idoc-listener -Dfile.encoding='UTF-8' ${NAK_HANELLY_MEM_ALLOC}"
