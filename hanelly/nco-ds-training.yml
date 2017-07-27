@@ -12,7 +12,7 @@ volumes:
 services:
 
   apache-shib:
-    image: <NAK_IMAGE_APACHE>
+    image: nakisa/apache:${NAK_APACSHIB_IMG_TAG}
     depends_on:
       - hanelly
     volumes:
