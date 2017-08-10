@@ -28,6 +28,14 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
            NAK_IMAGE_PROMETHEUS=prom/prometheus:v1.6.0
            NAK_IMAGE_GRAFANA=grafana/grafana:4.2.0
            ;;
+  "3.1"*)  NAK_IMAGE_APACHE=nakisa/apache:2.4-shib
+           NAK_IMAGE_MYSQL=mysql:5.7
+           NAK_IMAGE_ES=elasticsearch:5.2.0
+           NAK_IMAGE_CADVISOR=google/cadvisor:v0.25.0
+           NAK_IMAGE_DBMONITOR=prom/mysqld-exporter:v0.10.0
+           NAK_IMAGE_PROMETHEUS=prom/prometheus:v1.6.0
+           NAK_IMAGE_GRAFANA=grafana/grafana:4.2.0
+           ;;
   *)       NAK_IMAGE_APACHE=nakisa/apache:2.4-shib
            NAK_IMAGE_MYSQL=mysql:5.7
            NAK_IMAGE_ES=elasticsearch:5.2.0
@@ -43,35 +51,13 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
   "3.0.0") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.0
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.0.0
            ;;
-  "3.0.1") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.1
+  "3.0"*)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
            ;;
-  "3.0.2") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.2
-           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-           ;;
-  "3.0.3") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.3
-           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-           ;;
-  "3.0.4") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.4
-           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-           ;;
-  "3.0.5") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.5
-           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-           ;;
-  "3.0.6") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.6
+  "3.1"*)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
 #           NAK_IMAGE_BACKUP_RESTORE=tbd
 #           NAK_IMAGE_TASK_MANAGER=tbd
-           ;;
-  "3.0.5-snapshot")
-           NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.5-snapshot
-           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-           ;;
-  "3.0.6-snapshot")
-           NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.6-snapshot
-           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-#           NAK_IMAGE_BACKUP_RESTORE=backup-management-1.1.0-snapshot
-#           NAK_IMAGE_TASK_MANAGER=task-manager-1.1.0-snapshot
            ;;
 esac
 
