@@ -7,7 +7,7 @@ services:
     volumes:
       - ./es:/usr/share/elasticsearch/data
     environment:
-      ES_JAVA_OPTS: "-Xms1g -Xmx4g"
+      ES_JAVA_OPTS: "-Xms4g -Xmx4g"
     command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
 
 
