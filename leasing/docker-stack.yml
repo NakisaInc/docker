@@ -35,7 +35,7 @@ services:
 # mysql --host=slandb --user=root --password=Nakisa_1 slan
 
   nginx:
-    image: nginx
+    image: nginx:1.11.5
     depends_on:
       - slan
     volumes:
