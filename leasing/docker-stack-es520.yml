@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+  elasticsearch:
+    image: elasticsearch:5.2.0
+    volumes:
+      - ./es:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx4g"
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+
+
+  slan:
+    image: nakisa/leaseadministration:3.2-mysql-standalone-es
+    environment:
+      CATALINA_OPTS: "-Xms1g -Xmx4g -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false"
+    depends_on:
+      - elasticsearch
+      - slandb
+    volumes:
+      - ./data:/data
+
+
+  slandb:
+    image: mysql:5.7
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: Nakisa_1
+        MYSQL_DATABASE: slan
+        #MYSQL_USER: root
+        MYSQL_PASSWORD: Nakisa_1
+
+# mysql --host=slandb --user=root --password=Nakisa_1 slan
+
+  nginx:
+    image: nginx:1.11.5
+    depends_on:
+      - slan
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/external/
+    ports:
+      - "80:80"
+      - "443:443"
+    command: /bin/bash -c "cat /etc/nginx/conf.d/external/site.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off; error_log /dev/stdout info;'"
