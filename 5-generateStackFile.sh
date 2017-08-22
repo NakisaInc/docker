@@ -104,18 +104,18 @@ cat dsService-mySQL_ES | sed 's,<NAK_IMAGE_MYSQL>,'"${NAK_IMAGE_MYSQL}"',g' | se
 #fi
 
 # always add iDoc Listener except for Micro, Mini and Demo installation types
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] &&
-   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] &&
-   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
+if ([ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] &&
+    [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] &&
+    [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]) || $NAK_INSTANTIATE_IDOC_LISTENER
 then
   sudo cat dsService-iDocListener | sed 's,<NAK_IMAGE_IDOC_LISTENER>,'"${NAK_IMAGE_IDOC_LISTENER}"',g' >> ~/ds-Generated
 fi
 
 # add Backup & Restore for all customer installation types
-if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] &&
-   [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] &&
-   [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
-   [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
+if ([ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTP"  ] &&
+    [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] &&
+    [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
+    [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]) || $NAK_INSTANTIATE_BACKUP_RESTORE
 then
 echo ''
 #  sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,  '"${NAK_IMAGE_TASK_MANAGER}  "',g' | sed 's,<NAK_BNR_AUTHENTICATION_TOKEN>,  '"${NAK_BNR_AUTHENTICATION_TOKEN}  "',g' | sed 's,<NAK_AWS_ACCESS_KEY>,  '"${NAK_AWS_ACCESS_KEY}  "',g' | sed 's,<NAK_AWS_SECRET_KEY>,  '"${NAK_AWS_SECRET_KEY}  "',g' | sed 's,<NAK_AWS_BUCKET>,  '"${NAK_AWS_BUCKET}  "',g' | sed 's,<NAK_AWS_REGION>,  '"${NAK_AWS_REGION}  "',g' | sed 's,<NAK_AWS_CUSTOMER_NAME>,  '"${NAK_AWS_CUSTOMER_NAME}  "',g' | sed 's,<NAK_AWS_INSTALLATION_NAME>,  '"${NAK_AWS_INSTALLATION_NAME}  "',g' >> ~/ds-Generated

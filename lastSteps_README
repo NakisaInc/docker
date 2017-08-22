@@ -30,3 +30,11 @@ sudo docker service start
 # trigger Apache redirect to maintenance page and remove trigger
 sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
 sudo rm /nakisa/app-volumes/apache-www/maintenance.enable
+
+######################################## USEFUL MYSQL COMMANDS ########################################
+mysql -u <userid> -p <password>
+show databases;
+use hanelly;
+show tables;
+select * from Employee;
+

@@ -86,3 +86,6 @@ sudo docker pull nakisa/tools:task-manager-1.2.0-snapshot
 # copy private key into Apache and NGINX folders
 sudo cp ~/cert.key /nakisa/app-volumes/apache-ssl
 sudo cp ~/cert.key /nakisa/app/hanelly/nginx
+
+# make backup script executable
+sudo chmod +x /nakisa/app/backup.sh

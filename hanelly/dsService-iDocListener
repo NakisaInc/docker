@@ -1,5 +1,6 @@
 
-# ref: http://192.168.8.8/nakisa/dockers/blob/master/scripts/internal/compose/hanelly/docker-compose.yml
+  # Ref: http://192.168.8.8/nakisa/dockers/blob/master/scripts/internal/compose/hanelly/docker-compose.yml
+  # for fuller list of environmental parameters which can also be set from manager page for iDocListener
   idoclistener:
     image: <NAK_IMAGE_IDOC_LISTENER>
     depends_on:
@@ -8,13 +9,10 @@
         - /nakisa/app-volumes/idocs-data:/data
         - /nakisa/app-volumes/idocs-logs:/idoc-listener/logs
     environment:
-        nak.app.url: "http://hanelly1:8080/hanelly/app"
+        nak.app.url: "http://hanelly:8080/hanelly/app"
         nak.volume.path.idoc: "/data"
         nak.authentication.token: "NakisaInternal"
         nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"
- # Not required because already set to below values by default
- #       idoc.config.id : "defaultIdocMapping"
- #       auto.start.receiver : "false"
- #       nak.idoc.throttle.size: "0"
+
 
 
