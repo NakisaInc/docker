@@ -13,6 +13,3 @@
         nak.volume.path.idoc: "/data"
         nak.authentication.token: "NakisaInternal"
         nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"
-
-
-

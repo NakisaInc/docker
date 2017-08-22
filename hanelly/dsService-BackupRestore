@@ -1,13 +1,13 @@
 
-   taskmanager:
+  taskmanager:
     image: <NAK_IMAGE_TASK_MANAGER>
     volumes:
         - /nakisa/app-volumes/taskManager-logs:/nakisa-queue/logs
     environment:
         nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
         nak.authentication.token: "<NAK_BNR_AUTHENTICATION_TOKEN>" # NakisaInternal
-
-	backupmanager:
+		
+  backupmanager:
     image: <NAK_IMAGE_BACKUP_RESTORE>
     volumes:
         - /nakisa/app-volumes/backupRestore-data:/nakisa/backup
