@@ -18,10 +18,10 @@ sudo mkdir /nakisa/app-volumes/es-data
 sudo mkdir /nakisa/app-volumes/es-logs
 sudo mkdir /nakisa/app-volumes/idocs-data
 sudo mkdir /nakisa/app-volumes/idocs-logs
-#sudo mkdir /nakisa/app-volumes/bnr-data
-#sudo mkdir /nakisa/app-volumes/bnr-logs
-#sudo mkdir /nakisa/app-volumes/bnr-storage
-#sudo mkdir /nakisa/app-volumes/tm-logs
+sudo mkdir /nakisa/app-volumes/backupRestore-data
+sudo mkdir /nakisa/app-volumes/backupRestore-logs
+sudo mkdir /nakisa/app-volumes/backupRestore-storage
+sudo mkdir /nakisa/app-volumes/taskManager-logs
 sudo mkdir /nakisa/app-volumes/prometheus-agent         # monitoring PoC only - not for customer use
 sudo mkdir /nakisa/app-volumes/prometheus-conf          # monitoring PoC only - not for customer use
 sudo mkdir /nakisa/app-volumes/grafana-data             # monitoring PoC only - not for customer use
@@ -55,27 +55,29 @@ sudo docker login -u ${NAK_DOCKER_ID} -p ${NAK_DOCKER_PW}
 # download all application specific docker images for all 3.0.x solutions
 sudo docker swarm init
 sudo docker pull nakisa/apache:2.4-shib                      # based off Apache 2.4.25
-sudo docker pull nginx:1.11.5
+#sudo docker pull nginx:1.11.5
+sudo docker pull mysql:5.7
+#sudo docker pull redis:3.2.8
+sudo docker pull elasticsearch:5.2.0
 #sudo docker pull nakisa/hanelly:3.0.0
 #sudo docker pull nakisa/hanelly:3.0.1
 #sudo docker pull nakisa/hanelly:3.0.2
 #sudo docker pull nakisa/hanelly:3.0.3
-sudo docker pull nakisa/hanelly:3.0.4
+#sudo docker pull nakisa/hanelly:3.0.4
 #sudo docker pull nakisa/hanelly:3.0.5
 sudo docker pull nakisa/hanelly:3.0.6
 sudo docker pull nakisa/hanelly:3.0.7
-sudo docker pull nakisa/hanelly:3.0.7-snapshot
+sudo docker pull nakisa/hanelly:3.0.8-snapshot
 sudo docker pull nakisa/hanelly:3.1.0-snapshot
-sudo docker pull mysql:5.7
-sudo docker pull redis:3.2.8
-sudo docker pull elasticsearch:5.2.0
 sudo docker pull nakisa/tools:idoc-listener-1.0.0
 sudo docker pull nakisa/tools:idoc-listener-1.1.0
-sudo docker pull nakisa/tools:idoc-listener-1.2.0-snapshot
+sudo docker pull nakisa/tools:idoc-listener-1.2.0
+sudo docker pull nakisa/tools:idoc-listener-1.3.0-snapshot
 sudo docker pull nakisa/tools:backup-management-1.0.0
 sudo docker pull nakisa/tools:backup-management-1.1.0-snapshot
 sudo docker pull nakisa/tools:task-manager-1.0.0
-sudo docker pull nakisa/tools:task-manager-1.1.0-snapshot
+sudo docker pull nakisa/tools:task-manager-1.1.0
+sudo docker pull nakisa/tools:task-manager-1.2.0-snapshot
 #sudo docker pull google/cadvisor:v0.25.0
 #sudo docker pull prom/mysqld-exporter:v0.10.0
 #sudo docker pull prom/prometheus:v1.6.0

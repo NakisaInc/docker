@@ -51,13 +51,18 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
   "3.0.0") NAK_IMAGE_HANELLY=nakisa/hanelly:3.0.0
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.0.0
            ;;
-  "3.0"*)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
+  "3.0."1-6)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
            ;;
-  "3.1"*)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
+  "3.0"*)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
            NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.1.0
-#           NAK_IMAGE_BACKUP_RESTORE=tbd
-#           NAK_IMAGE_TASK_MANAGER=tbd
+           NAK_IMAGE_BACKUP_RESTORE=nakisa/tools:backup-management-1.0.0
+           NAK_IMAGE_TASK_MANAGER=nakisa/tools:task-manager-1.1.0
+           ;;
+  "3.1"*)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.2.0
+           NAK_IMAGE_BACKUP_RESTORE=nakisa/tools:backup-management-1.0.0
+           NAK_IMAGE_TASK_MANAGER=nakisa/tools:task-manager-1.1.0
            ;;
 esac
 
@@ -90,7 +95,7 @@ cd /nakisa/app/hanelly; cp dsService- ~/ds-Generated
   fi
 #fi
 
-cat dsService-mySQL_ES | sed 's,<NAK_IMAGE_MYSQL>,'"${NAK_IMAGE_MYSQL}"',g' | sed 's,<NAK_IMAGE_ES>,'"${NAK_IMAGE_ES}"',g' | sed 's,<NAK_MEMORY_ES>,'"${NAK_MEMORY_ES}"',g' >> ~/ds-Generated
+cat dsService-mySQL_ES | sed 's,<NAK_IMAGE_MYSQL>,'"${NAK_IMAGE_MYSQL}"',g' | sed 's,<NAK_MYSQL_ROOT_PW>,'"${NAK_MYSQL_ROOT_PW}"',g' | sed 's,<NAK_MYSQL_USER_ID>,'"${NAK_MYSQL_USER_ID}"',g' | sed 's,<NAK_MYSQL_USER_PW>,'"${NAK_MYSQL_USER_PW}"',g' | sed 's,<NAK_IMAGE_ES>,'"${NAK_IMAGE_ES}"',g' | sed 's,<NAK_MEMORY_ES>,'"${NAK_MEMORY_ES}"',g' >> ~/ds-Generated
 
 # add Redis if 3.0.0
 #if [ $NAK_SOLUTION_RELEASE_HANELLY = "3.0.0" ]
@@ -113,7 +118,7 @@ if [ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "Mi
    [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]
 then
 echo ''
-# sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,  '"${NAK_IMAGE_TASK_MANAGER}  "',g' >> ~/ds-Generated
+#  sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,  '"${NAK_IMAGE_TASK_MANAGER}  "',g' | sed 's,<NAK_BNR_AUTHENTICATION_TOKEN>,  '"${NAK_BNR_AUTHENTICATION_TOKEN}  "',g' | sed 's,<NAK_AWS_ACCESS_KEY>,  '"${NAK_AWS_ACCESS_KEY}  "',g' | sed 's,<NAK_AWS_SECRET_KEY>,  '"${NAK_AWS_SECRET_KEY}  "',g' | sed 's,<NAK_AWS_BUCKET>,  '"${NAK_AWS_BUCKET}  "',g' | sed 's,<NAK_AWS_REGION>,  '"${NAK_AWS_REGION}  "',g' | sed 's,<NAK_AWS_CUSTOMER_NAME>,  '"${NAK_AWS_CUSTOMER_NAME}  "',g' | sed 's,<NAK_AWS_INSTALLATION_NAME>,  '"${NAK_AWS_INSTALLATION_NAME}  "',g' >> ~/ds-Generated
 fi
 
 # add Monitoring if selected - proof of concept at this stage only.

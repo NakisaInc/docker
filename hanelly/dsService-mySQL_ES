@@ -7,10 +7,11 @@
         - /nakisa/app-volumes/mysql-dump:/var/backups
     # parametrize password in the clear
     environment:
-        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_ROOT_PASSWORD: <NAK_MYSQL_ROOT_PW>
         MYSQL_DATABASE: hanelly
-        MYSQL_USER: hanelly
-        MYSQL_PASSWORD: hanelly
+        MYSQL_USER: <NAK_MYSQL_USER_ID>
+        MYSQL_PASSWORD: <NAK_MYSQL_USER_PW>
+# capture mySQL logs into logfiles
 #    command: --slow_query_log --slow_query_log_file=/var/log/mysql/slow_query.log --log-output=FILE --log-queries-not-using-indexes=ON 	--long-query-time=60 --log_slow_admin_statements
 
   elasticsearch:
