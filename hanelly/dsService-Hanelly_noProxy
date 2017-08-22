@@ -4,6 +4,7 @@
     depends_on:
       - hanelly-db
       - elasticsearch
+      <NAK_HANELLY_DEPENDENCIES>
     volumes:
         - /nakisa/app-volumes/prometheus-agent:/usr/local/tomcat/agent/
         - /nakisa/app-volumes/idocs-data:/nakisa/idocs

@@ -5,7 +5,7 @@
         - /nakisa/app-volumes/taskManager-logs:/nakisa-queue/logs
     environment:
         nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
-        nak.authentication.token: "<NAK_BNR_AUTHENTICATION_TOKEN>" # NakisaInternal
+        nak.authentication.token: "<NAK_BNR_AUTHENTICATION_TOKEN>"
 		
   backupmanager:
     image: <NAK_IMAGE_BACKUP_RESTORE>
@@ -17,7 +17,7 @@
         nak.app.name: "hanelly"
         nak.app.image: <NAK_SOLUTION_RELEASE_HANELLY>
         nak.app.service.url: "http://hanelly:8080/hanelly/app/services/BackupRecoveryService/backup"
-        nak.authentication.token: "<NAK_BNR_AUTHENTICATION_TOKEN>" # NakisaInternal
+        nak.authentication.token: "<NAK_BNR_AUTHENTICATION_TOKEN>"
         nak.volume.path.backup: "/nakisa/backup"
         nak.app.storage.external: "/nakisa/storage"
         aws.accesskey: "<NAK_AWS_ACCESS_KEY>"             # 20 char AWS Access Key
@@ -31,11 +31,11 @@
         aws.vpcnetwork: "NR-VPC-NETWORK"
         aws.customernetwork: "NR-CUSTOMER-NETWORK"
         aws.subnettype: "NR-SUBNET-TYPE"
-		# cron job reference: http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html
+        # cron job reference: http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html
         # sec min hour dayOfMonth month dayOfWeek year
         nak.default.backup.schedule.cron: "0 0/5 0 1/1 * ? *"
         nak.default.backup.sons.count: "7"
         nak.default.backup.fathers.count: "4"
         nak.default.backup.grandfathers.count: "13"
-		# set to true for local storage (fakeStorage), false for S3 storage 
+        # set to true for local storage (fakeStorage), false for S3 storage 
         nak.default.backup.local.storage: "false"
