@@ -5,7 +5,7 @@
         - /nakisa/app-volumes/taskManager-logs:/nakisa-queue/logs
     environment:
         nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
-        nak.authentication.token: "<NAK_BNR_AUTHENTICATION_TOKEN>"
+        nak.authentication.token: "NakisaInternal"
 		
   backupmanager:
     image: <NAK_IMAGE_BACKUP_RESTORE>
@@ -17,7 +17,7 @@
         nak.app.name: "hanelly"
         nak.app.image: <NAK_SOLUTION_RELEASE_HANELLY>
         nak.app.service.url: "http://hanelly:8080/hanelly/app/services/BackupRecoveryService/backup"
-        nak.authentication.token: "<NAK_BNR_AUTHENTICATION_TOKEN>"
+        nak.authentication.token: "NakisaInternal"
         nak.volume.path.backup: "/nakisa/backup"
         nak.app.storage.external: "/nakisa/storage"
         aws.accesskey: "<NAK_AWS_ACCESS_KEY>"             # 20 char AWS Access Key

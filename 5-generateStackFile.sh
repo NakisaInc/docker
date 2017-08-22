@@ -72,7 +72,7 @@ if ([ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "M
     [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]
     [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]) || $NAK_INSTANTIATE_BACKUP_RESTORE
 then
-  NAK_HANELLY_DEPENDENCIES="- taskmanager\n        - backupmanager"
+  NAK_HANELLY_DEPENDENCIES="- taskmanager\n      - backupmanager"
 fi
 
 # generate the docker stack .yml file based on parameters and components needed
