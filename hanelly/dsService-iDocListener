@@ -11,5 +11,5 @@
     environment:
         nak.app.url: "http://hanelly:8080/hanelly/app"
         nak.volume.path.idoc: "/data"
-        nak.authentication.token: "NakisaInternal"
+        nak.authentication.token: "<NAK_INTERNAL_AUTHENTICATION_TOKEN>"
         nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"
