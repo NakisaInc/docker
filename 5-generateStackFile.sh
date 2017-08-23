@@ -117,7 +117,7 @@ if ([ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "M
     [ $NAK_INSTALLATION_TYPE != "MicroHTTPS" ] && [ $NAK_INSTALLATION_TYPE != "MiniHTTPS" ] &&
     [ $NAK_INSTALLATION_TYPE != "DemoHTTP"   ] && [ $NAK_INSTALLATION_TYPE != "DemoHTTPS" ]) || $NAK_INSTANTIATE_IDOC_LISTENER
 then
-  sudo cat dsService-iDocListener | sed 's,<NAK_IMAGE_IDOC_LISTENER>,'"${NAK_IMAGE_IDOC_LISTENER}"',g' >> ~/ds-Generated
+  sudo cat dsService-iDocListener | sed 's,<NAK_IMAGE_IDOC_LISTENER>,'"${NAK_IMAGE_IDOC_LISTENER}"',g' | sed 's,<NAK_INTERNAL_AUTHENTICATION_TOKEN>,'"${NAK_INTERNAL_AUTHENTICATION_TOKEN}"',g' >> ~/ds-Generated
 fi
 
 # add Backup & Restore for all customer installation types
