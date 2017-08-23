@@ -97,10 +97,10 @@ cd /nakisa/app/hanelly; cp dsService- ~/ds-Generated
      [ $NAK_INSTALLATION_TYPE = "DemoHTTP"  ] || [ $NAK_INSTALLATION_TYPE = "Training" ]
   then
     cat dsService-ApacheNoSSL | sed 's,<NAK_IMAGE_APACHE>,'"${NAK_IMAGE_APACHE}"',g' >> ~/ds-Generated
-    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
+    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_SOLUTION_RELEASE_HANELLY>,'"${NAK_SOLUTION_RELEASE_HANELLY}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
   else
     cat dsService-Apache | sed 's,<NAK_IMAGE_APACHE>,'"${NAK_IMAGE_APACHE}"',g' >> ~/ds-Generated
-    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
+    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_SOLUTION_RELEASE_HANELLY>,'"${NAK_SOLUTION_RELEASE_HANELLY}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
   fi
 #fi
 
@@ -127,7 +127,7 @@ if ([ $NAK_INSTALLATION_TYPE != "MicroHTTP"  ] && [ $NAK_INSTALLATION_TYPE != "M
     [ $NAK_INSTALLATION_TYPE != "Training"   ] && [ $NAK_INSTALLATION_TYPE != "XSmallUnmonitored" ]) || $NAK_INSTANTIATE_BACKUP_RESTORE
 then
 echo ''
-  sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,  '"${NAK_IMAGE_TASK_MANAGER}  "',g' | sed 's,<NAK_BNR_AUTHENTICATION_TOKEN>,  '"${NAK_BNR_AUTHENTICATION_TOKEN}  "',g' | sed 's,<NAK_AWS_ACCESS_KEY>,  '"${NAK_AWS_ACCESS_KEY}  "',g' | sed 's,<NAK_AWS_SECRET_KEY>,  '"${NAK_AWS_SECRET_KEY}  "',g' | sed 's,<NAK_AWS_BUCKET>,  '"${NAK_AWS_BUCKET}  "',g' | sed 's,<NAK_AWS_REGION>,  '"${NAK_AWS_REGION}  "',g' | sed 's,<NAK_AWS_CUSTOMER_NAME>,  '"${NAK_AWS_CUSTOMER_NAME}  "',g' | sed 's,<NAK_AWS_INSTALLATION_NAME>,  '"${NAK_AWS_INSTALLATION_NAME}  "',g' >> ~/ds-Generated
+  sudo cat dsService-BackupRestore | sed 's,<NAK_IMAGE_BACKUP_RESTORE>,'"${NAK_IMAGE_BACKUP_RESTORE}"',g' | sed 's,<NAK_IMAGE_TASK_MANAGER>,'"${NAK_IMAGE_TASK_MANAGER}"',g' | sed 's,<NAK_SOLUTION_RELEASE_HANELLY>,'"${NAK_SOLUTION_RELEASE_HANELLY}"',g' | sed 's,<NAK_INTERNAL_AUTHENTICATION_TOKEN>,'"${NAK_INTERNAL_AUTHENTICATION_TOKEN}"',g' | sed 's,<NAK_AWS_ACCESS_KEY>,'"${NAK_AWS_ACCESS_KEY}"',g' | sed 's,<NAK_AWS_SECRET_KEY>,'"${NAK_AWS_SECRET_KEY}"',g' | sed 's,<NAK_AWS_BUCKET>,'"${NAK_AWS_BUCKET}"',g' | sed 's,<NAK_AWS_REGION>,'"${NAK_AWS_REGION}"',g' | sed 's,<NAK_AWS_CUSTOMER_NAME>,'"${NAK_AWS_CUSTOMER_NAME}"',g' | sed 's,<NAK_AWS_INSTALLATION_NAME>,'"${NAK_AWS_INSTALLATION_NAME}"',g' >> ~/ds-Generated
 fi
 
 # add Monitoring if selected - proof of concept at this stage only.

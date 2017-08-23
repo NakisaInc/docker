@@ -6,7 +6,7 @@
     environment:
         nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
         nak.authentication.token: "NakisaInternal"
-		
+
   backupmanager:
     image: <NAK_IMAGE_BACKUP_RESTORE>
     volumes:
