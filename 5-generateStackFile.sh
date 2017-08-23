@@ -97,10 +97,10 @@ cd /nakisa/app/hanelly; cp dsService- ~/ds-Generated
      [ $NAK_INSTALLATION_TYPE = "DemoHTTP"  ] || [ $NAK_INSTALLATION_TYPE = "Training" ]
   then
     cat dsService-ApacheNoSSL | sed 's,<NAK_IMAGE_APACHE>,'"${NAK_IMAGE_APACHE}"',g' >> ~/ds-Generated
-    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_SOLUTION_RELEASE_HANELLY>,'"${NAK_SOLUTION_RELEASE_HANELLY}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
+    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_SOLUTION_RELEASE_HANELLY>,'"${NAK_SOLUTION_RELEASE_HANELLY}"',g' | sed 's,<NAK_INTERNAL_AUTHENTICATION_TOKEN>,'"${NAK_INTERNAL_AUTHENTICATION_TOKEN}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
   else
     cat dsService-Apache | sed 's,<NAK_IMAGE_APACHE>,'"${NAK_IMAGE_APACHE}"',g' >> ~/ds-Generated
-    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_SOLUTION_RELEASE_HANELLY>,'"${NAK_SOLUTION_RELEASE_HANELLY}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
+    cat dsService-Hanelly | sed 's,<NAK_IMAGE_HANELLY>,'"${NAK_IMAGE_HANELLY}"',g' | sed 's,<NAK_HANELLY_DEPENDENCIES>,'"${NAK_HANELLY_DEPENDENCIES}"',g' | sed 's,<NAK_SOLUTION_RELEASE_HANELLY>,'"${NAK_SOLUTION_RELEASE_HANELLY}"',g' | sed 's,<NAK_INTERNAL_AUTHENTICATION_TOKEN>,'"${NAK_INTERNAL_AUTHENTICATION_TOKEN}"',g' | sed 's,<NAK_MEMORY_MIN_HANELLY>,'"${NAK_MEMORY_MIN_HANELLY}"',g' | sed 's,<NAK_MEMORY_MAX_HANELLY>,'"${NAK_MEMORY_MAX_HANELLY}"',g' >> ~/ds-Generated
   fi
 #fi
 
