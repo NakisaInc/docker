@@ -1,0 +1,42 @@
+
+version: '3'
+
+services:
+
+  elasticsearch:
+    image: elasticsearch:5.2.0
+    volumes:
+      - /nakisa/app-volumes/es:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: "${NAK_ES_MEM_ALLOC}"
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+
+
+  slan:
+    image: ${NAK_SLAN_IMG}
+    environment:
+      CATALINA_OPTS: "${NAK_SLAN_MEM_ALLOC} -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dnak.authentication.token=${NAK_AUTH_TOKEN} -Dnak.queue.url=http://taskmanager:10000/queue-manager"
+    depends_on:
+      - elasticsearch
+      - slandb
+    volumes:
+      - /nakisa/app-volumes/data:/data
+
+
+  slandb:
+    image: mysql:5.7
+    volumes:
+      - /nakisa/app-volumes/mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: ${NAK_MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: slan
+        #MYSQL_USER: root
+        MYSQL_PASSWORD: ${NAK_MYSQL_PASSWORD}
+
+  taskmanager:
+    image: ${NAK_TASKMGR_IMG}
+    volumes:
+      - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
+    environment:
+      nakisa.application.service.url: "http://slan:8080/leaseadministration/app/services/QueueService/"
+      nak.authentication.token: "${NAK_AUTH_TOKEN}"
