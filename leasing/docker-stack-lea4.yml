@@ -40,5 +40,5 @@ services:
     volumes:
       - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
     environment:
-      nakisa.application.service.url: "http://slan:8080/leaseadministration/app/services/QueueService/"
+      nakisa.application.service.url: "http://slan:8080/leasing/app/services/QueueService/"
       nak.authentication.token: "${NAK_AUTH_TOKEN}"
