@@ -19,6 +19,8 @@ services:
     depends_on:
       - elasticsearch
       - slandb
+    ports:
+      - "8080:8080"
     volumes:
       - /nakisa/app-volumes/data:/data
 
