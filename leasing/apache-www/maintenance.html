@@ -1,0 +1,56 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Lease Administration | a Nakisa solution</title>
+<link rel="stylesheet" type="text/css" href="./css/login.css">
+<link rel="stylesheet" type="text/css" href="./css/login-ext.css">
+<link rel="icon" type="image/png" href="./images/nakisa-favicon.png">
+
+<script type="text/javascript" src="vanguard-base.js"></script>
+<script>
+
+function placeFloating() {
+	var f = $("#maintenance-floating");
+	var b = $("body");
+
+	f.css("top", (b.height() - f.outerHeight()) * 2 / 5);
+	f.css("left", (b.width() - f.outerWidth()) * 2 / 4);
+}
+
+$(document).ready(function() {
+
+	placeFloating();
+	$(window).resize(placeFloating);
+});
+
+</script>
+</head>
+
+
+
+<body class="login-page">
+
+	<div id="unsupported-browser" style="display: none">
+		<div class="shadow"></div>
+		<div class="text-box">
+			<div class="close-x" onclick="$(&#39;#unsupported-browser&#39;).hide();">X</div>
+			<div>You are using an unsupported web browser.</div>
+			<div>We recommend IE 11 or the latest version of Chrome.</div>
+		</div>
+	</div>
+
+
+  <a id="nakisa-leasing" target="_blank" href="http://www.nakisa.com/">
+    <img id="nakisa-leasing-header" src="./images/logo/login-logo.png">
+  </a>
+   <div id="maintenance-floating" style="top: 488.667px; left: 1100px; text-align: center; ">
+        <h1>Please try again in 15 minutes.</h1>
+        <h1>Lease Administration is currently performing scheduled maintenance.</h1>
+    </div>
+
+
+</body></html>

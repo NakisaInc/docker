@@ -1,0 +1,65 @@
+
+version: '3'
+
+volumes:
+  leasing-data:
+  tomcat-conf:
+
+services:
+
+  apache-shib:
+    image: nakisa/apache:${NAK_APACSHIB_IMG_TAG}
+    depends_on:
+      - slan
+    volumes:
+      - /nakisa/app-volumes/apache-www:/var/www/html
+      - /nakisa/app-volumes/apache-ssl:/etc/apache2/ssl
+      - /nakisa/app-volumes/apache-conf:/etc/apache2/sites-enabled
+      - /nakisa/app-volumes/apache-logs:/var/log/apache2
+      - /nakisa/app-volumes/apache-shib:/usr/local/shibboleth
+    ports:
+      - "80:80"
+      - "443:443"
+
+  elasticsearch:
+    image: elasticsearch:5.2.0
+    volumes:
+      - /nakisa/app-volumes/es-data:/usr/share/elasticsearch/data
+      - /nakisa/app-volumes/es-logs:/usr/share/elasticsearch/logs
+    environment:
+      ES_JAVA_OPTS: "${NAK_ES_MEM_ALLOC}"
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+
+
+  slan:
+    image: ${NAK_SLAN_IMG}
+    environment:
+      JAVA_OPTS: "-Dfile.encoding='UTF-8'"
+      CATALINA_OPTS: "${NAK_SLAN_MEM_ALLOC} -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dnak.authentication.token=${NAK_AUTH_TOKEN} -Dnak.queue.url=http://taskmanager:10000/queue-manager"
+    depends_on:
+      - elasticsearch
+      - slandb
+    volumes:
+      - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
+      - leasing-data:/usr/local/tomcat/webapps/leasing
+      - tomcat-conf:/usr/local/tomcat/conf
+
+  slandb:
+    image: mysql:5.7
+    volumes:
+      - /nakisa/app-volumes/mysql-data:/var/lib/mysql
+      - /nakisa/app-volumes/mysql-logs:/var/log/mysql
+      - /nakisa/app-volumes/mysql-dump:/var/backups
+    environment:
+        MYSQL_ROOT_PASSWORD: ${NAK_MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: slan
+        #MYSQL_USER: root
+        MYSQL_PASSWORD: ${NAK_MYSQL_PASSWORD}
+
+  taskmanager:
+    image: ${NAK_TASKMGR_IMG}
+    volumes:
+      - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
+    environment:
+      nakisa.application.service.url: "http://slan:8080/leasing/app/services/QueueService/"
+      nak.authentication.token: "${NAK_AUTH_TOKEN}"
