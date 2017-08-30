@@ -32,7 +32,7 @@ services:
     environment:
         MYSQL_ROOT_PASSWORD: ${NAK_MYSQL_ROOT_PASSWORD}
         MYSQL_DATABASE: leasing
-        #MYSQL_USER: root
+        MYSQL_USER: leasing
         MYSQL_PASSWORD: ${NAK_MYSQL_PASSWORD}
 
   taskmanager:
