@@ -44,7 +44,7 @@
 
   <Resource name="jdbc/dynamic" auth="Container" type="javax.sql.DataSource"
                maxActive="100" maxIdle="30" maxWait="10000"
-               username="leasing" password="leasing" driverClassName="com.mysql.jdbc.Driver"
+               username="leasing" password="<NAK_DB_PASS>" driverClassName="com.mysql.jdbc.Driver"
                url="jdbc:mysql://leasing-db:3306/leasing"/>
 
 
