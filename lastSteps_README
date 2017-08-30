@@ -38,3 +38,6 @@ use hanelly;
 show tables;
 select * from Employee;
 
+########################################  SOLUTION  B&R LINKS  ########################################
+http://35.182.195.62/hanelly/app/services/BackupRecoveryService/getBackupProfile
+http://35.182.195.62/hanelly/app/services/BackupRecoveryService/configure?cron=0%200/1%20*%20*%20*%20?%20*&sons=3&fathers=5&grandfathers=10
