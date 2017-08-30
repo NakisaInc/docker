@@ -28,6 +28,7 @@ services:
       - "80:8080"
     volumes:
       - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
+      - /nakisa/app-volumes/tomcat-context/context.xml:/usr/local/tomcat/conf/context.xml
       - leasing-data:/usr/local/tomcat/webapps/leasing
       - tomcat-conf:/usr/local/tomcat/conf
 
