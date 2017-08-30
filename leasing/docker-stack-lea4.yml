@@ -1,41 +1,49 @@
 
 version: '3'
 
+volumes:
+  leasing-data:
+  tomcat-conf:
+
 services:
 
   elasticsearch:
     image: elasticsearch:5.2.0
     volumes:
-      - /nakisa/app-volumes/es:/usr/share/elasticsearch/data
+      - /nakisa/app-volumes/es-data:/usr/share/elasticsearch/data
+      - /nakisa/app-volumes/es-logs:/usr/share/elasticsearch/logs
     environment:
       ES_JAVA_OPTS: "${NAK_ES_MEM_ALLOC}"
     command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
 
-
   leasing:
     image: ${NAK_SLAN_IMG}
     environment:
-      CATALINA_OPTS: "${NAK_SLAN_MEM_ALLOC} -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dnak.authentication.token=${NAK_AUTH_TOKEN} -Dnak.queue.url=http://taskmanager:10000/queue-manager"
+      JAVA_OPTS: "-Dfile.encoding='UTF-8'"
+      CATALINA_OPTS: "${NAK_SLAN_MEM_ALLOC} -Ddynamic.sql.ddldialect=com.nakisa.data.dynamic.sqldialects.MySQLDialect -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=leasing -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=${NAK_AUTH_TOKEN} -Dnak.queue.url=http://leasing-queue:10000/queue-manager"
     depends_on:
       - elasticsearch
       - leasing-db
     ports:
-      - "8080:8080"
+      - "80:8080"
     volumes:
-      - /nakisa/app-volumes/data:/data
-
+      - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
+      - leasing-data:/usr/local/tomcat/webapps/leasing
+      - tomcat-conf:/usr/local/tomcat/conf
 
   leasing-db:
     image: mysql:5.7
     volumes:
-      - /nakisa/app-volumes/mysql:/var/lib/mysql
+      - /nakisa/app-volumes/mysql-data:/var/lib/mysql
+      - /nakisa/app-volumes/mysql-logs:/var/log/mysql
+      - /nakisa/app-volumes/mysql-dump:/var/backups
     environment:
         MYSQL_ROOT_PASSWORD: ${NAK_MYSQL_ROOT_PASSWORD}
         MYSQL_DATABASE: leasing
         MYSQL_USER: leasing
         MYSQL_PASSWORD: ${NAK_MYSQL_PASSWORD}
 
-  taskmanager:
+  leasing-queue:
     image: ${NAK_TASKMGR_IMG}
     volumes:
       - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
