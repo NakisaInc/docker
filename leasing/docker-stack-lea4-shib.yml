@@ -10,7 +10,7 @@ services:
   apache-shib:
     image: nakisa/apache:${NAK_APACSHIB_IMG_TAG}
     depends_on:
-      - slan
+      - leasing
     volumes:
       - /nakisa/app-volumes/apache-www:/var/www/html
       - /nakisa/app-volumes/apache-ssl:/etc/apache2/ssl
@@ -31,20 +31,20 @@ services:
     command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
 
 
-  slan:
+  leasing:
     image: ${NAK_SLAN_IMG}
     environment:
       JAVA_OPTS: "-Dfile.encoding='UTF-8'"
       CATALINA_OPTS: "${NAK_SLAN_MEM_ALLOC} -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dnak.authentication.token=${NAK_AUTH_TOKEN} -Dnak.queue.url=http://taskmanager:10000/queue-manager"
     depends_on:
       - elasticsearch
-      - slandb
+      - leasing-db
     volumes:
       - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
       - leasing-data:/usr/local/tomcat/webapps/leasing
       - tomcat-conf:/usr/local/tomcat/conf
 
-  slandb:
+  leasing-db:
     image: mysql:5.7
     volumes:
       - /nakisa/app-volumes/mysql-data:/var/lib/mysql
@@ -52,8 +52,8 @@ services:
       - /nakisa/app-volumes/mysql-dump:/var/backups
     environment:
         MYSQL_ROOT_PASSWORD: ${NAK_MYSQL_ROOT_PASSWORD}
-        MYSQL_DATABASE: slan
-        #MYSQL_USER: root
+        MYSQL_DATABASE: leasing
+        MYSQL_USER: leasing
         MYSQL_PASSWORD: ${NAK_MYSQL_PASSWORD}
 
   taskmanager:
@@ -61,5 +61,5 @@ services:
     volumes:
       - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
     environment:
-      nakisa.application.service.url: "http://slan:8080/leasing/app/services/QueueService/"
+      nakisa.application.service.url: "http://leasing:8080/leasing/app/services/QueueService/"
       nak.authentication.token: "${NAK_AUTH_TOKEN}"

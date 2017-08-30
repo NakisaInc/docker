@@ -12,26 +12,26 @@ services:
     command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
 
 
-  slan:
+  leasing:
     image: ${NAK_SLAN_IMG}
     environment:
       CATALINA_OPTS: "${NAK_SLAN_MEM_ALLOC} -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dnak.authentication.token=${NAK_AUTH_TOKEN} -Dnak.queue.url=http://taskmanager:10000/queue-manager"
     depends_on:
       - elasticsearch
-      - slandb
+      - leasing-db
     ports:
       - "8080:8080"
     volumes:
       - /nakisa/app-volumes/data:/data
 
 
-  slandb:
+  leasing-db:
     image: mysql:5.7
     volumes:
       - /nakisa/app-volumes/mysql:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: ${NAK_MYSQL_ROOT_PASSWORD}
-        MYSQL_DATABASE: slan
+        MYSQL_DATABASE: leasing
         #MYSQL_USER: root
         MYSQL_PASSWORD: ${NAK_MYSQL_PASSWORD}
 
@@ -40,5 +40,5 @@ services:
     volumes:
       - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
     environment:
-      nakisa.application.service.url: "http://slan:8080/leasing/app/services/QueueService/"
+      nakisa.application.service.url: "http://leasing:8080/leasing/app/services/QueueService/"
       nak.authentication.token: "${NAK_AUTH_TOKEN}"
