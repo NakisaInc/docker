@@ -68,7 +68,8 @@ sudo docker pull elasticsearch:5.2.0
 sudo docker pull nakisa/hanelly:3.0.6
 sudo docker pull nakisa/hanelly:3.0.7
 sudo docker pull nakisa/hanelly:3.0.8-snapshot
-sudo docker pull nakisa/hanelly:3.1.0-snapshot
+sudo docker pull nakisa/hanelly:3.1.0
+sudo docker pull nakisa/hanelly:3.1.1-snapshot
 sudo docker pull nakisa/tools:idoc-listener-1.0.0
 sudo docker pull nakisa/tools:idoc-listener-1.1.0
 sudo docker pull nakisa/tools:idoc-listener-1.2.0
