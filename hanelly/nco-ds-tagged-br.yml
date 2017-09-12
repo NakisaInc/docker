@@ -33,8 +33,9 @@ services:
       #- /nakisa/app-volumes/bnr-data:/nakisa/backup
       - /nakisa/app-volumes/prometheus-agent:/usr/local/tomcat/agent/
       - /nakisa/app-volumes/idocs-data:/nakisa/idocs
+      - /nakisa/app-volumes/backupRestore-data:/nakisa/backup
       - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
-      # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+      # the following volumes are mapped to named volumes because these contain subdirectories and data which we don't want to overwrite
       - hanelly-data:/usr/local/tomcat/webapps/hanelly
       - tomcat-conf:/usr/local/tomcat/conf
     environment:
@@ -68,13 +69,13 @@ services:
     command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
 
-  #taskmanager:
-  #  image: nakisa/tools:${NAK_TASKMGR_IMG_TAG}
-  #  volumes:
-  #    - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
-  #  environment:
-  #    nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
-  #    nak.authentication.token: "${NAK_AUTH_TOKEN}"
+  taskmanager:
+    image: nakisa/tools:${NAK_TASKMGR_IMG_TAG}
+    volumes:
+      - /nakisa/app-volumes/tm-logs:/nakisa-queue/logs
+    environment:
+      nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
+      nak.authentication.token: "${NAK_AUTH_TOKEN}"
 
   idoclistener:
     image: nakisa/tools:${NAK_IDOC_IMG_TAG}
@@ -87,35 +88,36 @@ services:
       nak.app.url: "http://hanelly:8080/hanelly/app"
       nak.volume.path.idoc: "/data"
       nak.authentication.token: "${NAK_AUTH_TOKEN}"
+      nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"
 
-  #backupmanager:
-  #  image: nakisa/tools:${NAK_BACREC_IMG_TAG}
-  #  volumes:
-  #    - /nakisa/app-volumes/bnr-data:/nakisa/backup
-  #    - /nakisa/app-volumes/bnr-logs:/nakisa-backup/logs
-  #    - /nakisa/app-volumes/bnr-storage:/nakisa/storage/fakeStorage
-  #  environment:
-  #    nak.app.name: "hanelly"
-  #    nak.app.image: "${NAK_HANELLY_IMG_TAG}"
-  #    nak.app.service.url: "http://hanelly:8080/hanelly/app/services/BackupRecoveryService/backup"
-  #    nak.authentication.token: "${NAK_AUTH_TOKEN}"
-  #    nak.volume.path.backup: "/nakisa/backup"
-  #    nak.app.storage.external: "/nakisa/storage"
-  #    aws.accesskey: "${NAK_AWS_ACCESS_KEY}"
-  #    aws.secretkey: "${NAK_AWS_SECRET_KEY}"
-  #    aws.bucket: "${NAK_AWS_BUCKET}"
-  #    aws.customer: "${NAK_AWS_CUSTOMER}"
-  #    aws.region: "${NAK_AWS_REGION}"
-  #    aws.installation: "${NAK_AWS_INSALLATION}"
-  #    aws.availabilityzone: "${NAK_AWS_AVL_ZONE}"
-  #    aws.vpcnetwork: "${NAK_AWS_VPC_NETWORK}"
-  #    aws.customernetwork: "${NAK_AWS_CUSTOMER_NETWORK}"
-  #    aws.subnettype: "${NAK_AWS_SUBNET_TYPE}"
-  #    nak.default.backup.schedule.cron: "0 0 0 1/1 * ? *"
-  #    nak.default.backup.sons.count: "7"
-  #    nak.default.backup.fathers.count: "4"
-  #    nak.default.backup.grandfathers.count: "13"
-  #    nak.default.backup.local.storage: "${NAK_ENABLE_LOCAL_STORAGE}"
+  backupmanager:
+    image: nakisa/tools:${NAK_BACREC_IMG_TAG}
+    volumes:
+      - /nakisa/app-volumes/backupRestore-data:/nakisa/backup
+      - /nakisa/app-volumes/backupRestore-logs:/nakisa-backup/logs
+      - /nakisa/app-volumes/backupRestore-storage:/nakisa/storage/fakeStorage
+    environment:
+      nak.app.name: "hanelly"
+      nak.app.image: "${NAK_HANELLY_IMG_TAG}"
+      nak.app.service.url: "http://hanelly:8080/hanelly/app/services/BackupRecoveryService/backup"
+      nak.authentication.token: "${NAK_AUTH_TOKEN}"
+      nak.volume.path.backup: "/nakisa/backup"
+      nak.app.storage.external: "/nakisa/storage"
+      aws.accesskey: "${NAK_AWS_ACCESS_KEY}"
+      aws.secretkey: "${NAK_AWS_SECRET_KEY}"
+      aws.bucket: "${NAK_AWS_BUCKET}"
+      aws.customer: "${NAK_AWS_CUSTOMER}"
+      aws.region: "${NAK_AWS_REGION}"
+      aws.installation: "${NAK_AWS_INSALLATION}"
+      aws.availabilityzone: "${NAK_AWS_AVL_ZONE}"
+      aws.vpcnetwork: "${NAK_AWS_VPC_NETWORK}"
+      aws.customernetwork: "${NAK_AWS_CUSTOMER_NETWORK}"
+      aws.subnettype: "${NAK_AWS_SUBNET_TYPE}"
+      nak.default.backup.schedule.cron: "0 0 0/3 * * ? *"
+      nak.default.backup.sons.count: "2"
+      nak.default.backup.fathers.count: "5"
+      nak.default.backup.grandfathers.count: "10"
+      nak.default.backup.local.storage: "${NAK_ENABLE_LOCAL_STORAGE}"
 
   cadvisor:
     image: google/cadvisor:v0.25.0

@@ -79,3 +79,4 @@ services:
       nak.app.url: "http://hanelly:8080/hanelly/app"
       nak.volume.path.idoc: "/data"
       nak.authentication.token: "${NAK_AUTH_TOKEN}"
+      nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"

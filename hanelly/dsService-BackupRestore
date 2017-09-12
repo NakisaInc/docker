@@ -26,7 +26,7 @@
         aws.region: "<NAK_AWS_REGION>"                    # ca-central-1
         aws.customer: "<NAK_AWS_CUSTOMER_NAME>"           # AustraliaPost
         aws.installation: "<NAK_AWS_INSTALLATION_NAME>"   # AustraliaPost-Prod
-        # below are only for naming and tagging in S3, no functional use 
+        # below are only for naming and tagging in S3, no functional use
         aws.availabilityzone: "AZ"
         aws.vpcnetwork: "X.X"
         aws.customernetwork: "Y"
@@ -37,5 +37,5 @@
         nak.default.backup.sons.count: "2"
         nak.default.backup.fathers.count: "5"
         nak.default.backup.grandfathers.count: "10"
-        # set to true for local storage (fakeStorage), false for S3 storage 
+        # set to true for local storage (fakeStorage), false for S3 storage
         nak.default.backup.local.storage: "false"
