@@ -48,6 +48,6 @@ sudo crontab -e
 #  5,10,20,25,35,40,50,55   *    *          *     *   /nakisa/app/backup.sh WeeklyFull     # Weekly  test every  5 minutes
 #  *                        *    *          *     *   /nakisa/app/backup.sh DailyDBOnly    # Daily   test every  1 minutes
 
-sudo crontab ls  
+sudo crontab -l  
 
 
