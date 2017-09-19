@@ -7,12 +7,16 @@ sudo mkdir /nakisa/app
 wget -O - https://raw.githubusercontent.com/NakisaInc/docker/Hanelly-3.0/backup.sh  > ~/backup.sh
 sudo mv ~/backup.sh /nakisa/app/backup.sh
 
-# in the /nakisa/app/backup.sh script set the following  variables to the directories which need to be copied
-NAK_BACKUP_HANELLY_DIRECTORY=
-NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=
-NAK_BACKUP_MYSQL_DIRECTORY=
-NAK_BACKUP_APACHE_SHIB_DIRECTORY=
-NAK_BACKUP_APACHE_CONF_DIRECTORY=
+# Ensure Apache is deployed and Apache /nakisa/app-volumes/apache-* directories exist
+# See: https://nakisa.atlassian.net/wiki/spaces/CSOL/pages/7357013/Apache+SSL+Termination
+
+# in the /nakisa/app/backup.sh script set the following variables to the directories which need to be copied
+# you will need to supply the full absolute path of the directory - the backup.sh file will have defaults pre-filled
+NAK_BACKUP_HANELLY_DIRECTORY=/...
+NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=/...
+NAK_BACKUP_MYSQL_DIRECTORY=/...
+NAK_BACKUP_APACHE_SHIB_DIRECTORY=/nakisa/app-volumes/apache-shib
+NAK_BACKUP_APACHE_CONF_DIRECTORY=/nakisa/app-volumes/apache-conf
 # modify the limits on the number of daily, weekly and monthly backups to keep as needed or keep the defaults
 NUM_DAILY_BACKUPS_TO_KEEP=10
 NUM_WEEKLY_BACKUPS_TO_KEEP=5
@@ -49,5 +53,12 @@ sudo crontab -e
 #  *                        *    *          *     *   /nakisa/app/backup.sh DailyDBOnly    # Daily   test every  1 minutes
 
 sudo crontab -l  
+
+ mkdir /nakisa/backup-restore
+ tar -xvf /nakisa_backup/<backup_filename>.tar.gz -C /nakisa/backup-restore --strip-components=2
+
+ tar -xvf /nakisa_backup/backupWeeklyFull_2017.09Sep.10_03-05-35.220528478.tar.gz -C /nakisa/backup-restore --strip-components=2
+
+tar -xvf ~/t2.tar.gz -C /
 
 

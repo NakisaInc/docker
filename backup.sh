@@ -7,7 +7,7 @@ sudo touch /nakisa/app-volumes/apache-www/maintenance.enable
 
 # Set environemental variables to identify the directories to be backed up
 #
-# Hanelly 2.2 directories - may be different per installation - please double check first before specifying
+# Hanelly 2.2 directories - may be different per installation - please double check first before specifying absolute directories
 NAK_BACKUP_HANELLY_DIRECTORY=/opt/tomcat/webapps/hanelly
 NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=/opt/tomcat/logs
 NAK_BACKUP_MYSQL_DIRECTORY=/nakisa/mysql
@@ -15,7 +15,7 @@ NAK_BACKUP_APACHE_SHIB_DIRECTORY=/nakisa/app-volumes/apache-shib
 NAK_BACKUP_APACHE_CONF_DIRECTORY=/nakisa/app-volumes/apache-conf     # with hanelly-ssl.conf file
 # need mysql dump directory
 #
-# Hanelly 3.0 directories - standardized
+# Hanelly 3.0 directories - standardized -  do not change - COMMENT OUT IF Hanelly 2.2 IS DEPLOYED
 NAK_BACKUP_HANELLY_DIRECTORY=/nakisa/docker-data/volumes/NHAN_hanelly-data/_data
 NAK_BACKUP_TOMCAT_LOGS_DIRECTORY=/nakisa/app-volumes/tomcat-logs
 NAK_BACKUP_MYSQL_DIRECTORY=/nakisa/app-volumes/mysql-data
