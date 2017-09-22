@@ -64,6 +64,11 @@ case $NAK_SOLUTION_RELEASE_HANELLY in
            NAK_IMAGE_BACKUP_RESTORE=nakisa/tools:backup-management-1.0.0
            NAK_IMAGE_TASK_MANAGER=nakisa/tools:task-manager-1.1.0
            ;;
+  "3.2"*)  NAK_IMAGE_HANELLY=nakisa/hanelly:$NAK_SOLUTION_RELEASE_HANELLY
+           NAK_IMAGE_IDOC_LISTENER=nakisa/tools:idoc-listener-1.2.0
+           NAK_IMAGE_BACKUP_RESTORE=nakisa/tools:backup-management-1.0.0
+           NAK_IMAGE_TASK_MANAGER=nakisa/tools:task-manager-1.2.0
+           ;;
 esac
 
 # add Backup & Restore for all customer installation types
