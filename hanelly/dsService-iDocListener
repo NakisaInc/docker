@@ -5,6 +5,8 @@
     image: <NAK_IMAGE_IDOC_LISTENER>
     depends_on:
       - hanelly
+    ports:
+        - "10002:10002"
     volumes:
         - /nakisa/app-volumes/idocs-data:/data
         - /nakisa/app-volumes/idocs-logs:/idoc-listener/logs
