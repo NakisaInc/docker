@@ -1,0 +1,143 @@
+version: '3'
+
+# Any non-empty directory inside a container that is to be persisted must be mapped to a named volume.
+# This is because we don't want the empty host directory overwriting a non-empty directory inside the container.
+# Named volumes must be removed manually or they will stick around after 'docker stack rm'.
+volumes:
+  hanelly-data:
+  tomcat-conf:
+  # need more here for JVM working dirs for all containers that have them in order to persist JVM heap dumps...
+  # though Khosrow questioned the value of this
+
+services:
+  apache-shib:
+    image: nakisa/apache:2.4-shib
+    depends_on:
+      - hanelly
+    volumes: 
+      - /nakisa/app-volumes/apache-www:/var/www/html
+      - /nakisa/app-volumes/apache-ssl:/etc/apache2/ssl
+      - /nakisa/app-volumes/apache-confNoSSL:/etc/apache2/sites-enabled
+      - /nakisa/app-volumes/apache-logs:/var/log/apache2
+      - /nakisa/app-volumes/apache-shib:/usr/local/shibboleth
+    ports:
+      - "80:80"
+      - "443:443"
+
+  hanelly:
+    image: nakisa/hanelly:3.1.1
+    depends_on:
+      - hanelly-db
+      - elasticsearch
+      - taskmanager
+      - backupmanager
+    volumes:
+        - /nakisa/app-volumes/prometheus-agent:/usr/local/tomcat/agent/
+        - /nakisa/app-volumes/idocs-data:/nakisa/idocs
+        - /nakisa/app-volumes/backupRestore-data:/nakisa/backup
+        - /nakisa/app-volumes/tomcat-logs:/usr/local/tomcat/logs
+        # the following volumes are mapped to named volumes because they contains subdirectories and data which we don't want to overwrite
+        - hanelly-data:/usr/local/tomcat/webapps/hanelly
+        - tomcat-conf:/usr/local/tomcat/conf
+    environment:
+        JAVA_OPTS: "-Dfile.encoding='UTF-8'"
+        CATALINA_OPTS: "                                                                          -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.volume.path.idoc=/nakisa/idocs -Dnak.idoc.app.url=http://idoclistener:10002/idoc-listener -Dnak.queue.url=http://taskmanager:10000/queue-manager -Dnak.backup.app.url=http://backupmanager:10001/backup-manager -Dnak.volume.path.backup=/nakisa/backup -Dfile.encoding='UTF-8' -Dnak.cookie.useHttpOnly=false -Dnak.cookie.useSecure=false -Xms1500m -Xmx1500m"
+        CATALINA_OPTS: "-Ddynamic.sql.ddldialect=com.nakisa.data.dynamic.sqldialects.MySQLDialect -Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=leasing -Djava.net.preferIPv4Stack=true -Dnak.authentication.token=NakisaInternal -Dnak.queue.url=http://leasing-queue:10000/queue-manager -Xms1g -Xmx7g"
+
+  hanelly-db:
+    image: mysql:5.7
+    volumes:
+        - /nakisa/app-volumes/mysql-data:/var/lib/mysql
+        - /nakisa/app-volumes/mysql-logs:/var/log/mysql
+        - /nakisa/app-volumes/mysql-dump:/var/backups
+    environment:
+        MYSQL_ROOT_PASSWORD: hanelly
+        MYSQL_DATABASE: hanelly
+        MYSQL_USER: hanelly
+        MYSQL_PASSWORD: hanelly
+     # capture mySQL logs into logfiles
+#    command: --slow_query_log --slow_query_log_file=/var/log/mysql/slow_query.log --log-output=FILE --log-queries-not-using-indexes=ON 	--long-query-time=60 --log_slow_admin_statements
+
+  elasticsearch:
+    image: elasticsearch:5.2.0
+    volumes:
+        # docker copies the contents of each host directory over to the container directory and overwrites it
+        - /nakisa/app-volumes/es-data:/usr/share/elasticsearch/data
+        - /nakisa/app-volumes/es-logs:/usr/share/elasticsearch/logs
+        # the following volume is mapped to a named volume because it contains subdirectories and data which we don't want to overwrite
+        #- es-JVM-workingDir:/usr/lib/jvm/java-8-openjdk-amd64/jre
+    environment:
+      ES_JAVA_OPTS: "-Xms1500m -Xmx1500m"
+    # need to disable swap for ES as per: but seems to crash ES https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+    # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
+
+  # Ref: http://192.168.8.8/nakisa/dockers/blob/master/scripts/internal/compose/hanelly/docker-compose.yml
+  # for fuller list of environmental parameters which can also be set from manager page for iDocListener
+  idoclistener:
+    image: nakisa/tools:idoc-listener-1.2.0
+    depends_on:
+      - hanelly
+    ports:
+        - "10002:10002"
+    volumes:
+        - /nakisa/app-volumes/idocs-data:/data
+        - /nakisa/app-volumes/idocs-logs:/idoc-listener/logs
+    environment:
+        nak.app.url: "http://hanelly:8080/hanelly/app"
+        nak.volume.path.idoc: "/data"
+        nak.authentication.token: "NakisaInternal"
+        nak.app.user.role : "NAKISA_ADMIN_LEVEL_3"
+
+  taskmanager:
+    image: nakisa/tools:task-manager-1.1.0
+    volumes:
+        - /nakisa/app-volumes/taskManager-logs:/nakisa-queue/logs
+    environment:
+        nakisa.application.service.url: "http://hanelly:8080/hanelly/app/services/QueueService/"
+        nak.authentication.token: "NakisaInternal"
+
+  leasing-queue:
+    image: nakisa/tools:task-manager-1.2.0
+    environment:
+      nakisa.application.service.url: "http://leasing:8080/leasing/app/services/QueueService/"
+      nak.authentication.token: "NakisaInternal"
+    restart: on-failure
+    depends_on:
+      - elasticsearch
+      - leasing-db
+
+
+        backupmanager:
+    image: nakisa/tools:backup-management-1.0.0
+    volumes:
+        - /nakisa/app-volumes/backupRestore-data:/nakisa/backup
+        - /nakisa/app-volumes/backupRestore-logs:/nakisa-backup/logs
+        - /nakisa/app-volumes/backupRestore-storage:/nakisa/storage/fakeStorage
+    environment:
+        nak.app.name: "hanelly"
+        nak.app.image: 3.1.1
+        nak.app.service.url: "http://hanelly:8080/hanelly/app/services/BackupRecoveryService/backup"
+        nak.authentication.token: "NakisaInternal"
+        nak.volume.path.backup: "/nakisa/backup"
+        nak.app.storage.external: "/nakisa/storage"
+        aws.accesskey: "AKIAISDFKWITMOJLATEA"             # 20 char AWS Access Key
+        aws.secretkey: "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"             # 40 char AWS Secret Key
+        aws.bucket: "nakisa-dev-br-0490-8406-8477-ca-central-1"                    # nakisa-dev-br-ca-central-1
+        aws.region: "ca-central-1"                    # ca-central-1
+        aws.customer: "NakisaBNRTesting"           # AustraliaPost
+        aws.installation: "NakisaBNRTesting-QA"   # AustraliaPost-Prod
+        # below are only for naming and tagging in S3, no functional use 
+        aws.availabilityzone: "AZ"
+        aws.vpcnetwork: "X.X"
+        aws.customernetwork: "Y"
+        aws.subnettype: "Z"
+        # cron job reference: http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html
+        # sec min hour dayOfMonth month dayOfWeek year
+        nak.default.backup.schedule.cron: "0 0 0/3 * * ? *"
+        nak.default.backup.sons.count: "2"
+        nak.default.backup.fathers.count: "5"
+        nak.default.backup.grandfathers.count: "10"
+        # set to true for local storage (fakeStorage), false for S3 storage 
+        nak.default.backup.local.storage: "false"

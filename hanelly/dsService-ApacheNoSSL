@@ -6,7 +6,7 @@
       - /nakisa/app-volumes/apache-www:/var/www/html
       - /nakisa/app-volumes/apache-ssl:/etc/apache2/ssl
       - /nakisa/app-volumes/apache-confNoSSL:/etc/apache2/sites-enabled
-      - /nakisa/app-volumes/apache-logs:/var/log/apache2
+      - /nakisa/app-volumes/apache-logs:/var/log
       - /nakisa/app-volumes/apache-shib:/usr/local/shibboleth
     ports:
       - "80:80"
