@@ -8,6 +8,7 @@ sudo mkdir /nakisa/app-volumes/apache-shib
 sudo mkdir /nakisa/app-volumes/apache-conf
 sudo mkdir /nakisa/app-volumes/apache-confNoSSL
 sudo mkdir /nakisa/app-volumes/apache-logs
+sudo mkdir /nakisa/app-volumes/apache-logs/apache2
 sudo mkdir /nakisa/app-volumes/tomcat-logs
 sudo mkdir /nakisa/app-volumes/mysql-data
 sudo mkdir /nakisa/app-volumes/mysql-logs
