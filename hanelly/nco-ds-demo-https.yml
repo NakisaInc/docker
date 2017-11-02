@@ -39,7 +39,15 @@ services:
       - tomcat-conf:/usr/local/tomcat/conf
     environment:
       JAVA_OPTS: "-Dfile.encoding='UTF-8'"
-      CATALINA_OPTS: "-Ddynamic.embedded=false -Ddynamic.host=elasticsearch -Ddynamic.cluster=elasticsearch -Dcluster.standalone=false -Dcluster.discovery.file=WEB-INF/tcp.xml -Djgroups.bind_addr=hanelly -Djava.net.preferIPv4Stack=true -Dfile.encoding='UTF-8' ${NAK_HANELLY_MEM_ALLOC}"
+      CATALINA_OPTS: |-
+          "-Ddynamic.embedded=false 
+          -Ddynamic.host=elasticsearch 
+          -Ddynamic.cluster=elasticsearch 
+          -Dcluster.standalone=false 
+          -Dcluster.discovery.file=WEB-INF/tcp.xml 
+          -Djgroups.bind_addr=hanelly 
+          -Djava.net.preferIPv4Stack=true 
+          -Dfile.encoding='UTF-8' ${NAK_HANELLY_MEM_ALLOC}"
 
   hanelly-db:
     image: mysql:5.7
@@ -65,5 +73,12 @@ services:
     environment:
       ES_JAVA_OPTS: "${NAK_ES_MEM_ALLOC}"
     # need to disable swap for ES as per: but seems to crash ES https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html
-    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Enetwork.publish_host=elasticsearch -Ecluster.name=elasticsearch -Escript.inline=true -Escript.stored=true -Escript.max_compilations_per_minute=100000
+    command: 
+        - elasticsearch 
+        - -Enetwork.bind_host=0.0.0.0 
+        - -Enetwork.publish_host=elasticsearch 
+        - -Ecluster.name=elasticsearch 
+        - -Escript.inline=true 
+        - -Escript.stored=true 
+        - -Escript.max_compilations_per_minute=100000
     # ensure data, logs and JVM working directory are mapped externally to container for data persistence and problem troubleshooting post crash
